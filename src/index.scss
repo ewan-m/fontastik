@@ -1,0 +1,17 @@
+@import "./styles/animations.scss";
+@import "./styles/button.scss";
+@import "./styles/form.scss";
+@import "./styles/site.scss";
+@import "./styles/utils.scss";
+@import "./styles/window.scss";
+@import "./styles/typography.scss";
+
+body {
+	font-family: "GreycliffCF";
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	font-weight: 500;
+	font-size: $size1;
+	margin: 0;
+}

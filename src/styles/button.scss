@@ -1,0 +1,48 @@
+@import "./variables.scss";
+
+.button {
+	border: none;
+	font-family: "GreycliffCF";
+	font-weight: 500;
+	border-radius: $size6;
+	cursor: pointer;
+	box-shadow: $shadow1px;
+	text-decoration: none;
+	z-index: 2;
+	transition-property: transform, box-shadow;
+	transition-duration: 0.3s;
+	transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+	transform: scale(1);
+	padding: $size-3 $size0;
+
+	display: inline-flex;
+	align-items: center;
+	font-size: $size1;
+
+	&__primary {
+		background-color: $primary;
+		color: $white;
+	}
+
+	&__secondary {
+		background: $lightGrey;
+		color: $darkGrey;
+		border: 1px solid $grey;
+	}
+
+	&--large {
+		font-size: $size2;
+		padding: $size-1 $size1;
+	}
+
+	&:hover,
+	&:focus {
+		transform: scale(1.05);
+		box-shadow: none;
+	}
+
+	&--stacked {
+		display: block;
+		margin-bottom: $size0;
+	}
+}

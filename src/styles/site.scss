@@ -1,0 +1,73 @@
+@import "./variables.scss";
+
+.siteHeader {
+	background-image: $primaryGradient;
+	padding: $size0;
+	position: sticky;
+	top: 0;
+	border-bottom: 1px solid $darkestGey;
+	z-index: 3;
+	box-shadow: $shadow5px;
+
+	&__h1 {
+		margin: 0;
+		color: $white;
+		text-align: center;
+		font-size: $size6;
+		font-weight: 900;
+	}
+}
+
+.siteMain {
+	flex-grow: 1;
+}
+
+.siteFooter {
+	background: $whiteTransparent;
+	color: $darkestGey;
+	position: sticky;
+	bottom: 0;
+	text-align: center;
+}
+
+.footerNav {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	justify-content: space-between;
+	list-style: none;
+	border-top: 1px solid $grey;
+
+	&__item {
+		width: 100%;
+
+		&:first-child {
+			.footerNav__item__a {
+				border-left: none;
+			}
+		}
+
+		&__a {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			padding: $size0;
+			background: $darkGrey;
+			color: $lightGrey;
+			text-decoration: none;
+			border-left: 1px solid $darkestGey;
+			box-shadow: none;
+			transition: 0.2s background, box-shadow ease-in-out;
+
+			&--active {
+				background: linear-gradient(
+					-120deg,
+					rgba(232, 26, 255, 0.8) 0%,
+					rgba(240, 45, 71, 0.8) 100%
+				);
+				box-shadow: inset 1px 1px 5px $darkGreyTransparent;
+			}
+		}
+	}
+}

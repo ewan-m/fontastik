@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"module": "es2015",
+		"target": "es5",
+		"lib": ["es2018", "dom"],
+		"sourceMap": true,
+		"jsx": "react",
+		"downlevelIteration": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"esModuleInterop": true,
+		"preserveSymlinks": true,
+		"moduleResolution": "node"
+	},
+	"exclude": ["dist"]
+}

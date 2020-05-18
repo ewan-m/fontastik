@@ -1,0 +1,13 @@
+@import "../../styles/variables.scss";
+
+.material-icons {
+	font-size: 1.25em;
+	margin: 0;
+
+	&--left {
+		margin: 0 $size-3 0 0;
+	}
+	&--right {
+		margin: 0 0 0 $size-3;
+	}
+}

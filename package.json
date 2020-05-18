@@ -1,0 +1,34 @@
+{
+  "name": "bespoke",
+  "version": "1.0.0",
+  "description": "A social media platform in your own handwriting",
+  "main": "src/index.html",
+  "browserslist": "> 0.25%, not dead",
+  "homepage": "/bespoke",
+  "author": "Ewan Morrison",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html  --out-dir docs --public-url ./",
+    "format": "prettier \"src/**\" --write"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
+    "moment": "^2.25.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "@types/history": "^4.7.5",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "@types/react-router-dom": "^5.1.5",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.0.5",
+    "sass": "^1.26.5",
+    "typescript": "^3.8.3"
+  }
+}

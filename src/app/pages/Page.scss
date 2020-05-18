@@ -1,0 +1,18 @@
+@import "../../styles/variables.scss";
+
+.pageContainer {
+	padding: $size0;
+}
+
+.pageTitle {
+	margin: 0;
+	font-size: $size3;
+	font-weight: 900;
+	color: $darkGrey;
+}
+
+.lettersSideBar {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}

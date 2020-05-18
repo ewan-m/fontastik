@@ -1,0 +1,23 @@
+@import "./variables.scss";
+
+.form {
+	display: flex;
+	flex-direction: column;
+
+	&__label {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: $size3;
+	}
+
+	&__input {
+		margin-top: $size-3;
+		padding: $size0;
+		border-radius: $size-3;
+		border: 1px solid $grey;
+		outline: none;
+		max-width: 225px;
+		box-sizing: content-box;
+		font-weight: 500;
+	}
+}
