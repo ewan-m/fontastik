@@ -5,7 +5,7 @@
 	padding: $size0;
 	position: sticky;
 	top: 0;
-	border-bottom: 1px solid $darkestGey;
+	border-bottom: 1px solid $darkestGrey;
 	z-index: 3;
 	box-shadow: $shadow5px;
 
@@ -24,7 +24,7 @@
 
 .siteFooter {
 	background: $whiteTransparent;
-	color: $darkestGey;
+	color: $darkestGrey;
 	position: sticky;
 	bottom: 0;
 	text-align: center;
@@ -36,10 +36,11 @@
 	display: flex;
 	justify-content: space-between;
 	list-style: none;
-	border-top: 1px solid $grey;
+	border-top: 1px solid $darkGrey;
 
 	&__item {
 		width: 100%;
+		border: none;
 
 		&:first-child {
 			.footerNav__item__a {
@@ -56,7 +57,7 @@
 			background: $darkGrey;
 			color: $lightGrey;
 			text-decoration: none;
-			border-left: 1px solid $darkestGey;
+			border-left: 1px solid $darkestGrey;
 			box-shadow: none;
 			transition: 0.2s background, box-shadow ease-in-out;
 

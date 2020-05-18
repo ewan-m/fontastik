@@ -2,14 +2,21 @@ import * as React from "react";
 import { FunctionComponent } from "react";
 import "./Icon.scss";
 
-export const Icon: FunctionComponent<{ withMargin?: "left" | "right" }> = ({
+interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
+	withMargin?: "left" | "right";
+}
+
+export const Icon: FunctionComponent<IconProps> = ({
 	children,
 	withMargin,
+	className,
+	...props
 }) => (
 	<span
+		{...props}
 		className={`material-icons ${
-			withMargin ? ` material-icons--${withMargin}` : ""
-		}`}
+			withMargin ? ` material-icons--${withMargin} ` : ""
+		}${className}`}
 	>
 		{children}
 	</span>
