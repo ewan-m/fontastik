@@ -62,11 +62,7 @@
 			transition: 0.2s background, box-shadow ease-in-out;
 
 			&--active {
-				background: linear-gradient(
-					-120deg,
-					rgba(232, 26, 255, 0.8) 0%,
-					rgba(240, 45, 71, 0.8) 100%
-				);
+				background: $vibrantGradient;
 				box-shadow: inset 1px 1px 5px $darkGreyTransparent;
 			}
 		}

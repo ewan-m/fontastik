@@ -14,6 +14,11 @@ $primaryGradient: linear-gradient(
 	$primary 0%,
 	$secondaryTransparent 100%
 );
+$vibrantGradient: linear-gradient(
+	-120deg,
+	rgba(232, 26, 255, 0.8) 0%,
+	rgba(240, 45, 71, 0.8) 100%
+);
 
 $white: #fff;
 $whiteTransparent: #ffffffcc;
