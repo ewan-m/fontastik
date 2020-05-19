@@ -1,11 +1,12 @@
 @import "../../styles/variables.scss";
 
-.pageContainer {
-	padding: $size0;
+.sidewaysPadding {
+	padding: 0 $size0;
 }
 
 .pageTitle {
 	margin: 0;
+	padding: $size0 $size0 0;
 	font-size: $size3;
 	font-weight: 900;
 	color: $darkGrey;

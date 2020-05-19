@@ -15,7 +15,7 @@ const Step0: FunctionComponent<Step> = ({ setStep }) => {
 	const [complete, setComplete] = useState(false);
 
 	return (
-		<div className="fadeInBottomEntrance">
+		<div className="fadeInBottomEntrance sidewaysPadding">
 			<p>
 				You see all that cool writing on the stream tab? Those fellas made their own
 				font and you can too! Let's start with the letter 'A' in the box below.
@@ -42,7 +42,7 @@ const Step0: FunctionComponent<Step> = ({ setStep }) => {
 const Step1: FunctionComponent<Step> = ({ setStep }) => {
 	const [complete, setComplete] = useState(false);
 	return (
-		<div className="fadeInBottomEntrance">
+		<div className="fadeInBottomEntrance sidewaysPadding">
 			<p>
 				Do you know what's coming next? You guessed it baby, I'm gonna need you to
 				draw the letter 'a'.
@@ -87,7 +87,7 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 
 	return (
 		<div className="fadeInBottomEntrance">
-			<p>It's the alphabet time buddy!</p>
+			<p className="sidewaysPadding">It's the alphabet time buddy!</p>
 			<LetterDraw
 				letter={selectedLetter}
 				setContainsLetter={(containsIt) => {
@@ -100,7 +100,7 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 					}
 				}}
 			/>
-			<ol className="letterNavigation">
+			<ol className="letterNavigation" id="letterNavigation">
 				{characters.map((letter) => (
 					<li className={getLiClassName(letter)} key={letter}>
 						<a
@@ -108,6 +108,16 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 							className="letterNavigation__item__a"
 							onClick={(e) => {
 								e.preventDefault();
+								const container = document.getElementById("letterNavigation");
+								if (container) {
+									container.scrollTo({
+										left:
+											e.currentTarget.offsetLeft -
+											container.clientWidth / 2 +
+											e.currentTarget.clientWidth / 2,
+										behavior: "smooth",
+									});
+								}
 								setSelectedLetter(letter);
 							}}
 						>
@@ -146,7 +156,7 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 					</li>
 				))}
 			</ol>
-			<p className="fadeInBottomEntrance">
+			<p className="fadeInBottomEntrance sidewaysPadding">
 				Looking good, my friend.{" "}
 				<button
 					className="button button__primary button--large"
@@ -194,7 +204,7 @@ export const Create = () => {
 	const [step, setStep] = useState(0);
 
 	return (
-		<div className="pageContainer">
+		<>
 			<h2 className="pageTitle">Create your own font</h2>
 			{
 				[
@@ -204,6 +214,6 @@ export const Create = () => {
 					<Step3 setStep={setStep} key={3} />,
 				][step]
 			}
-		</div>
+		</>
 	);
 };
