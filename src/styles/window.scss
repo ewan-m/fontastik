@@ -11,15 +11,13 @@
 .innerWindow {
 	overflow: auto;
 	max-width: 450px;
-	width: calc(100vw - 1.52rem);
+	width: 100%;
 	max-height: 900px;
-	height: calc(100% - 1.52rem);
+	height: 100%;
 	background-color: $white;
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
-	border-radius: $size0;
-	box-shadow: $shadow10px;
 	overflow-y: auto;
 }
 
@@ -29,6 +27,11 @@
 	}
 
 	.innerWindow {
+		width: calc(100vw - 1.52rem);
+		height: calc(100% - 1.52rem);
+		border-radius: $size0;
+		box-shadow: $shadow10px;
+
 		&::-webkit-scrollbar {
 			width: 11px;
 		}
