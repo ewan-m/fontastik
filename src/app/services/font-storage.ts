@@ -1,8 +1,6 @@
-interface Font {
-	[fontLetter: string]: string;
-}
+import { Font } from "./font.interface";
 
-const storageKey = "customFont";
+const storageKey = "CUSTOM_FONT";
 
 export function getFont(): Font {
 	try {

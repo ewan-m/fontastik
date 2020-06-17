@@ -13,22 +13,26 @@
     "format": "prettier \"src/**\" --write"
   },
   "dependencies": {
+    "makerjs": "^0.17.0",
+    "moment": "^2.26.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2",
-    "moment": "^2.25.3"
+    "react-router-dom": "^5.2.0",
+    "svg2ttf": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "@babel/preset-react": "^7.9.4",
-    "@types/history": "^4.7.5",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/preset-react": "^7.10.1",
+    "@types/css-font-loading-module": "0.0.4",
+    "@types/history": "^4.7.6",
+    "@types/react": "^16.9.37",
+    "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
+    "@types/svg2ttf": "^5.0.0",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5",
-    "sass": "^1.26.5",
-    "typescript": "^3.8.3"
+    "sass": "^1.26.8",
+    "typescript": "^3.9.5"
   }
 }
