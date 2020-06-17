@@ -2,11 +2,10 @@
 
 .button {
 	border: none;
-	font-family: "GreycliffCF";
+	font-family: inherit;
 	font-weight: 500;
 	border-radius: $size6;
 	cursor: pointer;
-	box-shadow: $shadow1px;
 	text-decoration: none;
 	z-index: 2;
 	transition-property: transform, box-shadow;
@@ -37,8 +36,7 @@
 
 	&:hover,
 	&:focus {
-		transform: scale(1.05);
-		box-shadow: none;
+		transform: scale(1.1);
 	}
 
 	&--stacked {
