@@ -10,6 +10,7 @@ import {
 import { updateFont, getFont } from "../../../services/font-storage";
 import "./LetterDraw.scss";
 import { Icon } from "../../../global/Icon";
+import { preferences } from "../../../services/saved-preferences";
 
 const size = 250;
 
@@ -25,9 +26,12 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 	const svgElement = createRef<SVGSVGElement>();
 	const [path, setPath] = useState("");
 	const [isDrawing, setIsDrawing] = useState(false);
-	const [showGuides, setShowGuides] = useState(
-		localStorage.getItem("showGuides") === "true"
-	);
+	const [showRuler, setShowRuler] = useState(preferences.getRulerPreference());
+
+	const syncPath = (path: string) => {
+		setPath(path);
+		updateFont(letter, path);
+	};
 
 	useEffect(() => {
 		const font = getFont();
@@ -39,15 +43,11 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 		}
 	}, [letter]);
 
-	useEffect(() => {
-		updateFont(letter, path);
-	}, [path]);
-
 	const startPath = (x: number, y: number) => {
 		setIsDrawing(true);
 		if (svgElement.current) {
 			const { left, top } = svgElement.current.getBoundingClientRect();
-			setPath(`${path} M ${(x - left).toFixed(2)} ${(y - top).toFixed(2)}`);
+			syncPath(`${path} M${(x - left).toFixed(2)},${(y - top).toFixed(2)}`);
 		}
 	};
 
@@ -55,7 +55,7 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 		if (isDrawing) {
 			if (svgElement.current) {
 				const { left, top } = svgElement.current.getBoundingClientRect();
-				setPath(`${path} L ${(x - left).toFixed(2)} ${(y - top).toFixed(2)}`);
+				syncPath(`${path} L${(x - left).toFixed(2)},${(y - top).toFixed(2)}`);
 			}
 		}
 	};
@@ -87,14 +87,20 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 	};
 
 	const tryAgain = () => {
-		setPath("");
+		syncPath("");
 		setContainsLetter(false);
 	};
 
 	return (
 		<div className="letterDraw">
 			<label className="letterDraw__label" id={`letterDraw__${letter}`}>
-				Drawing: <strong>{letter}</strong>
+				Drawing:{" "}
+				<strong>
+					{/[A-Za-z]/.test(letter) && (
+						<>{letter.toLocaleLowerCase() === letter ? "Lowercase " : "Capital "}</>
+					)}
+					{letter}
+				</strong>
 			</label>
 			<svg
 				ref={svgElement}
@@ -112,7 +118,7 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 				className="letterDraw__canvas"
 				aria-labelledby={`letterDraw__${letter}`}
 			>
-				{showGuides && (
+				{showRuler && (
 					<>
 						<path className="letterDraw__canvas__guide" d="M10,30 L10,30 L240,30" />
 						<path
@@ -135,17 +141,17 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 				<button
 					className="button button__secondary letterDraw__button"
 					onClick={() => {
-						setShowGuides(!showGuides);
-						localStorage.setItem("showGuides", `${!showGuides}`);
+						setShowRuler(!showRuler);
+						preferences.setRulerPreference(!showRuler);
 					}}
 				>
-					{showGuides ? (
+					{showRuler ? (
 						<>
-							<Icon withMargin="left">visibility_off</Icon> Hide guides
+							<Icon withMargin="left">visibility_off</Icon> Hide ruler
 						</>
 					) : (
 						<>
-							<Icon withMargin="left">visibility</Icon> Show guides
+							<Icon withMargin="left">visibility</Icon> Show ruler
 						</>
 					)}
 				</button>

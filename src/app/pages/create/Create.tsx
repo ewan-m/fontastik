@@ -121,26 +121,7 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 								setSelectedLetter(letter);
 							}}
 						>
-							{completedLetters.includes(letter) ? (
-								<Icon
-									withMargin="left"
-									key={`${letter}--${completedLetters.includes(letter)}`}
-									className="fadeInBottomEntrance"
-									style={{ fontSize: "1.25rem" }}
-								>
-									check_circle
-								</Icon>
-							) : (
-								<Icon
-									withMargin="left"
-									key={`${letter}--${completedLetters.includes(letter)}`}
-									className="fadeInBottomEntrance"
-									style={{ fontSize: "1.25rem" }}
-								>
-									radio_button_unchecked
-								</Icon>
-							)}
-							{getFont()[letter] ? (
+							{getFont()[letter]?.length > 0 ? (
 								<svg
 									className="letterPreviewSvg"
 									width="1em"
@@ -180,22 +161,12 @@ export const Step3: FunctionComponent<Step> = ({ setStep }) => {
 		<div className="fadeInBottomEntrance">
 			<textarea
 				className="fontPreview"
+				autoFocus={true}
 				value={somethingImTyping}
 				onChange={(event) => {
 					setSomethingImTyping(event.target.value);
 				}}
 			></textarea>
-
-			{somethingImTyping.split("").map((letter) => (
-				<svg
-					viewBox="0 0 250 250"
-					width="1em"
-					height="1em"
-					className="letterPreviewSvg"
-				>
-					<path d={font[letter]} />
-				</svg>
-			))}
 		</div>
 	);
 };
