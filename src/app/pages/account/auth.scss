@@ -1,0 +1,25 @@
+@import "../../../styles/variables.scss";
+
+.authPage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 0 $size0;
+	max-width: 400px;
+	margin: auto;
+
+	.form {
+		align-items: center;
+	}
+
+	&__links {
+		display: flex;
+		justify-content: space-between;
+		padding-top: $size0;
+
+		&__divider {
+			padding: 0 $size0;
+		}
+	}
+}

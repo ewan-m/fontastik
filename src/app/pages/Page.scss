@@ -1,13 +1,14 @@
 @import "../../styles/variables.scss";
 
-.sidewaysPadding {
-	padding: 0 $size0;
-}
-
 .pageTitle {
 	margin: 0;
-	padding: $size0 $size0 0;
-	font-size: $size3;
+	padding: 0 0 $size3;
+	font-size: $size5;
 	font-weight: 900;
 	color: $darkGrey;
+	line-height: 1;
+
+	@include desktop {
+		font-size: $size6;
+	}
 }
