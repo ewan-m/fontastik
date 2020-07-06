@@ -14,10 +14,15 @@ $primaryGradient: linear-gradient(
 	$primary 0%,
 	$secondaryTransparent 100%
 );
+
+$vibrantPurple: rgba(232, 26, 255, 0.8);
+$vibrantPink: rgba(240, 45, 71, 0.8);
+$hoverPink: rgba(240, 45, 71, 0.3);
+
 $vibrantGradient: linear-gradient(
 	-120deg,
-	rgba(232, 26, 255, 0.8) 0%,
-	rgba(240, 45, 71, 0.8) 100%
+	$vibrantPurple 0%,
+	$vibrantPink 100%
 );
 
 $white: #fff;
@@ -27,6 +32,7 @@ $grey: #ccc;
 $darkGrey: #333;
 $darkGreyTransparent: #333333cc;
 $darkestGrey: #222;
+$error: #d10707;
 
 $size6: 3.082rem;
 $size5: 2.435rem;
@@ -38,3 +44,9 @@ $size0: 0.75rem;
 $size-1: 0.593rem;
 $size-2: 0.468rem;
 $size-3: 0.37rem;
+
+@mixin desktop {
+	@media (min-width: 450px) {
+		@content;
+	}
+}

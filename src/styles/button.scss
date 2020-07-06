@@ -13,10 +13,10 @@
 	transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 	transform: scale(1);
 	padding: $size-3 $size0;
-
 	display: inline-flex;
 	align-items: center;
 	font-size: $size1;
+	transition: filter 0.2s ease-in-out;
 
 	&__primary {
 		background-color: $primary;
@@ -34,9 +34,17 @@
 		padding: $size-1 $size1;
 	}
 
+	&--wide {
+		width: 100%;
+		border-radius: $size-3;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
 	&:hover,
 	&:focus {
-		transform: scale(1.1);
+		filter: drop-shadow(3px 3px 0 $hoverPink);
 	}
 
 	&--stacked {

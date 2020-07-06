@@ -3,11 +3,14 @@
 .form {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 
 	&__label {
 		display: flex;
 		flex-direction: column;
-		margin-bottom: $size3;
+		font-weight: 600;
+		padding-bottom: $size0;
+		width: 100%;
 	}
 
 	&__input {
@@ -16,8 +19,12 @@
 		border-radius: $size-3;
 		border: 1px solid $grey;
 		outline: none;
-		max-width: 225px;
 		box-sizing: content-box;
 		font-weight: 500;
+		transition: filter 0.2s ease-in-out;
+		&:hover,
+		&:focus {
+			filter: drop-shadow(3px 3px 0 $hoverPink);
+		}
 	}
 }

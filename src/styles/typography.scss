@@ -33,3 +33,32 @@
 	font-family: "GreycliffCF";
 	font-weight: 900;
 }
+
+@import "./variables.scss";
+
+.paragraph {
+	max-width: 550px;
+	color: $darkestGrey;
+	font-size: $size1;
+	margin: 0;
+
+	&--informational {
+		font-size: $size0;
+	}
+
+	&--b {
+		padding-bottom: $size0;
+	}
+
+	&--error {
+		font-size: $size1;
+		color: $error;
+		display: flex;
+		align-items: center;
+	}
+
+	&--hero {
+		font-size: $size6;
+		font-weight: 300;
+	}
+}

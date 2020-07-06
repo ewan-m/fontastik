@@ -1,14 +1,32 @@
-.fadeInBottomEntrance {
-	animation: fadeInBottomEntrance 0.5s ease-in-out forwards;
+@import "./variables.scss";
+
+.contentAppear {
+	animation: fadeInBottomEntrance 0.3s ease-in-out forwards;
+
+	@include desktop {
+		animation: fadeInTopEntrance 0.3s ease-in-out forwards;
+	}
 }
 
 @keyframes fadeInBottomEntrance {
 	0% {
-		transform: scale(0.9);
+		transform: translateY(10px);
 		opacity: 0;
 	}
 	100% {
 		opacity: 1;
-		transform: scale(1);
+		transform: translateY(0px);
 	}
 }
+
+@keyframes fadeInTopEntrance {
+	0% {
+		transform: translateY(-20px);
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0px);
+	}
+}
+
