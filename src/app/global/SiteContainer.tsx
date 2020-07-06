@@ -1,51 +1,70 @@
 import * as React from "react";
 import { FunctionComponent } from "react";
 import { NavLink } from "react-router-dom";
+import { useMediaQuery } from "../hooks/use-media-query";
 import { Icon } from "./Icon";
+import "./SiteContainer.scss";
 
-export const SiteContainer: FunctionComponent = ({ children }) => (
-	<div className="outerWindow">
-		<div className="innerWindow">
+function NavigationItems({ type }: { type: "footer" | "header" }) {
+	return (
+		<nav>
+			<ul className={`${type}Nav`}>
+				<li className={`${type}Nav__item`}>
+					<NavLink
+						activeClassName={`${type}Nav__item__a--active`}
+						className={`${type}Nav__item__a`}
+						to="/home"
+					>
+						<Icon>home</Icon>
+						&nbsp;Home
+					</NavLink>
+				</li>
+				<li className={`${type}Nav__item`}>
+					<NavLink
+						activeClassName={`${type}Nav__item__a--active`}
+						className={`${type}Nav__item__a`}
+						to="/create"
+					>
+						<Icon>create</Icon>
+						&nbsp;Create
+					</NavLink>
+				</li>
+				<li className={`${type}Nav__item`}>
+					<NavLink
+						activeClassName={`${type}Nav__item__a--active`}
+						className={`${type}Nav__item__a`}
+						to="/account"
+					>
+						<Icon>account_circle</Icon>
+						&nbsp;Account
+					</NavLink>
+				</li>
+			</ul>
+		</nav>
+	);
+}
+
+export const SiteContainer: FunctionComponent = ({ children }) => {
+	const isMobile = useMediaQuery("(max-width: 450px)");
+
+	return (
+		<>
 			<header className="siteHeader">
-				<h1 className="siteHeader__h1">Bespoke</h1>
+				<div className="siteHeader__inner">
+					<NavLink to="/home" className="link">
+						<h1 className="siteHeader__h1">
+							<Icon>chat</Icon>Bespoke.
+						</h1>
+					</NavLink>
+					{!isMobile && <NavigationItems type="header" />}
+				</div>
 			</header>
 			<main className="siteMain">{children}</main>
-			<footer className="siteFooter">
-				<nav>
-					<ul className="footerNav">
-						<li className="footerNav__item">
-							<NavLink
-								activeClassName="footerNav__item__a--active"
-								className="footerNav__item__a"
-								to="stream"
-							>
-								<Icon>home</Icon>
-								&nbsp;Stream
-							</NavLink>
-						</li>
-						<li className="footerNav__item">
-							<NavLink
-								activeClassName="footerNav__item__a--active"
-								className="footerNav__item__a"
-								to="create"
-							>
-								<Icon>create</Icon>
-								&nbsp;Create
-							</NavLink>
-						</li>
-						<li className="footerNav__item">
-							<NavLink
-								activeClassName="footerNav__item__a--active"
-								className="footerNav__item__a"
-								to="profile"
-							>
-								<Icon>account_circle</Icon>
-								&nbsp;Profile
-							</NavLink>
-						</li>
-					</ul>
-				</nav>
-			</footer>
-		</div>
-	</div>
-);
+			{isMobile && (
+				<footer className="siteFooter">
+					<NavigationItems type="footer" />
+				</footer>
+			)}
+		</>
+	);
+};
