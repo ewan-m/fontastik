@@ -7,9 +7,15 @@
 	stroke-linecap: round;
 }
 
+.createPage {
+	max-width: 1000px;
+	padding: 0 $size0;
+	margin: auto;
+}
+
 .letterNavigation {
 	list-style: none;
-	margin: $size0 0 0 0;
+	margin: 0 0 $size0 0;
 	padding: 0;
 	display: flex;
 	flex-direction: row;
@@ -60,4 +66,13 @@
 			padding: $size0;
 		}
 	}
+}
+
+.fontPreview {
+	font-family: "Handwriting";
+	border: none;
+	font-size: 2rem;
+	font-weight: bold;
+	width: 100% !important;
+	height: 100% !important;
 }

@@ -1,11 +1,13 @@
 import * as React from "react";
-import "../Page.scss";
-import { LetterDraw } from "./subcomponents/LetterDraw";
+import { FunctionComponent, useEffect, useState } from "react";
 import { Icon } from "../../global/Icon";
-import { FunctionComponent, useState } from "react";
-import "./Create.scss";
-import { characters } from "./characters";
 import { getFont } from "../../services/font-storage";
+import "../Page.scss";
+import { characters } from "./characters";
+import "./Create.scss";
+import { LetterDraw } from "./subcomponents/LetterDraw";
+import { convertToTTF } from "../../services/svg-font-string";
+import { LoadingSpinner } from "../../global/LoadingSpinner";
 
 interface Step {
 	setStep: (stepNumber: number) => void;
@@ -15,14 +17,14 @@ const Step0: FunctionComponent<Step> = ({ setStep }) => {
 	const [complete, setComplete] = useState(false);
 
 	return (
-		<div className="fadeInBottomEntrance sidewaysPadding">
-			<p>
+		<div className="contentAppear">
+			<p className="paragraph paragraph--b">
 				You see all that cool writing on the stream tab? Those fellas made their own
 				font and you can too! Let's start with the letter 'A' in the box below.
 			</p>
 			<LetterDraw letter="A" setContainsLetter={setComplete} />
 			{complete && (
-				<p className="fadeInBottomEntrance">
+				<p className="contentAppear paragraph">
 					When you like how it looks hit{" "}
 					<button
 						className="button button__primary button--large"
@@ -42,15 +44,15 @@ const Step0: FunctionComponent<Step> = ({ setStep }) => {
 const Step1: FunctionComponent<Step> = ({ setStep }) => {
 	const [complete, setComplete] = useState(false);
 	return (
-		<div className="fadeInBottomEntrance sidewaysPadding">
-			<p>
+		<div className="contentAppear">
+			<p className="paragraph paragraph--b">
 				Do you know what's coming next? You guessed it baby, I'm gonna need you to
 				draw the letter 'a'.
 			</p>
 			<LetterDraw letter="a" setContainsLetter={setComplete} />
 			{complete && (
 				<>
-					<p className="fadeInBottomEntrance">
+					<p className="contentAppear paragraph">
 						Looking good, my friend.{" "}
 						<button
 							className="button button__primary button--large"
@@ -86,8 +88,8 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 	};
 
 	return (
-		<div className="fadeInBottomEntrance">
-			<p className="sidewaysPadding">It's the alphabet time buddy!</p>
+		<div className="contentAppear">
+			<p className="paragraph paragraph--b">It's the alphabet time buddy!</p>
 			<LetterDraw
 				letter={selectedLetter}
 				setContainsLetter={(containsIt) => {
@@ -137,7 +139,7 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 					</li>
 				))}
 			</ol>
-			<p className="fadeInBottomEntrance sidewaysPadding">
+			<p className="contentAppear paragraph">
 				Looking good, my friend.{" "}
 				<button
 					className="button button__primary button--large"
@@ -155,18 +157,35 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 
 export const Step3: FunctionComponent<Step> = ({ setStep }) => {
 	const [somethingImTyping, setSomethingImTyping] = useState("");
+	const [isLoading, setIsLoading] = useState(true);
 	const font = getFont();
 
+	useEffect(() => {
+		convertToTTF(font).then((res) => {
+			document.fonts.add(new FontFace("Handwriting", res.buffer));
+			setIsLoading(false);
+		});
+	}, []);
+
 	return (
-		<div className="fadeInBottomEntrance">
-			<textarea
-				className="fontPreview"
-				autoFocus={true}
-				value={somethingImTyping}
-				onChange={(event) => {
-					setSomethingImTyping(event.target.value);
-				}}
-			></textarea>
+		<div className="contentAppear">
+			<div>
+				{isLoading && (
+					<p className="paragraph">
+						<LoadingSpinner /> Generating your font
+					</p>
+				)}
+				{!isLoading && (
+					<textarea
+						className="fontPreview"
+						autoFocus={true}
+						value={somethingImTyping}
+						onChange={(event) => {
+							setSomethingImTyping(event.target.value);
+						}}
+					></textarea>
+				)}
+			</div>
 		</div>
 	);
 };
@@ -175,8 +194,8 @@ export const Create = () => {
 	const [step, setStep] = useState(0);
 
 	return (
-		<>
-			<h2 className="pageTitle">Create your own font</h2>
+		<div className="createPage">
+			<h2 className="pageTitle contentAppear">Create your own font.</h2>
 			{
 				[
 					<Step0 setStep={setStep} key={0} />,
@@ -185,6 +204,6 @@ export const Create = () => {
 					<Step3 setStep={setStep} key={3} />,
 				][step]
 			}
-		</>
+		</div>
 	);
 };
