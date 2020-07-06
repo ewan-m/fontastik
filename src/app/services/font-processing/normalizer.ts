@@ -8,7 +8,7 @@ export function normalize(points: Point[]): [Point[], number] {
 
 	const shiftedPoints = points.map((point) => ({
 		...point,
-		y: -1 * Number(point.y) + 250,
+		y: -1 * Number(point.y),
 		x: Number(point.x) - startingX,
 	}));
 
