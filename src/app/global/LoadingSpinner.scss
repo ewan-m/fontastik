@@ -1,0 +1,40 @@
+@import "../../styles/variables.scss";
+
+.loadingSpinner {
+	&__circle {
+		display: inline-block;
+		width: 1em;
+		height: 1em;
+
+		&__colour {
+			&1 {
+				stop-color: $primary;
+			}
+			&2 {
+				stop-color: $white;
+			}
+		}
+
+		&__svg {
+			vertical-align: text-bottom;
+			animation: circle-animation 1000ms linear infinite;
+
+			&__circle {
+				stroke-width: 7;
+				stroke-linecap: round;
+				stroke-dasharray: 90, 150;
+				stroke-dashoffset: 0;
+			}
+		}
+	}
+}
+
+@keyframes circle-animation {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
