@@ -18,7 +18,8 @@ export const SignUp = () => {
 		<div className="authPage contentAppear">
 			<h2 className="pageTitle">Sign up.</h2>
 			<p className="paragraph paragraph--b">
-				Create an account so you can save your fonts and share messages with the Bespoke community.
+				Create an account so you can save your fonts and share messages with the
+				Bespoke community.
 			</p>
 			<form className="form">
 				<label className="form__label">
