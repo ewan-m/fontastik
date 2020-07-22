@@ -35,6 +35,10 @@
 		border-radius: $size2;
 	}
 
+	@include desktop {
+		flex-wrap: wrap;
+	}
+
 	&__item {
 		color: $darkestGrey;
 		margin: $size-3;
