@@ -16,7 +16,7 @@
 	backdrop-filter: blur(4px);
 
 	&__inner {
-		max-width: 1000px;
+		max-width: 1350px;
 		margin: auto;
 		display: flex;
 		flex-direction: row;
@@ -32,12 +32,6 @@
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
-
-		transition: filter 0.2s ease-in-out;
-		&:hover,
-		&:focus {
-			filter: drop-shadow(3px 3px 0 $hoverPink);
-		}
 
 		.material-icons {
 			font-size: 1.07em;

@@ -21,10 +21,5 @@
 		outline: none;
 		box-sizing: content-box;
 		font-weight: 500;
-		transition: filter 0.2s ease-in-out;
-		&:hover,
-		&:focus {
-			filter: drop-shadow(3px 3px 0 $hoverPink);
-		}
 	}
 }

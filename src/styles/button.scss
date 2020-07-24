@@ -16,7 +16,6 @@
 	display: inline-flex;
 	align-items: center;
 	font-size: $size1;
-	transition: filter 0.2s ease-in-out;
 
 	&__primary {
 		background-color: $primary;
@@ -44,7 +43,7 @@
 
 	&:hover,
 	&:focus {
-		filter: drop-shadow(3px 3px 0 $hoverPink);
+		transform: scale(1.1);
 	}
 
 	&--stacked {
