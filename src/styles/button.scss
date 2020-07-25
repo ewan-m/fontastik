@@ -28,6 +28,11 @@
 		border: 1px solid $grey;
 	}
 
+	&__destructive {
+		background-color: $error;
+		color: $white;
+	}
+
 	&--large {
 		font-size: $size2;
 		padding: $size-1 $size1;
@@ -43,11 +48,12 @@
 
 	&:hover,
 	&:focus {
-		transform: scale(1.1);
+		box-shadow: $shadow1px;
 	}
 
 	&--stacked {
-		display: block;
+		display: flex;
+		align-items: center;
 		margin-bottom: $size0;
 	}
 }
