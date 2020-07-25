@@ -1,12 +1,12 @@
 import * as React from "react";
 import { FunctionComponent, useEffect, useState } from "react";
 import { Icon } from "../../global/Icon";
-import { getFont } from "../../services/font-storage";
+import { getFont } from "../../workers/font-storage";
 import "../Page.scss";
 import { characters } from "./characters";
 import "./Create.scss";
 import { LetterDraw } from "./subcomponents/LetterDraw";
-import { convertToTTF } from "../../services/svg-font-string";
+import { convertToTTF } from "../../workers/svg-font-string";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 
 interface Step {

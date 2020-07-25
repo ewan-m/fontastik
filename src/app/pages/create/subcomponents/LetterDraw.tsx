@@ -7,10 +7,10 @@ import {
 	useState,
 	useEffect,
 } from "react";
-import { updateFont, getFont } from "../../../services/font-storage";
+import { updateFont, getFont } from "../../../workers/font-storage";
 import "./LetterDraw.scss";
 import { Icon } from "../../../global/Icon";
-import { preferences } from "../../../services/saved-preferences";
+import { preferences } from "../../../workers/saved-preferences";
 
 const size = 250;
 

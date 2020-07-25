@@ -29,29 +29,28 @@ const getSvgFontString = (glyphs: string) => `
 const getSvgGlyph = (letter: string, path: string, horizontalAdvance: number) =>
 	`<glyph unicode="${letter}" glyph-name="${letter}" horiz-adv-x="${horizontalAdvance}" d="${path}" />`;
 
-export function convertToTTF(font: Font): Promise<svg2ttf.MicroBuffer> {
-	return new Promise(function (resolve, reject) {
-		try {
-			const result = svg2ttf(
-				getSvgFontString(
-					Object.entries(font)
-						.map(([key, value]) => {
-							const [shiftedPath, horizontalAdvance] = normalize(
-								simplify(convertPathToPoints(value.trim()), 0.5)
-							);
+function convertToTTF(font: Font): svg2ttf.MicroBuffer {
+	return svg2ttf(
+		getSvgFontString(
+			Object.entries(font)
+				.map(([key, value]) => {
+					const [shiftedPath, horizontalAdvance] = normalize(
+						simplify(convertPathToPoints(value.trim()), 0.5)
+					);
 
-							return getSvgGlyph(
-								key,
-								convertPathToOutline(convertPointsToPath(shiftedPath)),
-								horizontalAdvance
-							);
-						})
-						.join(" ")
-				)
-			);
-			resolve(result);
-		} catch (error) {
-			reject("Failed to create .ttf font");
-		}
-	});
+					return getSvgGlyph(
+						key,
+						convertPathToOutline(convertPointsToPath(shiftedPath)),
+						horizontalAdvance
+					);
+				})
+				.join(" ")
+		)
+	);
 }
+
+self.onmessage = (ev: { data: Font }) => {
+	const ttf = convertToTTF(ev.data);
+
+	self.postMessage(ttf);
+};
