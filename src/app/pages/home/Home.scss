@@ -1,0 +1,54 @@
+@import "../../../styles/variables.scss";
+
+.homePage {
+	max-width: 750px;
+	padding: 0 $size0;
+	margin: auto;
+}
+
+.categoryContainer {
+	display: flex;
+	align-items: flex-start;
+	height: 50px;
+	padding: 0 0 $size6;
+}
+
+.categoryLink {
+	text-decoration: none;
+	color: $darkGrey;
+	font-size: $size1;
+	font-weight: 500;
+	display: inline-flex;
+	align-items: center;
+	background-color: $white;
+	padding: $size0;
+	border-radius: $size6;
+	transition: 0.2s font-size ease-in-out;
+	box-shadow: $shadow1px;
+	border: 1px solid $white;
+
+	&:hover {
+		background-color: $lightGrey;
+	}
+
+	&--active {
+		font-weight: 900;
+		line-height: 1;
+		box-shadow: $shadow5px;
+		font-size: $size2;
+		border: 1px solid $secondary;
+
+		@include desktop {
+			font-size: $size4;
+			padding: $size0 $size2;
+		}
+
+		&:hover {
+			background-color: $white;
+		}
+	}
+
+	&:not(:last-child) {
+		margin-right: $size0;
+	}
+}
