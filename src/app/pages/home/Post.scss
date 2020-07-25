@@ -1,0 +1,59 @@
+@import "../../../styles/variables.scss";
+
+.post {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	padding-bottom: $size4;
+
+	&__side {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__image {
+		width: 60px;
+		height: auto;
+		border-radius: 50%;
+	}
+
+	&__body {
+		flex-grow: 1;
+		padding: 0 0 0 $size0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__content {
+		margin: 0;
+		font-size: $size3;
+	}
+
+	&__author {
+		font-weight: 800;
+		font-style: normal;
+		font-size: $size1;
+	}
+
+	&__info {
+		padding-top: $size2;
+	}
+
+	&__time {
+		display: inline-flex;
+		align-items: center;
+		font-size: $size0;
+		color: $darkGrey;
+	}
+
+	&__location {
+		display: inline-flex;
+		align-items: center;
+		font-size: $size0;
+		color: $darkGrey;
+		padding-left: $size1;
+	}
+}
