@@ -43,11 +43,11 @@ export const MagicLink = () => {
 			</form>
 			<div className="authPage__links">
 				<Link className="link" to="/account/log-in">
-					Log in to Bespoke
+					Log in to Fontastik
 				</Link>
 				<span className="authPage__links__divider">|</span>
 				<Link className="link" to="/account/sign-up">
-					Sign up for Bespoke
+					Sign up for Fontastik
 				</Link>
 			</div>
 		</div>

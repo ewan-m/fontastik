@@ -53,7 +53,7 @@ export const SiteContainer: FunctionComponent = ({ children }) => {
 				<div className="siteHeader__inner">
 					<NavLink to="/home" className="link">
 						<h1 className="siteHeader__h1">
-							<Icon>chat</Icon>Bespoke.
+							<Icon>chat</Icon>Font<span style={{ fontWeight: 500 }}>astik</span>.
 						</h1>
 					</NavLink>
 					{!isMobile && <NavigationItems type="header" />}

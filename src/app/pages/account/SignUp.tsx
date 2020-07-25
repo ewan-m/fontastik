@@ -19,7 +19,7 @@ export const SignUp = () => {
 			<h2 className="pageTitle">Sign up.</h2>
 			<p className="paragraph paragraph--b">
 				Create an account so you can save your fonts and share messages with the
-				Bespoke community.
+				Fontastik community.
 			</p>
 			<form className="form">
 				<label className="form__label">
@@ -73,7 +73,7 @@ export const SignUp = () => {
 
 				<span className="authPage__links__divider">|</span>
 				<Link className="link" to="/account/log-in">
-					Log in to Bespoke
+					Log in to Fontastik
 				</Link>
 			</div>
 		</div>
