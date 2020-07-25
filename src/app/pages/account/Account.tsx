@@ -23,6 +23,7 @@ export const Account = () => {
 					<button className="button button__secondary">
 						<Icon withMargin="left">portrait</Icon> Change your profile picture
 					</button>
+					{/* <input type="file" className="button button__secondary"  style={{boxSizing: "border-box", width: "100%"} } accept="image/*"/> */}
 				</div>
 				<div className="profileInfo__fields">
 					<button className="button  button__secondary button--large button--stacked">
