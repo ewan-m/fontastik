@@ -33,10 +33,10 @@ export const Account = () => {
 						itsemail@gmail.com<Icon withMargin="right">edit</Icon>
 					</button>
 					<button className="button button__primary button--stacked">
-					<Icon withMargin="left">lock_open</Icon>Change your password
+						<Icon withMargin="left">lock_open</Icon>Change your password
 					</button>
 					<button className="button button__destructive button--stacked">
-					<Icon withMargin="left">delete</Icon> Delete your account
+						<Icon withMargin="left">delete</Icon> Delete your account
 					</button>
 				</div>
 			</div>
