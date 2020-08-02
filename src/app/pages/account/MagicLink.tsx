@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Errors } from "../../global/Errors";
 import { Icon } from "../../global/Icon";
 import "./auth.scss";
@@ -9,8 +9,6 @@ export const MagicLink = () => {
 	const [email, setEmail] = useState("");
 	const [errors, setErrors] = useState([] as string[]);
 	const [isSendingRequest, setIsSendingRequest] = useState(false);
-
-	const token = new URLSearchParams(useLocation().search).get("token");
 
 	return (
 		<div className="authPage contentAppear">
