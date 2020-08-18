@@ -181,27 +181,27 @@ export const Step3: FunctionComponent<Step> = ({ setStep }) => {
 		setErrors([]);
 		setIsSendingRequest(true);
 
-		try {
-			const result = await http.request({
-				method: "POST",
-				uri: "font",
-				body: {
-					fontTtf: JSON.stringify(fontTtf),
-					fontCharacters: JSON.stringify(font),
-				},
-				withAuth: true,
-			});
-			setIsSendingRequest(false);
+		const response = await http.request({
+			method: "POST",
+			uri: "font",
+			body: {
+				fontTtf: JSON.stringify(fontTtf),
+				fontCharacters: JSON.stringify(font),
+			},
+			withAuth: true,
+		});
+		const result = await response.json();
+
+		if (!response.ok) {
 			if (result.message) {
 				setErrors(
 					Array.isArray(result.message) ? result.message : [result.message]
 				);
 			} else {
+				setErrors(["Something went wrong saving your font."]);
 			}
-		} catch (error) {
-			setIsSendingRequest(false);
-			setErrors(["Something went wrong saving your font."]);
 		}
+		setIsSendingRequest(false);
 	};
 
 	return (
