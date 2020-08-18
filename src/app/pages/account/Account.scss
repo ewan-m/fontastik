@@ -2,7 +2,7 @@
 
 .accountPage {
 	max-width: 750px;
-	padding: 0 $size0;
+	padding: 0 $size0 $size3;
 	margin: auto;
 }
 
@@ -24,6 +24,10 @@
 		@include desktop {
 			padding: 0 0 0 $size3;
 		}
+	}
+
+	&__editForm {
+		padding: 0 0 $size4;
 	}
 
 	&__picture {

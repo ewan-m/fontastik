@@ -1,9 +1,11 @@
 import * as React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, MouseEvent } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { Errors } from "../../global/Errors";
 import { Icon } from "../../global/Icon";
 import "./auth.scss";
+import { useHttpClient } from "../../hooks/use-http-client";
+import { tokenStore } from "../../token-store";
 
 export const SignUp = () => {
 	const [name, setName] = useState("");
@@ -11,6 +13,37 @@ export const SignUp = () => {
 	const [password, setPassword] = useState("");
 	const [errors, setErrors] = useState([] as string[]);
 	const [isSendingRequest, setIsSendingRequest] = useState(false);
+
+	const http = useHttpClient();
+	const history = useHistory();
+
+	const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		setErrors([]);
+		setIsSendingRequest(true);
+
+		const response = await http.request({
+			method: "POST",
+			uri: "sign-up",
+			body: { email, password, name },
+			withAuth: false,
+		});
+		const result = await response.json();
+		setIsSendingRequest(false);
+
+		if (!response.ok) {
+			if (result.message) {
+				setErrors(result.message);
+			} else {
+				setErrors(["Something went wrong signing you up."]);
+			}
+		} else {
+			if (result.token) {
+				tokenStore.set(result.token);
+				history.push("/home");
+			}
+		}
+	};
 
 	return (
 		<div className="authPage contentAppear">
@@ -55,7 +88,7 @@ export const SignUp = () => {
 				</label>
 				<button
 					className="button button__primary button--large button--wide"
-					onClick={() => {}}
+					onClick={onSubmit}
 					type="submit"
 					disabled={isSendingRequest}
 				>

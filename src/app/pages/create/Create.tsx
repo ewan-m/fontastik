@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useState, MouseEvent } from "react";
 import { Icon } from "../../global/Icon";
 import { getFont } from "../../workers/font-storage";
 import "../Page.scss";
@@ -8,6 +8,8 @@ import "./Create.scss";
 import { LetterDraw } from "./subcomponents/LetterDraw";
 import { convertToTTF } from "../../workers/svg-font-string";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
+import { useHttpClient } from "../../hooks/use-http-client";
+import { Errors } from "../../global/Errors";
 
 interface Step {
 	setStep: (stepNumber: number) => void;
@@ -156,16 +158,51 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 };
 
 export const Step3: FunctionComponent<Step> = ({ setStep }) => {
-	const [somethingImTyping, setSomethingImTyping] = useState("");
+	const [previewText, setPreviewText] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
+	const [fontTtf, setFontTtf] = useState(new Uint8Array());
+
+	const [errors, setErrors] = useState([] as string[]);
+	const [isSendingRequest, setIsSendingRequest] = useState(false);
+
+	const http = useHttpClient();
 	const font = getFont();
 
 	useEffect(() => {
 		convertToTTF(font).then((res) => {
 			document.fonts.add(new FontFace("Handwriting", res.buffer));
+			setFontTtf(res.buffer);
 			setIsLoading(false);
 		});
 	}, []);
+
+	const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		setErrors([]);
+		setIsSendingRequest(true);
+
+		try {
+			const result = await http.request({
+				method: "POST",
+				uri: "font",
+				body: {
+					fontTtf: JSON.stringify(fontTtf),
+					fontCharacters: JSON.stringify(font),
+				},
+				withAuth: true,
+			});
+			setIsSendingRequest(false);
+			if (result.message) {
+				setErrors(
+					Array.isArray(result.message) ? result.message : [result.message]
+				);
+			} else {
+			}
+		} catch (error) {
+			setIsSendingRequest(false);
+			setErrors(["Something went wrong saving your font."]);
+		}
+	};
 
 	return (
 		<div className="contentAppear">
@@ -176,14 +213,25 @@ export const Step3: FunctionComponent<Step> = ({ setStep }) => {
 					</p>
 				)}
 				{!isLoading && (
-					<textarea
-						className="fontPreview"
-						autoFocus={true}
-						value={somethingImTyping}
-						onChange={(event) => {
-							setSomethingImTyping(event.target.value);
-						}}
-					></textarea>
+					<>
+						<textarea
+							className="fontPreview"
+							autoFocus={true}
+							value={previewText}
+							onChange={(event) => {
+								setPreviewText(event.target.value);
+							}}
+						></textarea>
+
+						<button
+							disabled={isSendingRequest}
+							className="button button__primary button--large"
+							onClick={onSubmit}
+						>
+							Save font <Icon withMargin="right">font_download</Icon>
+						</button>
+						<Errors errors={errors} />
+					</>
 				)}
 			</div>
 		</div>

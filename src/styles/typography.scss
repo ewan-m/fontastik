@@ -53,6 +53,7 @@
 	&--error {
 		font-size: $size1;
 		color: $error;
+		padding: $size0 0 $size2;
 		display: flex;
 		align-items: center;
 	}

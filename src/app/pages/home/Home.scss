@@ -2,15 +2,15 @@
 
 .homePage {
 	max-width: 750px;
-	padding: 0 $size0;
+	padding: 0 $size0 $size3;
 	margin: auto;
 }
 
 .categoryContainer {
 	display: flex;
 	align-items: flex-start;
-	height: 50px;
-	padding: 0 0 $size6;
+	height: 64px;
+	padding: $size2 0;
 }
 
 .categoryLink {

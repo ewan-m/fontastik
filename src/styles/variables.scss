@@ -6,7 +6,7 @@ $shadow5px: 0 1px 2px rgba(0, 0, 0, 0.3), 0 3.4px 6.7px rgba(0, 0, 0, 0.15),
 $shadow10px: 0 1.7px 3.4px rgba(0, 0, 0, 0.3),
 	0 5.6px 11.4px rgba(0, 0, 0, 0.15), 0 25px 51px rgba(0, 0, 0, 0.07);
 
-$primary: #326799;
+$primary: #63447c;
 $secondary: #3d2979;
 $secondaryTransparent: #3d2979cc;
 $primaryGradient: linear-gradient(
@@ -15,15 +15,7 @@ $primaryGradient: linear-gradient(
 	$secondaryTransparent 100%
 );
 
-$vibrantPurple: rgba(232, 26, 255, 0.8);
-$vibrantPink: rgba(240, 45, 71, 0.8);
-$hoverPink: rgba(240, 45, 71, 0.3);
-
-$vibrantGradient: linear-gradient(
-	-120deg,
-	$vibrantPurple 0%,
-	$vibrantPink 100%
-);
+$vibrantGradient: linear-gradient(-120deg, #463772, #995a8f);
 
 $white: #fff;
 $whiteTransparent: #ffffffcc;

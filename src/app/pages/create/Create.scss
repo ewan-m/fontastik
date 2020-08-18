@@ -9,7 +9,7 @@
 
 .createPage {
 	max-width: 1000px;
-	padding: 0 $size0;
+	padding: 0 $size0 $size3;
 	margin: auto;
 }
 
@@ -77,6 +77,7 @@
 	border: none;
 	font-size: 2rem;
 	font-weight: bold;
+	margin: 0 0 $size1 !important;
+	min-height: 300px;
 	width: 100% !important;
-	height: 100% !important;
 }

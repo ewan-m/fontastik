@@ -1,20 +1,59 @@
 import * as React from "react";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useState, MouseEvent } from "react";
 import { useHistory } from "react-router-dom";
 import { Icon } from "../../global/Icon";
 import "./Account.scss";
+import { tokenStore } from "../../token-store";
+import { useHttpClient } from "../../hooks/use-http-client";
+import { LoadingSpinner } from "../../global/LoadingSpinner";
+import { Errors } from "../../global/Errors";
 
 enum FormState {
 	initial = "initial",
 	editing = "editing",
 	sending = "sending",
+	completed = "completed",
 }
 
-const MiniForm: FunctionComponent<{ label: string; initialValue: string }> = ({
-	label,
-	initialValue,
-}) => {
+const MiniForm: FunctionComponent<{
+	label: string;
+	initialValue: string;
+	endpoint: string;
+	bodyTag: string;
+	inputType?: string;
+}> = ({ label, initialValue, endpoint, bodyTag, inputType = "text" }) => {
 	const [formState, setFormState] = useState(FormState.initial);
+	const [value, setValue] = useState("");
+	const [errors, setErrors] = useState([]);
+	const http = useHttpClient();
+
+	useEffect(() => {
+		setValue(initialValue);
+		if (inputType === "password") {
+			setValue("");
+		}
+	}, []);
+
+	const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		setErrors([]);
+		setFormState(FormState.sending);
+
+		const result = await http.request({
+			method: "POST",
+			uri: endpoint,
+			body: { [bodyTag]: value },
+			withAuth: true,
+		});
+		console.log(result);
+		if (result.ok) {
+			setFormState(FormState.completed);
+		} else {
+			setFormState(FormState.editing);
+			const message = (await result.json())?.message;
+			setErrors(message ?? "Something went wrong changing that for you.");
+		}
+	};
 
 	switch (formState) {
 		case FormState.initial:
@@ -29,28 +68,72 @@ const MiniForm: FunctionComponent<{ label: string; initialValue: string }> = ({
 					<Icon withMargin="right">edit</Icon>
 				</button>
 			);
+		case FormState.sending:
 		case FormState.editing:
 			return (
-				<form className="form">
+				<form className="form profileInfo__editForm">
 					<label className="form__label">
 						{label}
-						<input className="form__input" value={initialValue}></input>
+						<input
+							type={inputType}
+							className="form__input"
+							value={value}
+							onChange={(e) => {
+								setValue(e.target.value);
+							}}
+						/>
 					</label>
 					<div className="buttonRow">
-						<button className="button button__primary">Save changes</button>
-						<button className="button secondary">Cancel</button>
+						<button
+							onClick={onSubmit}
+							disabled={formState === FormState.sending}
+							className="button button__primary"
+							type="submit"
+						>
+							Save changes
+						</button>
+						<button
+							onClick={(e) => {
+								e.preventDefault();
+								setFormState(FormState.initial);
+							}}
+							className="button secondary"
+						>
+							Cancel
+						</button>
 					</div>
+					<Errors errors={errors} />
+					{formState === FormState.sending && <LoadingSpinner />}
 				</form>
 			);
+		case FormState.completed:
+			return (
+				<div className="profileInfo__editForm">
+					<p className="paragraph paragraph--b">
+						Nice one! We've changed that for you.
+					</p>
+					<button
+						onClick={(e) => {
+							e.preventDefault();
+							setFormState(FormState.initial);
+						}}
+						className="button button__primary"
+					>
+						Okay
+					</button>
+				</div>
+			);
 		default:
-			return <>"this shouldn't happen :P"</>;
+			return null;
 	}
 };
 
 export const Account = () => {
 	const history = useHistory();
 	useEffect(() => {
-		// history.push("account/log-in");
+		if (!tokenStore.get()) {
+			history.push("account/log-in");
+		}
 	}, []);
 
 	return (
@@ -70,15 +153,24 @@ export const Account = () => {
 				</div>
 				<div className="profileInfo__fields">
 					<MiniForm initialValue="Sofia" label="Name" />
-					<MiniForm initialValue="itsemail@gmail.com" label="Email" />
-					<button className="button button__primary button--stacked">
-						<Icon withMargin="left">lock_open</Icon>Change your password
-					</button>
+					<MiniForm
+						inputType="email"
+						initialValue="itsemail@gmail.com"
+						label="Email"
+					/>
+					<MiniForm
+						endpoint="reset-password"
+						bodyTag="password"
+						inputType="password"
+						initialValue="Change your password"
+						label="Change your password"
+					/>
 					<button className="button button__destructive button--stacked">
 						<Icon withMargin="left">delete</Icon> Delete your account
 					</button>
 				</div>
 			</div>
+			<h2 className="pageTitle contentAppear">Your posts.</h2>
 		</div>
 	);
 };

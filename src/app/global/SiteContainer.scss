@@ -100,7 +100,7 @@
 	display: flex;
 	justify-content: space-between;
 	list-style: none;
-	border-top: 1px solid $darkGrey;
+	border-top: 1px solid $lightGrey;
 
 	&__item {
 		width: 100%;
@@ -118,15 +118,15 @@
 			align-items: center;
 			text-align: center;
 			padding: $size0;
-			background: $darkGrey;
-			color: $lightGrey;
+			background: $white;
+			color: $darkestGrey;
 			text-decoration: none;
-			border-left: 1px solid $darkestGrey;
 			box-shadow: none;
 			transition: 0.2s background, box-shadow ease-in-out;
 
 			&--active {
 				background: $vibrantGradient;
+				color: $lightGrey;
 				box-shadow: inset 1px 1px 5px $darkGreyTransparent;
 			}
 		}

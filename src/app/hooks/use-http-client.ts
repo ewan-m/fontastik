@@ -1,5 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { environment } from "../environment";
+import { tokenStore } from "../token-store";
 
 interface Request {
 	method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -11,7 +12,7 @@ interface Request {
 
 export const useHttpClient = () => {
 	const history = useHistory();
-	const token = "ey";
+	const token = tokenStore.get();
 
 	const request = async ({ method, uri, headers, body, withAuth }: Request) => {
 		const url = environment.apiUrl + uri;
@@ -23,19 +24,21 @@ export const useHttpClient = () => {
 		};
 		body = JSON.stringify(body);
 
-		const result = (
-			await fetch(url.toString(), {
-				headers,
-				method,
-				body,
-			})
-		).json();
-		result.then((resolved) => {
-			if (resolved?.message?.includes("Invalid token")) {
-				history.push("/");
-			}
+		const response = await fetch(url.toString(), {
+			headers,
+			method,
+			body,
 		});
-		return result;
+		response
+			.clone()
+			.json()
+			.then((resolved) => {
+				if (resolved?.message?.includes("Invalid token")) {
+					tokenStore.remove();
+					history.push("/");
+				}
+			});
+		return response;
 	};
 
 	return { request };
