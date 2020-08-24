@@ -8,10 +8,13 @@ export function convertPathToOutline(svgPath: string): string {
 	);
 
 	return exporter
-		.toSVGPathData(model.outline(makerObject, 5, 2, false), {
-			accuracy: 0,
-			fillRule: "nonzero",
-			origin: [0, 250],
-		})
+		.toSVGPathData(
+			model.outline(makerObject, 5, 0, false, { trimDeadEnds: true }),
+			{
+				accuracy: 0,
+				fillRule: "nonzero",
+				origin: [0, 250],
+			}
+		)
 		.toString();
 }
