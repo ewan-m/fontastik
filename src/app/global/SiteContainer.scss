@@ -1,22 +1,33 @@
 @import "../../styles/variables.scss";
 
 .siteContainer {
-	height: 100%;
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
 }
 
+.pointlessBollocksToMakeStuffLineup {
+	width: 100%;
+	height: 80px;
+
+	@include desktop {
+		height: 120px;
+	}
+}
+
 .siteHeader {
-	padding: $size0;
-	position: sticky;
+	padding: $size-2 0;
+	display: block;
+	width: 100%;
+	position: fixed;
 	top: 0;
 	z-index: 3;
 	background-color: rgba(255, 255, 255, 0.7);
-	backdrop-filter: blur(4px);
+	backdrop-filter: blur(2px);
 
 	&__inner {
 		max-width: 1350px;
+		padding: 0 $size-2;
 		margin: auto;
 		display: flex;
 		flex-direction: row;
@@ -24,19 +35,12 @@
 		align-items: center;
 	}
 
-	&__h1 {
-		margin: 0;
-		color: $primary;
-		font-size: $size4;
-		font-weight: 900;
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
+	&__logo {
+		height: auto;
+		width: 150px;
 
-		.material-icons {
-			font-size: 1.07em;
-			margin: 0;
-			margin-top: 9px;
+		@include desktop {
+			width: 200px;
 		}
 	}
 }
@@ -89,7 +93,8 @@
 .siteFooter {
 	background: $whiteTransparent;
 	color: $darkestGrey;
-	position: sticky;
+	position: fixed;
+	width: 100%;
 	bottom: 0;
 	text-align: center;
 }
@@ -100,7 +105,8 @@
 	display: flex;
 	justify-content: space-between;
 	list-style: none;
-	border-top: 1px solid $lightGrey;
+	box-shadow: 0px -1px 10px 1px rgba(0, 0, 0, 0.3),
+		0px -2px 15px 1px rgba(0, 0, 0, 0.1);
 
 	&__item {
 		width: 100%;

@@ -18,7 +18,12 @@
 	font-size: $size1;
 
 	&__primary {
-		background-color: $primary;
+		background: $vibrantGradient;
+		color: $white;
+	}
+
+	&__primaryAlt {
+		background: $vibrantGradientAlt;
 		color: $white;
 	}
 
@@ -29,7 +34,7 @@
 	}
 
 	&__destructive {
-		background-color: $error;
+		background: $error;
 		color: $white;
 	}
 

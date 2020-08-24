@@ -14,3 +14,13 @@ body {
 	font-size: $size1;
 	margin: 0;
 }
+
+.no-focus-outline {
+	*:focus {
+		outline: none;
+	}
+}
+
+.no-scrolling {
+	overflow: hidden;
+}

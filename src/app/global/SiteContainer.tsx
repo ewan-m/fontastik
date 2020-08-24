@@ -52,14 +52,19 @@ export const SiteContainer: FunctionComponent = ({ children }) => {
 			<header className="siteHeader">
 				<div className="siteHeader__inner">
 					<NavLink to="/home" className="link">
-						<h1 className="siteHeader__h1">
-							<Icon>chat</Icon>Font<span style={{ fontWeight: 500 }}>astik</span>.
-						</h1>
+						<img className="siteHeader__logo"
+							src={require("../../assets/fontastik.png")}
+						/>
 					</NavLink>
 					{!isMobile && <NavigationItems type="header" />}
 				</div>
 			</header>
-			<main className="siteMain">{children}</main>
+
+			<main className="siteMain">
+				<div className="pointlessBollocksToMakeStuffLineup"></div>
+				{children}
+				<div className="pointlessBollocksToMakeStuffLineup"></div>
+			</main>
 			{isMobile && (
 				<footer className="siteFooter">
 					<NavigationItems type="footer" />
