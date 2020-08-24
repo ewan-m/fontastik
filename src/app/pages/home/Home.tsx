@@ -2,7 +2,8 @@ import * as React from "react";
 import "./Home.scss";
 import { Icon } from "../../global/Icon";
 import { Post } from "./Post";
-import { useParams, Link, NavLink } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
+import { CreatePost } from "./CreatePost";
 
 export const Home = () => {
 	const { category }: { category: string } = useParams();
@@ -21,7 +22,7 @@ export const Home = () => {
 					activeClassName="categoryLink--active"
 					className="categoryLink"
 				>
-					<Icon withMargin="left">near_me</Icon> Local
+					<Icon withMargin="left">place</Icon> Local
 				</NavLink>
 				<NavLink
 					to="/home/new"
@@ -31,8 +32,7 @@ export const Home = () => {
 					<Icon withMargin="left">local_florist</Icon> New
 				</NavLink>
 			</nav>
-			<Post />
-			<Post />
+			<CreatePost />
 			<Post />
 			<Post />
 		</div>

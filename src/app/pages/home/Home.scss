@@ -10,7 +10,7 @@
 	display: flex;
 	align-items: flex-start;
 	height: 64px;
-	padding: $size2 0;
+	padding: 0 0 $size2;
 }
 
 .categoryLink {
@@ -32,15 +32,15 @@
 	}
 
 	&--active {
-		font-weight: 900;
+		font-weight: 700;
 		line-height: 1;
 		box-shadow: $shadow5px;
 		font-size: $size2;
 		border: 1px solid $secondary;
 
 		@include desktop {
-			font-size: $size4;
-			padding: $size0 $size2;
+			font-size: $size3;
+			padding: $size0 $size1;
 		}
 
 		&:hover {
