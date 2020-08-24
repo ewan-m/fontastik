@@ -6,11 +6,6 @@
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
-
-	&:focus {
-		outline: none;
-		filter: brightness(0.8);
-	}
 }
 
 .likeCount {
@@ -35,7 +30,7 @@
 	&--liked {
 		.likeButton__heart {
 			transform: scale(0.2);
-			fill: #f02d47;
+			fill: #d65071;
 			animation: animateHeart 0.3s linear forwards 0.25s;
 		}
 		.likeButton__circle {
@@ -172,44 +167,44 @@
 	40% {
 		transform: scale(10);
 		opacity: 1;
-		fill: #f35774;
+		fill: #99374f;
 	}
 	55% {
 		transform: scale(11);
 		opacity: 1;
-		fill: #f25487;
+		fill: #99374f;
 	}
 	65% {
 		transform: scale(12);
 		opacity: 1;
-		fill: #f2548b;
+		fill: #99374f;
 	}
 	75% {
 		transform: scale(13);
 		opacity: 1;
 		fill: transparent;
-		stroke: #f15299;
+		stroke: #99374f;
 		stroke-width: 0.5;
 	}
 	85% {
 		transform: scale(17);
 		opacity: 1;
 		fill: transparent;
-		stroke: #f050b3;
+		stroke: #99374f;
 		stroke-width: 0.2;
 	}
 	95% {
 		transform: scale(18);
 		opacity: 1;
 		fill: transparent;
-		stroke: #f04fbb;
+		stroke: #b13d5a;
 		stroke-width: 0.1;
 	}
 	100% {
 		transform: scale(19);
 		opacity: 1;
 		fill: transparent;
-		stroke: #ef4dcb;
+		stroke: #d65071;
 		stroke-width: 0;
 	}
 }

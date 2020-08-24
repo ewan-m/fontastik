@@ -34,7 +34,7 @@ export const LikeButton = () => {
 					/>
 					<circle
 						className="likeButton__circle"
-						fill="#f02d47"
+						fill="#d65071"
 						opacity="0"
 						cx="29.5"
 						cy="29.5"
@@ -42,38 +42,38 @@ export const LikeButton = () => {
 					/>
 
 					<g id="grp7" opacity="0" transform="translate(7 6)">
-						<circle id="oval1" fill="#326799" cx="2" cy="6" r="2" />
-						<circle id="oval2" fill="#3d2979" cx="5" cy="2" r="2" />
+						<circle id="oval1" fill="#995a8f" cx="2" cy="6" r="2" />
+						<circle id="oval2" fill="#463772" cx="5" cy="2" r="2" />
 					</g>
 
 					<g id="grp6" opacity="0" transform="translate(0 28)">
-						<circle id="oval1" fill="#e81aff" cx="2" cy="7" r="2" />
-						<circle id="oval2" fill="#3d2979" cx="3" cy="2" r="2" />
+						<circle id="oval1" fill="#bd556f" cx="2" cy="7" r="2" />
+						<circle id="oval2" fill="#463772" cx="3" cy="2" r="2" />
 					</g>
 
 					<g id="grp3" opacity="0" transform="translate(52 28)">
-						<circle id="oval2" fill="#326799" cx="2" cy="7" r="2" />
-						<circle id="oval1" fill="#326799" cx="4" cy="2" r="2" />
+						<circle id="oval2" fill="#995a8f" cx="2" cy="7" r="2" />
+						<circle id="oval1" fill="#995a8f" cx="4" cy="2" r="2" />
 					</g>
 
 					<g id="grp2" opacity="0" transform="translate(44 6)">
-						<circle id="oval2" fill="#e81aff" cx="5" cy="6" r="2" />
-						<circle id="oval1" fill="#326799" cx="2" cy="2" r="2" />
+						<circle id="oval2" fill="#bd556f" cx="5" cy="6" r="2" />
+						<circle id="oval1" fill="#995a8f" cx="2" cy="2" r="2" />
 					</g>
 
 					<g id="grp5" opacity="0" transform="translate(14 50)">
-						<circle id="oval1" fill="#3d2979" cx="6" cy="5" r="2" />
-						<circle id="oval2" fill="#3d2979" cx="2" cy="2" r="2" />
+						<circle id="oval1" fill="#463772" cx="6" cy="5" r="2" />
+						<circle id="oval2" fill="#463772" cx="2" cy="2" r="2" />
 					</g>
 
 					<g id="grp4" opacity="0" transform="translate(35 50)">
-						<circle id="oval1" fill="#326799" cx="6" cy="5" r="2" />
-						<circle id="oval2" fill="#e81aff" cx="2" cy="2" r="2" />
+						<circle id="oval1" fill="#995a8f" cx="6" cy="5" r="2" />
+						<circle id="oval2" fill="#bd556f" cx="2" cy="2" r="2" />
 					</g>
 
 					<g id="grp1" opacity="0" transform="translate(24)">
-						<circle id="oval1" fill="#3d2979" cx="2.5" cy="3" r="2" />
-						<circle id="oval2" fill="#3d2979" cx="7.5" cy="2" r="2" />
+						<circle id="oval1" fill="#463772" cx="2.5" cy="3" r="2" />
+						<circle id="oval2" fill="#463772" cx="7.5" cy="2" r="2" />
 					</g>
 				</g>
 			</svg>
