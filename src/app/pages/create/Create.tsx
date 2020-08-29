@@ -10,6 +10,8 @@ import { convertToTTF } from "../../workers/svg-font-string";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { useHttpClient } from "../../hooks/use-http-client";
 import { Errors } from "../../global/Errors";
+import { tokenStore } from "../../token-store";
+import { Link } from "react-router-dom";
 
 interface Step {
 	setStep: (stepNumber: number) => void;
@@ -21,8 +23,8 @@ const Step0: FunctionComponent<Step> = ({ setStep }) => {
 	return (
 		<div className="contentAppear">
 			<p className="paragraph paragraph--b">
-				You see all that cool writing on the stream tab? Those fellas made their own
-				font and you can too! Let's start with the letter 'A' in the box below.
+				You see all that cool writing on the home page? They made their own font and
+				you can too! Let's start with the letter 'A' in the box below.
 			</p>
 			<LetterDraw letter="A" setContainsLetter={setComplete} />
 			{complete && (
@@ -157,14 +159,16 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 	);
 };
 
+type Stage = "generating" | "initial" | "saving" | "saved";
+
 export const Step3: FunctionComponent<Step> = ({ setStep }) => {
 	const [previewText, setPreviewText] = useState("");
-	const [isLoading, setIsLoading] = useState(true);
 	const [fontTtf, setFontTtf] = useState(new Uint8Array());
 
 	const [errors, setErrors] = useState([] as string[]);
-	const [isSendingRequest, setIsSendingRequest] = useState(false);
+	const [stage, setStage] = useState("generating" as Stage);
 
+	const token = tokenStore.get();
 	const http = useHttpClient();
 	const font = getFont();
 
@@ -172,27 +176,27 @@ export const Step3: FunctionComponent<Step> = ({ setStep }) => {
 		convertToTTF(font).then((res) => {
 			document.fonts.add(new FontFace("Handwriting", res.buffer));
 			setFontTtf(res.buffer);
-			setIsLoading(false);
+			setStage("initial");
 		});
 	}, []);
 
 	const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		setErrors([]);
-		setIsSendingRequest(true);
+		setStage("saving");
 
 		const response = await http.request({
 			method: "POST",
-			uri: "font",
+			uri: "font-data",
 			body: {
-				fontTtf: JSON.stringify(fontTtf),
-				fontCharacters: JSON.stringify(font),
+				fontData: Object.values(fontTtf),
 			},
 			withAuth: true,
 		});
 		const result = await response.json();
 
 		if (!response.ok) {
+			setStage("initial");
 			if (result.message) {
 				setErrors(
 					Array.isArray(result.message) ? result.message : [result.message]
@@ -200,19 +204,20 @@ export const Step3: FunctionComponent<Step> = ({ setStep }) => {
 			} else {
 				setErrors(["Something went wrong saving your font."]);
 			}
+		} else {
+			setStage("saved");
 		}
-		setIsSendingRequest(false);
 	};
 
 	return (
 		<div className="contentAppear">
 			<div>
-				{isLoading && (
+				{stage === "generating" && (
 					<p className="paragraph">
 						<LoadingSpinner /> Generating your font
 					</p>
 				)}
-				{!isLoading && (
+				{stage !== "generating" && (
 					<>
 						<textarea
 							className="fontPreview"
@@ -222,15 +227,40 @@ export const Step3: FunctionComponent<Step> = ({ setStep }) => {
 								setPreviewText(event.target.value);
 							}}
 						></textarea>
-
-						<button
-							disabled={isSendingRequest}
-							className="button button__primary button--large"
-							onClick={onSubmit}
-						>
-							Save font <Icon withMargin="right">font_download</Icon>
-						</button>
-						<Errors errors={errors} />
+						{stage === "saved" && (
+							<p className="paragraph">
+								Your font has been saved! Now you can go spread the word on the home
+								page.
+							</p>
+						)}
+						{stage !== "saved" && (
+							<>
+								{token && (
+									<>
+										<button
+											disabled={stage === "saving"}
+											className="button button__primary button--large"
+											onClick={onSubmit}
+										>
+											Save font <Icon withMargin="right">font_download</Icon>
+										</button>
+										{stage === "saving" && <LoadingSpinner />}
+										<Errors errors={errors} />
+									</>
+								)}
+								{!token && (
+									<>
+										<p className="paragraph paragraph--b">
+											To save your font to use in posts please create, or log in to, your
+											account.
+										</p>
+										<Link className="button button__primary button--large" to="account">
+											Log in or create an account
+										</Link>
+									</>
+								)}
+							</>
+						)}
 					</>
 				)}
 			</div>
