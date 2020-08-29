@@ -9,7 +9,7 @@ export function convertPathToOutline(svgPath: string): string {
 
 	return exporter
 		.toSVGPathData(
-			model.outline(makerObject, 5, 0, false, { trimDeadEnds: true }),
+			model.outline(makerObject, 8, 0, false, { trimDeadEnds: true }),
 			{
 				accuracy: 0,
 				fillRule: "nonzero",
