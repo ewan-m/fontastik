@@ -29,7 +29,7 @@ export const CreatePost = () => {
 	}, [active]);
 
 	const onCreateClick = () => {
-		if (tokenStore.get()) {
+		if (!tokenStore.get()) {
 			history.push("/account/log-in");
 		} else if (false /*hasntMadeFont*/) {
 			history.push("/create");
@@ -73,7 +73,7 @@ export const CreatePost = () => {
 			{active && (
 				<div className="createPostScreen" ref={createFrame}>
 					<div className="createPostScreen__header">
-						<h2 className="createPostScreen__header__title">Share with Fontastik.</h2>
+						<h2 className="createPostScreen__header__title">Share with fontastik.</h2>
 						<button
 							className="createPostScreen__header__close"
 							onClick={onCloseClick}
