@@ -29,26 +29,22 @@ export const LogIn = () => {
 		setErrors([]);
 		setIsSendingRequest(true);
 
-		try {
-			const result = await http.request({
-				method: "POST",
-				uri: "sign-in",
-				body: { email, password, name },
-				withAuth: false,
-			});
+		const response = await http.request({
+			method: "POST",
+			uri: "sign-in",
+			body: { email, password, name },
+			withAuth: false,
+		});
+		const result = await response.json();
 
-			setIsSendingRequest(false);
+		setIsSendingRequest(false);
+		if (response.ok) {
 			if (result.token) {
 				tokenStore.set(result.token);
 				history.push("/home");
 			}
-
-			if (result.error) {
-				setErrors(result.message);
-			}
-		} catch (error) {
-			setIsSendingRequest(false);
-			setErrors(["Something went wrong signing you in."]);
+		} else {
+			setErrors(result.message ?? ["Something went wrong signing you in."]);
 		}
 	};
 
@@ -94,7 +90,7 @@ export const LogIn = () => {
 				</Link>
 				<span className="authPage__links__divider">|</span>
 				<Link className="link" to="/account/sign-up">
-					Sign up for Fontastik
+					Sign up for fontastik
 				</Link>
 			</div>
 		</div>

@@ -24,22 +24,21 @@ export const MagicLink = () => {
 		setSituation(Situation.sending);
 		setErrors([]);
 
-		try {
-			const result = await http.request({
-				method: "POST",
-				uri: "magic-link",
-				body: { email },
-				withAuth: false,
-			});
+		const response = await http.request({
+			method: "POST",
+			uri: "magic-link",
+			body: { email },
+			withAuth: false,
+		});
 
-			if (result.error) {
-				setErrors(result.message);
-				setSituation(Situation.initial);
-			} else {
-				setSituation(Situation.success);
-			}
-		} catch (error) {
-			setErrors(["Something went wrong sending you a magic link."]);
+		const result = await response.json();
+
+		if (response.ok) {
+			setSituation(Situation.success);
+		} else {
+			setErrors(
+				result.message ?? ["Something went wrong sending you a magic link."]
+			);
 			setSituation(Situation.initial);
 		}
 	};
@@ -86,11 +85,11 @@ export const MagicLink = () => {
 			)}
 			<div className="authPage__links">
 				<Link className="link" to="/account/log-in">
-					Log in to Fontastik
+					Log in to fontastik
 				</Link>
 				<span className="authPage__links__divider">|</span>
 				<Link className="link" to="/account/sign-up">
-					Sign up for Fontastik
+					Sign up for fontastik
 				</Link>
 			</div>
 		</div>
