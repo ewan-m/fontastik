@@ -1,12 +1,9 @@
 import { Font } from "./font.interface";
 import svg2ttf from "svg2ttf";
-import { simplify } from "./font-processing/simplify";
-import {
-	convertPathToPoints,
-	convertPointsToPath,
-} from "./font-processing/converters";
-import { normalize } from "./font-processing/normalizer";
-import { convertPathToOutline } from "./font-processing/convert-path-to-outline";
+import { simplify } from "./simplify";
+import { convertPathToPoints, convertPointsToPath } from "./converters";
+import { normalize } from "./normalizer";
+import { convertPathToOutline } from "./convert-path-to-outline";
 
 const getSvgFontString = (glyphs: string) => `
 <?xml version="1.0" standalone="no"?>

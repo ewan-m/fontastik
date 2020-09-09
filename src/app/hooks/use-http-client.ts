@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { environment } from "../environment";
-import { tokenStore } from "../token-store";
+import { tokenStore } from "../store/token-store";
 
 interface Request {
 	method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";

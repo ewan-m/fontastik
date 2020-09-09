@@ -3,7 +3,7 @@ import { FunctionComponent, useEffect, useState, MouseEvent } from "react";
 import { useHistory } from "react-router-dom";
 import { Icon } from "../../global/Icon";
 import "./Account.scss";
-import { tokenStore } from "../../token-store";
+import { tokenStore } from "../../store/token-store";
 import { useHttpClient } from "../../hooks/use-http-client";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { Errors } from "../../global/Errors";

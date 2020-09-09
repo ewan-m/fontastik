@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect } from "react";
 import "./Modal.scss";
-import FocusTrap from "focus-trap-react";
 import { Icon } from "./Icon";
 
 export const Modal = ({
@@ -58,20 +57,18 @@ export const Modal = ({
 	};
 
 	return (
-		<FocusTrap>
-			<div className="modal__background" onClick={onClickBackground}>
-				<div role="dialog" className="modal__foreground modal--sizeSmall">
-					<header className="modal__titleBar">
-						<h3 className="modal__title">{title}</h3>
-						<button onClick={handleClose} className="button button__secondary">
-							<Icon>close</Icon>
-						</button>
-					</header>
-					<div tabIndex={0} className={"modal__content"}>
-						<div className={"modal__content__child"}>{children}</div>
-					</div>
+		<div className="modal__background" onClick={onClickBackground}>
+			<div role="dialog" className="modal__foreground modal--sizeSmall">
+				<header className="modal__titleBar">
+					<h3 className="modal__title">{title}</h3>
+					<button onClick={handleClose} className="button button__secondary">
+						<Icon>close</Icon>
+					</button>
+				</header>
+				<div tabIndex={0} className={"modal__content"}>
+					<div className={"modal__content__child"}>{children}</div>
 				</div>
 			</div>
-		</FocusTrap>
+		</div>
 	);
 };

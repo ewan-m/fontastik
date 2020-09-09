@@ -1,16 +1,16 @@
 import * as React from "react";
 import { FunctionComponent, useEffect, useState, MouseEvent } from "react";
 import { Icon } from "../../global/Icon";
-import { getFont } from "../../workers/font-storage";
+import { fontStore } from "../../store/font-store";
 import "../Page.scss";
 import { characters } from "./characters";
 import "./Create.scss";
 import { LetterDraw } from "./subcomponents/LetterDraw";
-import { convertToTTF } from "../../workers/svg-font-string";
+import { convertToTTF } from "../../font-processing/svg-font-string";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { useHttpClient } from "../../hooks/use-http-client";
 import { Errors } from "../../global/Errors";
-import { tokenStore } from "../../token-store";
+import { tokenStore } from "../../store/token-store";
 import { Link } from "react-router-dom";
 
 interface Step {
@@ -77,7 +77,7 @@ const Step1: FunctionComponent<Step> = ({ setStep }) => {
 const Step2: FunctionComponent<Step> = ({ setStep }) => {
 	const [selectedLetter, setSelectedLetter] = useState(characters[2]);
 	const [completedLetters, setCompletedLetters] = useState(
-		Object.keys(getFont())
+		Object.keys(fontStore.get())
 	);
 
 	const getLiClassName = (letter: string) => {
@@ -127,14 +127,14 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 								setSelectedLetter(letter);
 							}}
 						>
-							{getFont()[letter]?.length > 0 ? (
+							{fontStore.get()[letter]?.length > 0 ? (
 								<svg
 									className="letterPreviewSvg"
 									width="1em"
 									height="1em"
 									viewBox="0 0 250 250"
 								>
-									<path d={getFont()[letter]} />
+									<path d={fontStore.get()[letter]} />
 								</svg>
 							) : (
 								letter
@@ -170,7 +170,7 @@ export const Step3: FunctionComponent<Step> = ({ setStep }) => {
 
 	const token = tokenStore.get();
 	const http = useHttpClient();
-	const font = getFont();
+	const font = fontStore.get();
 
 	useEffect(() => {
 		convertToTTF(font).then((res) => {

@@ -5,7 +5,7 @@ import { Errors } from "../../global/Errors";
 import { Icon } from "../../global/Icon";
 import "./auth.scss";
 import { useHttpClient } from "../../hooks/use-http-client";
-import { tokenStore } from "../../token-store";
+import { tokenStore } from "../../store/token-store";
 
 export const LogIn = () => {
 	const [email, setEmail] = useState("");

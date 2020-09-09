@@ -7,10 +7,10 @@ import {
 	useState,
 	useEffect,
 } from "react";
-import { updateFont, getFont } from "../../../workers/font-storage";
 import "./LetterDraw.scss";
 import { Icon } from "../../../global/Icon";
-import { preferences } from "../../../workers/saved-preferences";
+import { fontStore } from "../../../store/font-store";
+import { preferencesStore } from "../../../store/preferences-store";
 
 const size = 250;
 
@@ -26,15 +26,17 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 	const svgElement = createRef<SVGSVGElement>();
 	const [path, setPath] = useState("");
 	const [isDrawing, setIsDrawing] = useState(false);
-	const [showRuler, setShowRuler] = useState(preferences.getRulerPreference());
+	const [showRuler, setShowRuler] = useState(
+		preferencesStore.getRulerPreference()
+	);
 
 	const syncPath = (path: string) => {
 		setPath(path);
-		updateFont(letter, path);
+		fontStore.setLetter(letter, path);
 	};
 
 	useEffect(() => {
-		const font = getFont();
+		const font = fontStore.get();
 		if (font[letter]) {
 			setPath(font[letter]);
 			setContainsLetter(true);
@@ -142,7 +144,7 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 					className="button button__secondary letterDraw__button"
 					onClick={() => {
 						setShowRuler(!showRuler);
-						preferences.setRulerPreference(!showRuler);
+						preferencesStore.setRulerPreference(!showRuler);
 					}}
 				>
 					{showRuler ? (

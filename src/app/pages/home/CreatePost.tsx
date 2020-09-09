@@ -3,7 +3,7 @@ import { useState, MouseEvent, useRef, useEffect } from "react";
 import "./CreatePost.scss";
 import { Icon } from "../../global/Icon";
 import { useHistory } from "react-router-dom";
-import { tokenStore } from "../../token-store";
+import { tokenStore } from "../../store/token-store";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 
 const defaultLocation = { latitude: 0, longitude: 0 };
