@@ -5,7 +5,7 @@ import { Errors } from "../../global/Errors";
 import { Icon } from "../../global/Icon";
 import "./auth.scss";
 import { useHttpClient } from "../../hooks/use-http-client";
-import { tokenStore } from "../../store/token-store";
+import { useAuthStore } from "../../store/global-store";
 
 export const SignUp = () => {
 	const [name, setName] = useState("");
@@ -16,6 +16,7 @@ export const SignUp = () => {
 
 	const http = useHttpClient();
 	const history = useHistory();
+	const loginAction = useAuthStore((store) => store.login);
 
 	const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -39,7 +40,7 @@ export const SignUp = () => {
 			}
 		} else {
 			if (result.token) {
-				tokenStore.set(result.token);
+				loginAction(result.token);
 				history.push("/home");
 			}
 		}

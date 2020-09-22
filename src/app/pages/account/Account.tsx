@@ -3,10 +3,10 @@ import { FunctionComponent, useEffect, useState, MouseEvent } from "react";
 import { useHistory } from "react-router-dom";
 import { Icon } from "../../global/Icon";
 import "./Account.scss";
-import { tokenStore } from "../../store/token-store";
 import { useHttpClient } from "../../hooks/use-http-client";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { Errors } from "../../global/Errors";
+import { useAuthStore } from "../../store/global-store";
 
 enum FormState {
 	initial = "initial",
@@ -130,8 +130,9 @@ const MiniForm: FunctionComponent<{
 
 export const Account = () => {
 	const history = useHistory();
+	const token = useAuthStore((state) => state.token);
 	useEffect(() => {
-		if (!tokenStore.get()) {
+		if (!token) {
 			history.push("account/log-in");
 		}
 	}, []);

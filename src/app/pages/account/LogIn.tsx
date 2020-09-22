@@ -5,7 +5,7 @@ import { Errors } from "../../global/Errors";
 import { Icon } from "../../global/Icon";
 import "./auth.scss";
 import { useHttpClient } from "../../hooks/use-http-client";
-import { tokenStore } from "../../store/token-store";
+import { useAuthStore } from "../../store/global-store";
 
 export const LogIn = () => {
 	const [email, setEmail] = useState("");
@@ -17,9 +17,11 @@ export const LogIn = () => {
 
 	const token = new URLSearchParams(useLocation().search).get("token");
 
+	const loginAction = useAuthStore((store) => store.login);
+
 	useEffect(() => {
 		if (token) {
-			tokenStore.set(token);
+			loginAction(token);
 			history.push("/home");
 		}
 	}, [token]);
@@ -40,7 +42,7 @@ export const LogIn = () => {
 		setIsSendingRequest(false);
 		if (response.ok) {
 			if (result.token) {
-				tokenStore.set(result.token);
+				loginAction(result.token);
 				history.push("/home");
 			}
 		} else {

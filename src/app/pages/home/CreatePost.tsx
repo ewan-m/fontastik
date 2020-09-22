@@ -3,8 +3,8 @@ import { useState, MouseEvent, useRef, useEffect } from "react";
 import "./CreatePost.scss";
 import { Icon } from "../../global/Icon";
 import { useHistory } from "react-router-dom";
-import { tokenStore } from "../../store/token-store";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
+import { useAuthStore } from "../../store/global-store";
 
 const defaultLocation = { latitude: 0, longitude: 0 };
 
@@ -18,6 +18,7 @@ export const CreatePost = () => {
 	const history = useHistory();
 	const createFrame = useRef<HTMLDivElement>(null);
 	const inputElement = useRef<HTMLTextAreaElement>(null);
+	const token = useAuthStore((store) => store.token);
 
 	useEffect(() => {
 		if (active) {
@@ -29,7 +30,7 @@ export const CreatePost = () => {
 	}, [active]);
 
 	const onCreateClick = () => {
-		if (!tokenStore.get()) {
+		if (!token) {
 			history.push("/account/log-in");
 		} else if (false /*hasntMadeFont*/) {
 			history.push("/create");

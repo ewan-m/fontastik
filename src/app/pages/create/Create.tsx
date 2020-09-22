@@ -1,7 +1,6 @@
 import * as React from "react";
 import { FunctionComponent, useEffect, useState, MouseEvent } from "react";
 import { Icon } from "../../global/Icon";
-import { fontStore } from "../../store/font-store";
 import "../Page.scss";
 import { characters } from "./characters";
 import "./Create.scss";
@@ -10,8 +9,8 @@ import { convertToTTF } from "../../font-processing/svg-font-string";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { useHttpClient } from "../../hooks/use-http-client";
 import { Errors } from "../../global/Errors";
-import { tokenStore } from "../../store/token-store";
 import { Link } from "react-router-dom";
+import { useFontStore, useAuthStore } from "../../store/global-store";
 
 interface Step {
 	setStep: (stepNumber: number) => void;
@@ -76,9 +75,8 @@ const Step1: FunctionComponent<Step> = ({ setStep }) => {
 
 const Step2: FunctionComponent<Step> = ({ setStep }) => {
 	const [selectedLetter, setSelectedLetter] = useState(characters[2]);
-	const [completedLetters, setCompletedLetters] = useState(
-		Object.keys(fontStore.get())
-	);
+	const font = useFontStore((store) => store.font);
+	const [completedLetters, setCompletedLetters] = useState(Object.keys(font));
 
 	const getLiClassName = (letter: string) => {
 		const classes = ["letterNavigation__item"];
@@ -127,14 +125,14 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 								setSelectedLetter(letter);
 							}}
 						>
-							{fontStore.get()[letter]?.length > 0 ? (
+							{font[letter]?.length > 0 ? (
 								<svg
 									className="letterPreviewSvg"
 									width="1em"
 									height="1em"
 									viewBox="0 0 250 250"
 								>
-									<path d={fontStore.get()[letter]} />
+									<path d={font[letter]} />
 								</svg>
 							) : (
 								letter
@@ -168,9 +166,9 @@ export const Step3: FunctionComponent<Step> = ({ setStep }) => {
 	const [errors, setErrors] = useState([] as string[]);
 	const [stage, setStage] = useState("generating" as Stage);
 
-	const token = tokenStore.get();
+	const token = useAuthStore((store) => store.token);
 	const http = useHttpClient();
-	const font = fontStore.get();
+	const font = useFontStore((store) => store.font);
 
 	useEffect(() => {
 		convertToTTF(font).then((res) => {

@@ -9,8 +9,8 @@ import {
 } from "react";
 import "./LetterDraw.scss";
 import { Icon } from "../../../global/Icon";
-import { fontStore } from "../../../store/font-store";
-import { preferencesStore } from "../../../store/preferences-store";
+import { usePreferencesStore, useFontStore } from "../../../store/global-store";
+import { useInterval } from "../../../hooks/use-interval";
 
 const size = 250;
 
@@ -26,17 +26,29 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 	const svgElement = createRef<SVGSVGElement>();
 	const [path, setPath] = useState("");
 	const [isDrawing, setIsDrawing] = useState(false);
-	const [showRuler, setShowRuler] = useState(
-		preferencesStore.getRulerPreference()
+	const [syncRequired, setSyncRequired] = useState(false);
+
+	const showRuler = usePreferencesStore((store) => store.showRuler);
+	const toggleRulerAction = usePreferencesStore(
+		(store) => store.toggleRulerPreference
 	);
 
 	const syncPath = (path: string) => {
 		setPath(path);
-		fontStore.setLetter(letter, path);
+		setSyncRequired(true);
 	};
 
+	const font = useFontStore((store) => store.font);
+	const updateLetterAction = useFontStore((store) => store.setLetter);
+
+	useInterval(() => {
+		if (syncRequired) {
+			updateLetterAction(letter, path);
+			setSyncRequired(false);
+		}
+	}, 500);
+
 	useEffect(() => {
-		const font = fontStore.get();
 		if (font[letter]) {
 			setPath(font[letter]);
 			setContainsLetter(true);
@@ -143,8 +155,7 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 				<button
 					className="button button__secondary letterDraw__button"
 					onClick={() => {
-						setShowRuler(!showRuler);
-						preferencesStore.setRulerPreference(!showRuler);
+						toggleRulerAction();
 					}}
 				>
 					{showRuler ? (
