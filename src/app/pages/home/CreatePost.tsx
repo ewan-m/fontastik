@@ -5,6 +5,7 @@ import { Icon } from "../../global/Icon";
 import { useHistory } from "react-router-dom";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { useAuthStore } from "../../store/global-store";
+import { useHttpClient } from "../../hooks/use-http-client";
 
 const defaultLocation = { latitude: 0, longitude: 0 };
 
@@ -19,6 +20,27 @@ export const CreatePost = () => {
 	const createFrame = useRef<HTMLDivElement>(null);
 	const inputElement = useRef<HTMLTextAreaElement>(null);
 	const token = useAuthStore((store) => store.token);
+	const http = useHttpClient();
+
+	useEffect(() => {
+		if (active) {
+			(async () => {
+				const response = await http.request({
+					method: "GET",
+					uri: "has-saved-font",
+					withAuth: true,
+				});
+
+				if (response.ok) {
+					const result = await response.json();
+					if (result?.hasSavedFont) {
+						return;
+					}
+				}
+				history.push("/create");
+			})();
+		}
+	}, [active]);
 
 	useEffect(() => {
 		if (active) {
@@ -32,8 +54,6 @@ export const CreatePost = () => {
 	const onCreateClick = () => {
 		if (!token) {
 			history.push("/account/log-in");
-		} else if (false /*hasntMadeFont*/) {
-			history.push("/create");
 		} else {
 			setActive(true);
 		}
