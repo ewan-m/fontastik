@@ -17,6 +17,7 @@ const App = () => (
 	<Router history={history}>
 		<SiteContainer>
 			<Switch>
+				<Redirect path="/" exact to="home" />
 				<Redirect path="/home" exact to="home/popular" />
 				<Route path="/home/:category" exact component={Home} />
 				<Route path="/create" exact component={Create} />
