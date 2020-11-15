@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent, useEffect, useState, MouseEvent } from "react";
+import { FunctionComponent, useEffect, useState, MouseEvent, CSSProperties } from "react";
 import { useHistory } from "react-router-dom";
 import { Icon } from "../../global/Icon";
 import "./Account.scss";
@@ -7,6 +7,11 @@ import { useHttpClient } from "../../hooks/use-http-client";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { Errors } from "../../global/Errors";
 import { useAuthStore } from "../../store/global-store";
+import { decode } from "jsonwebtoken";
+import { TokenPayload } from "../../global/token-payload.type";
+import { environment } from "../../environment";
+import { Post } from "../home/Post";
+import { PostData } from "../home/post-data.interface";
 
 enum FormState {
 	initial = "initial",
@@ -26,6 +31,7 @@ const MiniForm: FunctionComponent<{
 	const [value, setValue] = useState("");
 	const [errors, setErrors] = useState([]);
 	const http = useHttpClient();
+	const loginAction = useAuthStore((store) => store.login);
 
 	useEffect(() => {
 		setValue(initialValue);
@@ -48,6 +54,10 @@ const MiniForm: FunctionComponent<{
 		console.log(result);
 		if (result.ok) {
 			setFormState(FormState.completed);
+			const response = await result.json();
+			if (response?.token) {
+				loginAction(response.token);
+			}
 		} else {
 			setFormState(FormState.editing);
 			const message = (await result.json())?.message;
@@ -59,7 +69,7 @@ const MiniForm: FunctionComponent<{
 		case FormState.initial:
 			return (
 				<button
-					className="button  button__secondary button--large button--stacked"
+					className="linkButton"
 					onClick={() => {
 						setFormState(FormState.editing);
 					}}
@@ -119,7 +129,7 @@ const MiniForm: FunctionComponent<{
 						}}
 						className="button button__primary"
 					>
-						Okay
+						Okay, thanks!
 					</button>
 				</div>
 			);
@@ -127,6 +137,8 @@ const MiniForm: FunctionComponent<{
 			return null;
 	}
 };
+
+type RequestStatus = "fetching" | "fetched" | "error";
 
 export const Account = () => {
 	const history = useHistory();
@@ -137,26 +149,52 @@ export const Account = () => {
 		}
 	}, []);
 
+	const decodedToken = decode(token) as TokenPayload;
+
+	const [requestStatus, setRequestStatus] = useState(
+		"fetching" as RequestStatus
+	);
+	const [posts, setPosts] = useState([] as PostData[]);
+	const http = useHttpClient();
+
+	useEffect(() => {
+		setRequestStatus("fetching");
+		(async () => {
+			const response = await http.request({
+				uri: "posts-for-user",
+				method: "GET",
+				withAuth: true,
+			});
+			if (response.ok) {
+				const result = await response.json();
+				setPosts(result);
+				setRequestStatus("fetched");
+			} else {
+				setRequestStatus("error");
+			}
+		})();
+	}, []);
+
+	
+	const logoutAction = useAuthStore((store) => store.logout);
+
+
 	return (
 		<div className="accountPage">
 			<h2 className="pageTitle contentAppear">Your info.</h2>
-			<div className="profileInfo contentAppear">
-				<div className="profileInfo__picture">
-					<img
-						className="profileInfo__picture__img"
-						alt="user profile picture"
-						src={require("../../../assets/sofia.jpg")}
-					/>
-					<button className="button button__secondary">
-						<Icon withMargin="left">portrait</Icon> Change your profile picture
-					</button>
-					{/* <input type="file" className="button button__secondary"  style={{boxSizing: "border-box", width: "100%"} } accept="image/*"/> */}
-				</div>
-				<div className="profileInfo__fields">
-					<MiniForm initialValue="Sofia" label="Name" />
+			<div className="accountFields">
+
 					<MiniForm
+						endpoint="change-name"
+						bodyTag="name"
+						initialValue={decodedToken?.name}
+						label="Name"
+					/>
+					<MiniForm
+						endpoint="change-email"
+						bodyTag="email"
 						inputType="email"
-						initialValue="itsemail@gmail.com"
+						initialValue={decodedToken?.email}
 						label="Email"
 					/>
 					<MiniForm
@@ -166,12 +204,52 @@ export const Account = () => {
 						initialValue="Change your password"
 						label="Change your password"
 					/>
-					<button className="button button__destructive button--stacked">
+					<button className="button button__primary button--stacked" onClick={() => {
+						logoutAction();
+						history.push("account/log-in");
+					}}>
+						<Icon withMargin="left">lock</Icon> Sign out
+					</button>
+					<button className="button button__destructive button--stacked" onClick={() => {
+						(async () => {
+							const resp = await http.request({method: "DELETE", uri: "account", withAuth: true});
+							if (resp.ok) {
+								logoutAction();
+								history.push("account/log-in");
+							}
+						})();
+					}}>
 						<Icon withMargin="left">delete</Icon> Delete your account
 					</button>
-				</div>
 			</div>
 			<h2 className="pageTitle contentAppear">Your posts.</h2>
+			<div>
+			{requestStatus === "fetched" && (
+				<>
+					{[...new Set(posts.map((post) => post.user_id))].map((userId) => (
+						<link
+							key={userId}
+							rel="stylesheet"
+							type="text/css"
+							href={`${environment.githubDataUrl}/UserFont-${userId}.css`}
+						/>
+					))}
+					{posts.map((post, index) => (
+						<div
+							className="animateIn"
+							key={post.post_id}
+							style={{ "--animation-order": index } as CSSProperties}
+						>
+							<Post showName={false} currentLocation={{x: 0, y: 0}} {...post} />
+						</div>
+					))}
+				</>
+			)}
+			{requestStatus === "fetching" && <LoadingSpinner />}
+			{requestStatus === "error" && (
+				<p className="paragraph">Something went wrong fetching posts.</p>
+			)}
+		</div>
 		</div>
 	);
 };
