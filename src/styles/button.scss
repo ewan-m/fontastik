@@ -73,3 +73,14 @@
 		margin: $size-3;
 	}
 }
+
+.linkButton {
+	border: 0;
+	background: none;
+	font-family: inherit;
+	display: flex;
+	font-weight: 600;
+	cursor: pointer;
+	color: $primary;
+	margin: 0 0 $size0;
+}

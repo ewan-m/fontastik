@@ -3,37 +3,47 @@ import { FunctionComponent } from "react";
 import "./Post.scss";
 import { Icon } from "../../global/Icon";
 import { LikeButton } from "./LikeButton";
-import { useMediaQuery } from "../../hooks/use-media-query";
+import { PostData } from "./post-data.interface";
+import { formatDistance } from "date-fns";
+import { calculateDistance } from "./calculate-distance";
 
-export const Post: FunctionComponent = () => {
-	const isMobile = useMediaQuery("(max-width: 450px)");
+interface PostComponent extends PostData {
+	currentLocation: { x: number; y: number };
+	showName?: boolean;
+}
 
+export const Post: FunctionComponent<PostComponent> = ({
+	name,
+	content,
+	created,
+	location,
+	currentLocation,
+	user_id,
+	post_id,
+	post_likes,
+	showName = true
+}) => {
+	const distance = calculateDistance(location, currentLocation);
 	return (
 		<article className="post">
-			<div className="post__side">
-				<img
-					className="post__image"
-					alt="user profile picture"
-					src={require("../../../assets/sofia.jpg")}
-				/>
-				{isMobile && <LikeButton />}
-			</div>
 			<div className="post__body">
-				<address className="post__author">Sofia </address>
-				<p className="post__content">
-					I think a better name for this app would have been fontastique, it's a got
-					a bit of a French flare. Ooh la la if you will. je ne se quois.
+				{showName && <address className="post__author">{name} </address>}
+				<p className="post__content" style={{ fontFamily: "UserFont-" + user_id }}>
+					{content}
 				</p>
 				<div className="post__info">
 					<time className="post__time">
-						<Icon>schedule</Icon>&nbsp;5 minutes ago
+						<Icon>schedule</Icon>&nbsp;
+						{formatDistance(new Date(created), new Date(), { addSuffix: true })}
 					</time>
-					<label className="post__location">
-						<Icon>location_on</Icon>&nbsp;5 miles away
-					</label>
+					{distance !== null && (
+						<label className="post__location">
+							<Icon>location_on</Icon>&nbsp;{distance} kilometres away
+						</label>
+					)}
 				</div>
 			</div>
-			{!isMobile && <LikeButton />}
+			<LikeButton postId={post_id} likes={post_likes} />
 		</article>
 	);
 };

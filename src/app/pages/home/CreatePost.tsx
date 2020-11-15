@@ -6,8 +6,13 @@ import { useHistory } from "react-router-dom";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { useAuthStore } from "../../store/global-store";
 import { useHttpClient } from "../../hooks/use-http-client";
+import { decode } from "jsonwebtoken";
+import { environment } from "../../environment";
+import { TokenPayload } from "../../global/token-payload.type";
 
-const defaultLocation = { latitude: 0, longitude: 0 };
+const defaultLocation = { x: 0, y: 0 };
+
+type RequestStatus = "initial" | "sending" | "sent";
 
 export const CreatePost = () => {
 	const [active, setActive] = useState(false);
@@ -16,10 +21,12 @@ export const CreatePost = () => {
 		state: "unset",
 	});
 	const [inputText, setInputText] = useState("");
+	const [requestStatus, setRequestStatus] = useState("initial" as RequestStatus);
 	const history = useHistory();
 	const createFrame = useRef<HTMLDivElement>(null);
 	const inputElement = useRef<HTMLTextAreaElement>(null);
 	const token = useAuthStore((store) => store.token);
+	const userId = (decode(token) as TokenPayload)?.["id"];
 	const http = useHttpClient();
 
 	useEffect(() => {
@@ -65,7 +72,10 @@ export const CreatePost = () => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 				({ coords }) => {
-					setLocation({ data: coords, state: "set" });
+					setLocation({
+						data: { x: coords.latitude, y: coords.longitude },
+						state: "set",
+					});
 				},
 				() => {
 					setLocation(error);
@@ -84,8 +94,39 @@ export const CreatePost = () => {
 		}, 300);
 	};
 
+	const onShareClick = async (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		if (!inputText || inputText.length > 420) {
+			return;
+		}
+		setRequestStatus("sending");
+
+		const response = await http.request({
+			method: "POST",
+			uri: "post",
+			body: {
+				content: inputText,
+				x: parseFloat(location.data.x.toFixed(2)),
+				y: parseFloat(location.data.y.toFixed(2)),
+			},
+			withAuth: true,
+		});
+
+		if (response.ok) {
+			setRequestStatus("sent");
+		} else {
+			setRequestStatus("initial");
+		}
+	};
+
 	return (
 		<>
+			<link
+				rel="stylesheet"
+				type="text/css"
+				href={`${environment.githubDataUrl}/UserFont-${userId}.css`}
+			/>
+
 			{!active && (
 				<button className="createPostButton" onClick={onCreateClick}>
 					<Icon>send</Icon>
@@ -104,13 +145,14 @@ export const CreatePost = () => {
 					</div>
 					<div className="createPostScreen__inputContainer">
 						<textarea
-							placeholder="What's the scoop"
+							placeholder="What's the scoop?!"
 							ref={inputElement}
 							value={inputText}
 							onChange={(e) => {
 								setInputText(e.target.value);
 							}}
 							className="createPostScreen__input"
+							style={{ fontFamily: "UserFont-" + userId }}
 						></textarea>
 
 						<div className="createPostScreen__buttonRow">
@@ -125,18 +167,46 @@ export const CreatePost = () => {
 							)}
 							{location.state === "set" && (
 								<p className="paragraph">
-									{location.data.latitude.toFixed(2)},{" "}
-									{location.data.longitude.toFixed(2)}
+									{location.data.x.toFixed(2)}, {location.data.y.toFixed(2)}
 								</p>
 							)}
 							<p className="paragraph paragraph">
 								{420 - inputText.length} characters remaining
 							</p>
 						</div>
-
-						<button className="button button__primaryAlt button--large createPostScreen__sendButton">
-							Share<Icon withMargin="right">send</Icon>
-						</button>
+						{requestStatus === "initial" && (
+							<button
+								onClick={onShareClick}
+								className="button button__primaryAlt button--large createPostScreen__sendButton"
+							>
+								Share<Icon withMargin="right">send</Icon>
+							</button>
+						)}
+						{requestStatus === "sending" && <LoadingSpinner />}
+						{requestStatus === "sent" && (
+							<>
+								<p className="paragraph paragraph--b">
+									Your message is now released into the world.
+								</p>
+								<div className="buttonRow">
+									<button
+										onClick={() => {
+											setInputText("");
+											setRequestStatus("initial");
+										}}
+										className="button button__secondary button--large"
+									>
+										Post another
+									</button>
+									<button
+										onClick={onCloseClick}
+										className="button button__primaryAlt button--large"
+									>
+										Woohoo!
+									</button>
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 			)}

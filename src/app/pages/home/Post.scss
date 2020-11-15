@@ -5,7 +5,7 @@
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
-	padding-bottom: $size4;
+	padding: 0 $size0 $size4;
 
 	&__side {
 		display: flex;
@@ -14,22 +14,17 @@
 		justify-content: center;
 	}
 
-	&__image {
-		width: 60px;
-		height: auto;
-		border-radius: 50%;
-	}
-
 	&__body {
 		flex-grow: 1;
-		padding: 0 0 0 $size0;
 		display: flex;
 		flex-direction: column;
 	}
 
 	&__content {
+		padding-top: $size-2;
 		margin: 0;
 		font-size: $size3;
+		font-weight: 700;
 	}
 
 	&__author {
@@ -44,14 +39,12 @@
 
 	&__time {
 		display: inline-flex;
-		align-items: center;
 		font-size: $size0;
 		color: $darkGrey;
 	}
 
 	&__location {
 		display: inline-flex;
-		align-items: center;
 		font-size: $size0;
 		color: $darkGrey;
 		padding-left: $size1;

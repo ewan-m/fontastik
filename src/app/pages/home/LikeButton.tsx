@@ -1,12 +1,20 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, FunctionComponent } from "react";
+import { useHttpClient } from "../../hooks/use-http-client";
 import "./LikeButton.scss";
 
-export const LikeButton = () => {
+export const LikeButton: FunctionComponent<{
+	likes: string;
+	postId: number;
+}> = ({ likes, postId }) => {
 	const [isLiked, setIsLiked] = useState(false);
+	const http = useHttpClient();
 
 	const handleClick = () => {
 		setIsLiked(!isLiked);
+
+		http.request({uri: "react-to-post",method: "POST", body: {isLike: !isLiked, postId: postId}, withAuth: true})
+
 	};
 
 	return (
@@ -77,7 +85,7 @@ export const LikeButton = () => {
 					</g>
 				</g>
 			</svg>
-			<label className="likeCount">500</label>
+			<label className="likeCount">{Number(likes) + (isLiked ? 1 : 0)}</label>
 		</div>
 	);
 };
