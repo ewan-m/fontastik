@@ -1,4 +1,4 @@
 export const environment = {
-	apiUrl: "http://localhost:3000/",
-	githubDataUrl: "https://cdn.statically.io/gh/ewan-m/fontastik-data/test",
+	apiUrl: "https://fontastik-api.herokuapp.com/",
+	githubDataUrl: "https://cdn.statically.io/gh/ewan-m/fontastik-data/master",
 };
