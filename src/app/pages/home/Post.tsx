@@ -21,7 +21,7 @@ export const Post: FunctionComponent<PostComponent> = ({
 	user_id,
 	post_id,
 	post_likes,
-	showName = true
+	showName = true,
 }) => {
 	const distance = calculateDistance(location, currentLocation);
 	return (

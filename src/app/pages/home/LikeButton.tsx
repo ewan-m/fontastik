@@ -1,20 +1,41 @@
 import * as React from "react";
 import { useState, FunctionComponent } from "react";
 import { useHttpClient } from "../../hooks/use-http-client";
+import { usePostLikesStore } from "../../store/global-store";
 import "./LikeButton.scss";
 
 export const LikeButton: FunctionComponent<{
 	likes: string;
 	postId: number;
 }> = ({ likes, postId }) => {
-	const [isLiked, setIsLiked] = useState(false);
+	const postsLikedIds = usePostLikesStore((store) => store.postsLikedIds);
+	const likePost = usePostLikesStore((store) => store.addPost);
+	const unlikePost = usePostLikesStore((store) => store.removePost);
+
+	const isLiked = postsLikedIds.includes(postId);
 	const http = useHttpClient();
 
+	const [initiallyLiked] = useState(isLiked);
+
+	const getModifier = () => {
+		if (!initiallyLiked && isLiked) {
+			return +1;
+		}
+		if (initiallyLiked && !isLiked) {
+			return -1;
+		}
+		return 0;
+	};
+
 	const handleClick = () => {
-		setIsLiked(!isLiked);
+		isLiked ? unlikePost(postId) : likePost(postId);
 
-		http.request({uri: "react-to-post",method: "POST", body: {isLike: !isLiked, postId: postId}, withAuth: true})
-
+		http.request({
+			uri: "react-to-post",
+			method: "POST",
+			body: { isLike: !isLiked, postId: postId },
+			withAuth: true,
+		});
 	};
 
 	return (
@@ -85,7 +106,7 @@ export const LikeButton: FunctionComponent<{
 					</g>
 				</g>
 			</svg>
-			<label className="likeCount">{Number(likes) + (isLiked ? 1 : 0)}</label>
+			<label className="likeCount">{Number(likes) + getModifier()}</label>
 		</div>
 	);
 };

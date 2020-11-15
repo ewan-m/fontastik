@@ -65,3 +65,28 @@ export const useFontCreationProgressStore = create(
 		"FONT_CREATION_PROGRESS"
 	)
 );
+
+export const usePostLikesStore = create(
+	persist(
+		combine(
+			{
+				postsLikedIds: [] as number[],
+			},
+			(set) => ({
+				addPost: (postId: number) => {
+					set((store) => ({ postsLikedIds: [...store.postsLikedIds, postId] }));
+				},
+				removePost: (postId: number) => {
+					set((store) => ({
+						postsLikedIds: store.postsLikedIds.filter((id) => id !== postId),
+					}));
+				},
+				syncWithApi: (apiIds: number[]) => {
+					set(() => ({ postsLikedIds: apiIds }));
+				},
+			})
+		),
+		localStorage,
+		"POST_LIKE_IDS"
+	)
+);

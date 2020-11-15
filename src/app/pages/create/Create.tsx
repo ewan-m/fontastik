@@ -27,8 +27,9 @@ const Step0: FunctionComponent<Step> = ({ setStep }) => {
 	return (
 		<div className="contentAppear">
 			<p className="paragraph paragraph--b">
-				You see all that cool writing on the home page? They converted their handwriting into a font and
-				you can too! Let's start with the letter 'A' in the box below.
+				You see all that cool writing on the home page? They converted their
+				handwriting into a font and you can too! Let's start with the letter 'A' in
+				the box below.
 			</p>
 			<LetterDraw letter="A" />
 			{!!font["A"] && (
@@ -309,8 +310,7 @@ export const Step5: FunctionComponent<Step> = () => {
 	const [previewText, setPreviewText] = useState(Object.keys(font).join(""));
 
 	useEffect(() => {
-		
-		let isSubscribed = true
+		let isSubscribed = true;
 		convertToTTF(font).then((res) => {
 			if (isSubscribed) {
 				document.fonts.add(new FontFace("Handwriting", res.buffer));
@@ -319,7 +319,9 @@ export const Step5: FunctionComponent<Step> = () => {
 			}
 		});
 
-		return () => {isSubscribed = false}
+		return () => {
+			isSubscribed = false;
+		};
 	}, []);
 
 	const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {

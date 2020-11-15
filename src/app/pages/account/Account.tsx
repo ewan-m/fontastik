@@ -1,5 +1,11 @@
 import * as React from "react";
-import { FunctionComponent, useEffect, useState, MouseEvent, CSSProperties } from "react";
+import {
+	FunctionComponent,
+	useEffect,
+	useState,
+	MouseEvent,
+	CSSProperties,
+} from "react";
 import { useHistory } from "react-router-dom";
 import { Icon } from "../../global/Icon";
 import "./Account.scss";
@@ -175,81 +181,88 @@ export const Account = () => {
 		})();
 	}, []);
 
-	
 	const logoutAction = useAuthStore((store) => store.logout);
-
 
 	return (
 		<div className="accountPage">
 			<h2 className="pageTitle contentAppear">Your info.</h2>
-			<div className="accountFields">
-
-					<MiniForm
-						endpoint="change-name"
-						bodyTag="name"
-						initialValue={decodedToken?.name}
-						label="Name"
-					/>
-					<MiniForm
-						endpoint="change-email"
-						bodyTag="email"
-						inputType="email"
-						initialValue={decodedToken?.email}
-						label="Email"
-					/>
-					<MiniForm
-						endpoint="reset-password"
-						bodyTag="password"
-						inputType="password"
-						initialValue="Change your password"
-						label="Change your password"
-					/>
-					<button className="button button__primary button--stacked" onClick={() => {
+			<div className="accountFields contentAppear">
+				<MiniForm
+					endpoint="change-name"
+					bodyTag="name"
+					initialValue={decodedToken?.name}
+					label="Name"
+				/>
+				<MiniForm
+					endpoint="change-email"
+					bodyTag="email"
+					inputType="email"
+					initialValue={decodedToken?.email}
+					label="Email"
+				/>
+				<MiniForm
+					endpoint="reset-password"
+					bodyTag="password"
+					inputType="password"
+					initialValue="Change your password"
+					label="Change your password"
+				/>
+				<button
+					className="button button__primary button--stacked"
+					onClick={() => {
 						logoutAction();
 						history.push("account/log-in");
-					}}>
-						<Icon withMargin="left">lock</Icon> Sign out
-					</button>
-					<button className="button button__destructive button--stacked" onClick={() => {
+					}}
+				>
+					<Icon withMargin="left">lock</Icon> Sign out
+				</button>
+				<button
+					className="button button__destructive button--stacked"
+					onClick={() => {
 						(async () => {
-							const resp = await http.request({method: "DELETE", uri: "account", withAuth: true});
+							const resp = await http.request({
+								method: "DELETE",
+								uri: "account",
+								withAuth: true,
+							});
 							if (resp.ok) {
 								logoutAction();
 								history.push("account/log-in");
 							}
 						})();
-					}}>
-						<Icon withMargin="left">delete</Icon> Delete your account
-					</button>
+					}}
+				>
+					<Icon withMargin="left">delete</Icon> Delete your account
+				</button>
 			</div>
 			<h2 className="pageTitle contentAppear">Your posts.</h2>
 			<div>
-			{requestStatus === "fetched" && (
-				<>
-					{[...new Set(posts.map((post) => post.user_id))].map((userId) => (
-						<link
-							key={userId}
-							rel="stylesheet"
-							type="text/css"
-							href={`${environment.githubDataUrl}/UserFont-${userId}.css`}
-						/>
-					))}
-					{posts.map((post, index) => (
-						<div
-							className="animateIn"
-							key={post.post_id}
-							style={{ "--animation-order": index } as CSSProperties}
-						>
-							<Post showName={false} currentLocation={{x: 0, y: 0}} {...post} />
-						</div>
-					))}
-				</>
-			)}
-			{requestStatus === "fetching" && <LoadingSpinner />}
-			{requestStatus === "error" && (
-				<p className="paragraph">Something went wrong fetching posts.</p>
-			)}
-		</div>
+				{requestStatus === "fetched" && (
+					<>
+						{[...new Set(posts.map((post) => post.user_id))].map((userId) => (
+							<link
+								key={userId}
+								rel="stylesheet"
+								type="text/css"
+								href={`${environment.githubDataUrl}/UserFont-${userId}.css`}
+							/>
+						))}
+						{posts.map((post, index) => (
+							<div
+								className="animateIn"
+								key={post.post_id}
+								style={{ "--animation-order": index } as CSSProperties}
+							>
+								<Post showName={false} currentLocation={{ x: 0, y: 0 }} {...post} />
+							</div>
+						))}
+					</>
+				)}
+				{requestStatus === "fetching" && <LoadingSpinner />}
+				{requestStatus === "error" && (
+					<p className="paragraph">Something went wrong fetching posts.</p>
+				)}
+			</div>
 		</div>
 	);
 };

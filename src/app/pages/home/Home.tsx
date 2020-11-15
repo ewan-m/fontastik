@@ -9,6 +9,7 @@ import { useHttpClient } from "../../hooks/use-http-client";
 import { PostData } from "./post-data.interface";
 import { environment } from "../../environment";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
+import { usePostLikesStore } from "../../store/global-store";
 
 type RequestStatus = "fetching" | "fetched" | "error";
 
@@ -69,6 +70,22 @@ export const Home = () => {
 			}
 		})();
 	}, [category, location.state]);
+
+	const syncLikesWithApi = usePostLikesStore((store) => store.syncWithApi);
+
+	useEffect(() => {
+		(async () => {
+			const request = await http.request({
+				method: "GET",
+				uri: "post-likes",
+				withAuth: true,
+			});
+			if (request.ok) {
+				const response = (await request.json()) as { post_id: number }[];
+				syncLikesWithApi(response.map((item) => item.post_id));
+			}
+		})();
+	}, []);
 
 	return (
 		<div className="homePage">
