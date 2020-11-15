@@ -13,9 +13,9 @@
     "format": "prettier \"src/**\" --write"
   },
   "dependencies": {
+    "date-fns": "^2.16.1",
     "jsonwebtoken": "^8.5.1",
     "makerjs": "^0.17.0",
-    "moment": "^2.29.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
