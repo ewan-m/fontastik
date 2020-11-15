@@ -4,7 +4,7 @@ export function simplify(points: Point[], tolerance: number) {
 	if (points.length <= 2) return points;
 
 	points = simplifyRadialDistance(points, tolerance);
-	points = simplifyDouglasPeucker(points, tolerance);
+	// points = simplifyDouglasPeucker(points, tolerance);
 
 	return points;
 }
@@ -12,6 +12,7 @@ export function simplify(points: Point[], tolerance: number) {
 function simplifyRadialDistance(points: Point[], sqTolerance: number) {
 	return points.filter(
 		(currentPoint, index, points) =>
+			currentPoint.type === "M" ||
 			squareDistance(currentPoint, points[index - 1]) > sqTolerance
 	);
 }
@@ -57,8 +58,8 @@ function simplifyDPStep(
 	let maxSqDist = sqTolerance,
 		index = 0;
 
-	for (var i = first + 1; i < last; i++) {
-		var sqDist = getSquareDistanceToSegment(
+	for (let i = first + 1; i < last; i++) {
+		const sqDist = getSquareDistanceToSegment(
 			points[i],
 			points[first],
 			points[last]
@@ -80,9 +81,9 @@ function simplifyDPStep(
 }
 
 function simplifyDouglasPeucker(points: Point[], sqTolerance: number) {
-	var last = points.length - 1;
+	const last = points.length - 1;
 
-	var simplified = [points[0]];
+	const simplified = [points[0]];
 	simplifyDPStep(points, 0, last, sqTolerance, simplified);
 	simplified.push(points[last]);
 

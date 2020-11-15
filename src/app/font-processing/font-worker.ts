@@ -1,9 +1,11 @@
 import { Font } from "./font.interface";
 import svg2ttf from "svg2ttf";
-import { simplify } from "./simplify";
 import { convertPathToPoints, convertPointsToPath } from "./converters";
 import { normalize } from "./normalizer";
 import { convertPathToOutline } from "./convert-path-to-outline";
+import { numbers, specialCharacters } from "../pages/create/characters";
+import { defaultNumbers, defaultSpecialCharacters } from "./default-characters";
+import { simplify } from "./simplify";
 
 const getSvgFontString = (glyphs: string) => `
 <?xml version="1.0" standalone="no"?>
@@ -26,13 +28,24 @@ const getSvgFontString = (glyphs: string) => `
 const getSvgGlyph = (letter: string, path: string, horizontalAdvance: number) =>
 	`<glyph unicode="${letter}" glyph-name="${letter}" horiz-adv-x="${horizontalAdvance}" d="${path}" />`;
 
+const fontHas = (font: Font, characters: string[]) =>
+	Object.keys(font).join("").includes(characters.join(""));
+
+const enrichWithDefaultCharacters = (font: Font): Font => ({
+	...font,
+	...(fontHas(font, specialCharacters) ? {} : defaultSpecialCharacters),
+	...(fontHas(font, numbers) ? {} : defaultNumbers),
+});
+
 function convertToTTF(font: Font): svg2ttf.MicroBuffer {
+	const fullFont = enrichWithDefaultCharacters(font);
+
 	return svg2ttf(
 		getSvgFontString(
-			Object.entries(font)
+			Object.entries(fullFont)
 				.map(([key, value]) => {
 					const [shiftedPath, horizontalAdvance] = normalize(
-						simplify(convertPathToPoints(value.trim()), 0.5)
+						simplify(convertPathToPoints(value.trim()), 1)
 					);
 
 					return getSvgGlyph(

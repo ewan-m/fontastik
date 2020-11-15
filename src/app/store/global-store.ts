@@ -48,3 +48,20 @@ export const useFontStore = create(
 		"FONT"
 	)
 );
+
+export const useFontCreationProgressStore = create(
+	persist(
+		combine(
+			{
+				step: 0,
+			},
+			(set) => ({
+				setStep: (newStep: number) => {
+					set(() => ({ step: newStep }));
+				},
+			})
+		),
+		localStorage,
+		"FONT_CREATION_PROGRESS"
+	)
+);

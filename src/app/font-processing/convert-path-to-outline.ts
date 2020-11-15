@@ -9,9 +9,9 @@ export function convertPathToOutline(svgPath: string): string {
 
 	return exporter
 		.toSVGPathData(
-			model.outline(makerObject, 8, 0, false, { trimDeadEnds: true }),
+			model.outline(makerObject, 5, 0, false, { trimDeadEnds: false }),
 			{
-				accuracy: 0,
+				accuracy: 2,
 				fillRule: "nonzero",
 				origin: [0, 250],
 			}
