@@ -1,4 +1,4 @@
-export const characters = [
+export const alphaCharacters = [
 	"A",
 	"a",
 	"B",
@@ -51,19 +51,20 @@ export const characters = [
 	"y",
 	"Z",
 	"z",
-	"!",
+];
+
+export const specialCharacters = [
 	"'",
 	",",
 	".",
-	"0",
-	"1",
-	"2",
-	"3",
-	"4",
-	"5",
-	"6",
-	"7",
-	"8",
-	"9",
 	"?",
+	"!",
+	"=",
+	"(",
+	")",
+	"$",
+	"#",
+	"-",
 ];
+
+export const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];

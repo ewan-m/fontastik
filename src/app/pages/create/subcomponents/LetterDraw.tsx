@@ -16,15 +16,13 @@ const size = 250;
 
 interface LetterDrawProps {
 	letter: string;
-	setContainsLetter: (doesItContainTheLetter: boolean) => void;
 }
 
-export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
-	letter,
-	setContainsLetter,
-}) => {
+export const LetterDraw: FunctionComponent<LetterDrawProps> = ({ letter }) => {
 	const svgElement = createRef<SVGSVGElement>();
+
 	const [path, setPath] = useState("");
+	const [isThrottled, setIsThrottled] = useState(false);
 	const [isDrawing, setIsDrawing] = useState(false);
 	const [syncRequired, setSyncRequired] = useState(false);
 
@@ -48,10 +46,13 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 		}
 	}, 500);
 
+	useInterval(() => {
+		setIsThrottled(false);
+	}, 25);
+
 	useEffect(() => {
 		if (font[letter]) {
 			setPath(font[letter]);
-			setContainsLetter(true);
 		} else {
 			setPath("");
 		}
@@ -75,7 +76,6 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 	};
 	const endPath = () => {
 		setIsDrawing(false);
-		setContainsLetter(true);
 	};
 
 	const leaveArea = () => {
@@ -92,17 +92,22 @@ export const LetterDraw: FunctionComponent<LetterDrawProps> = ({
 	};
 
 	const drawPathM = (event: MouseEvent<SVGSVGElement>) => {
-		drawPath(event.clientX, event.clientY);
+		if (!isThrottled) {
+			drawPath(event.clientX, event.clientY);
+		}
+		setIsThrottled(true);
 	};
 
 	const drawPathT = (event: TouchEvent<SVGSVGElement>) => {
 		event.preventDefault();
-		drawPath(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+		if (!isThrottled) {
+			drawPath(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
+		}
+		setIsThrottled(true);
 	};
 
 	const tryAgain = () => {
 		syncPath("");
-		setContainsLetter(false);
 	};
 
 	return (

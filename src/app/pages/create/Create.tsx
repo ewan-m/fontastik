@@ -2,7 +2,7 @@ import * as React from "react";
 import { FunctionComponent, useEffect, useState, MouseEvent } from "react";
 import { Icon } from "../../global/Icon";
 import "../Page.scss";
-import { characters } from "./characters";
+import { alphaCharacters, numbers, specialCharacters } from "./characters";
 import "./Create.scss";
 import { LetterDraw } from "./subcomponents/LetterDraw";
 import { convertToTTF } from "../../font-processing/svg-font-string";
@@ -10,23 +10,28 @@ import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { useHttpClient } from "../../hooks/use-http-client";
 import { Errors } from "../../global/Errors";
 import { Link } from "react-router-dom";
-import { useFontStore, useAuthStore } from "../../store/global-store";
+import {
+	useFontStore,
+	useAuthStore,
+	useFontCreationProgressStore,
+} from "../../store/global-store";
+import { Font } from "../../font-processing/font.interface";
 
 interface Step {
 	setStep: (stepNumber: number) => void;
 }
 
 const Step0: FunctionComponent<Step> = ({ setStep }) => {
-	const [complete, setComplete] = useState(false);
+	const font = useFontStore((store) => store.font);
 
 	return (
 		<div className="contentAppear">
 			<p className="paragraph paragraph--b">
-				You see all that cool writing on the home page? They made their own font and
+				You see all that cool writing on the home page? They converted their handwriting into a font and
 				you can too! Let's start with the letter 'A' in the box below.
 			</p>
-			<LetterDraw letter="A" setContainsLetter={setComplete} />
-			{complete && (
+			<LetterDraw letter="A" />
+			{!!font["A"] && (
 				<p className="contentAppear paragraph">
 					When you like how it looks hit{" "}
 					<button
@@ -45,15 +50,16 @@ const Step0: FunctionComponent<Step> = ({ setStep }) => {
 };
 
 const Step1: FunctionComponent<Step> = ({ setStep }) => {
-	const [complete, setComplete] = useState(false);
+	const font = useFontStore((store) => store.font);
+
 	return (
 		<div className="contentAppear">
 			<p className="paragraph paragraph--b">
 				Do you know what's coming next? You guessed it baby, I'm gonna need you to
 				draw the letter 'a'.
 			</p>
-			<LetterDraw letter="a" setContainsLetter={setComplete} />
-			{complete && (
+			<LetterDraw letter="a" />
+			{!!font["a"] && (
 				<>
 					<p className="contentAppear paragraph">
 						Looking good, my friend.{" "}
@@ -73,94 +79,225 @@ const Step1: FunctionComponent<Step> = ({ setStep }) => {
 	);
 };
 
-const Step2: FunctionComponent<Step> = ({ setStep }) => {
-	const [selectedLetter, setSelectedLetter] = useState(characters[2]);
-	const font = useFontStore((store) => store.font);
-	const [completedLetters, setCompletedLetters] = useState(Object.keys(font));
-
+const LetterNavigator = ({
+	setSelectedLetter,
+	selectedLetter,
+	font,
+	characters,
+}: {
+	characters: string[];
+	selectedLetter: string;
+	font: Font;
+	setSelectedLetter: any;
+}) => {
 	const getLiClassName = (letter: string) => {
 		const classes = ["letterNavigation__item"];
 		if (letter === selectedLetter) {
 			classes.push("letterNavigation__item--current");
 		}
-		if (completedLetters.includes(letter)) {
+		if (!!font[letter]) {
 			classes.push("letterNavigation__item--completed");
 		}
 		return classes.join(" ");
 	};
+	return (
+		<ol className="letterNavigation" id="letterNavigation">
+			{characters.map((letter) => (
+				<li className={getLiClassName(letter)} key={letter}>
+					<a
+						href={`#${letter}`}
+						className="letterNavigation__item__a"
+						onClick={(e) => {
+							e.preventDefault();
+							const container = document.getElementById("letterNavigation");
+							if (container) {
+								container.scrollTo({
+									left:
+										e.currentTarget.offsetLeft -
+										container.clientWidth / 2 +
+										e.currentTarget.clientWidth / 2,
+									behavior: "smooth",
+								});
+							}
+							setSelectedLetter(letter);
+						}}
+					>
+						{font[letter]?.length > 0 ? (
+							<svg
+								className="letterPreviewSvg"
+								width="1em"
+								height="1em"
+								viewBox="0 0 250 250"
+							>
+								<path d={font[letter]} />
+							</svg>
+						) : (
+							letter
+						)}
+					</a>
+				</li>
+			))}
+		</ol>
+	);
+};
+
+const Step2: FunctionComponent<Step> = ({ setStep }) => {
+	const [selectedLetter, setSelectedLetter] = useState(alphaCharacters[2]);
+	const font = useFontStore((store) => store.font);
 
 	return (
 		<div className="contentAppear">
 			<p className="paragraph paragraph--b">It's the alphabet time buddy!</p>
-			<LetterDraw
-				letter={selectedLetter}
-				setContainsLetter={(containsIt) => {
-					if (containsIt) {
-						setCompletedLetters([selectedLetter, ...completedLetters]);
-					} else {
-						setCompletedLetters(
-							completedLetters.filter((letter) => letter !== selectedLetter)
-						);
-					}
-				}}
+			<LetterDraw letter={selectedLetter} />
+			<LetterNavigator
+				font={font}
+				selectedLetter={selectedLetter}
+				setSelectedLetter={setSelectedLetter}
+				characters={alphaCharacters}
 			/>
-			<ol className="letterNavigation" id="letterNavigation">
-				{characters.map((letter) => (
-					<li className={getLiClassName(letter)} key={letter}>
-						<a
-							href={`#${letter}`}
-							className="letterNavigation__item__a"
-							onClick={(e) => {
-								e.preventDefault();
-								const container = document.getElementById("letterNavigation");
-								if (container) {
-									container.scrollTo({
-										left:
-											e.currentTarget.offsetLeft -
-											container.clientWidth / 2 +
-											e.currentTarget.clientWidth / 2,
-										behavior: "smooth",
-									});
-								}
-								setSelectedLetter(letter);
-							}}
-						>
-							{font[letter]?.length > 0 ? (
-								<svg
-									className="letterPreviewSvg"
-									width="1em"
-									height="1em"
-									viewBox="0 0 250 250"
-								>
-									<path d={font[letter]} />
-								</svg>
-							) : (
-								letter
-							)}
-						</a>
-					</li>
-				))}
-			</ol>
-			<p className="contentAppear paragraph">
-				Looking good, my friend.{" "}
+			{Object.keys(font).join("").includes(alphaCharacters.join("")) && (
+				<p className="contentAppear paragraph">
+					Looking good, my friend.{" "}
+					<button
+						className="button button__primary button--large"
+						onClick={(e) => {
+							e.preventDefault();
+							setStep(3);
+						}}
+					>
+						Next <Icon withMargin="right">arrow_forward</Icon>
+					</button>
+				</p>
+			)}
+		</div>
+	);
+};
+
+const Step3: FunctionComponent<Step> = ({ setStep }) => {
+	const [selectedLetter, setSelectedLetter] = useState(numbers[0]);
+	const [isCustomising, setIsCustomising] = useState(false);
+	const font = useFontStore((store) => store.font);
+
+	return isCustomising ? (
+		<div className="contentAppear" key={1}>
+			<p className="paragraph paragraph--b">It's numbers time mi amigo!</p>
+			<LetterDraw letter={selectedLetter} />
+			<LetterNavigator
+				font={font}
+				selectedLetter={selectedLetter}
+				setSelectedLetter={setSelectedLetter}
+				characters={numbers}
+			/>
+
+			{Object.keys(font).join("").includes(numbers.join("")) && (
+				<p className="contentAppear paragraph">
+					Looking good, my friend.{" "}
+					<button
+						className="button button__primary button--large"
+						onClick={(e) => {
+							e.preventDefault();
+							setStep(4);
+						}}
+					>
+						Next <Icon withMargin="right">arrow_forward</Icon>
+					</button>
+				</p>
+			)}
+		</div>
+	) : (
+		<div className="contentAppear" key={0}>
+			<p className="paragraph paragraph--b">
+				Would you like to customise your numbers?
+			</p>
+			<div className="buttonRow">
+				<button
+					className="button button__secondary button--large"
+					onClick={(e) => {
+						e.preventDefault();
+						setStep(4);
+					}}
+				>
+					Skip
+				</button>
 				<button
 					className="button button__primary button--large"
 					onClick={(e) => {
 						e.preventDefault();
-						setStep(3);
+						setIsCustomising(true);
 					}}
 				>
-					Next <Icon withMargin="right">arrow_forward</Icon>
+					Yes! <Icon withMargin="right">arrow_forward</Icon>
 				</button>
+			</div>
+		</div>
+	);
+};
+
+const Step4: FunctionComponent<Step> = ({ setStep }) => {
+	const [selectedLetter, setSelectedLetter] = useState(specialCharacters[0]);
+	const [isCustomising, setIsCustomising] = useState(false);
+	const font = useFontStore((store) => store.font);
+
+	return isCustomising ? (
+		<div className="contentAppear" key={1}>
+			<p className="paragraph paragraph--b">
+				It's special characters time mon ami!
 			</p>
+			<LetterDraw letter={selectedLetter} />
+			<LetterNavigator
+				font={font}
+				selectedLetter={selectedLetter}
+				setSelectedLetter={setSelectedLetter}
+				characters={specialCharacters}
+			/>
+
+			{Object.keys(font).join("").includes(specialCharacters.join("")) && (
+				<p className="contentAppear paragraph">
+					Looking good, my friend.{" "}
+					<button
+						className="button button__primary button--large"
+						onClick={(e) => {
+							e.preventDefault();
+							setStep(5);
+						}}
+					>
+						Next <Icon withMargin="right">arrow_forward</Icon>
+					</button>
+				</p>
+			)}
+		</div>
+	) : (
+		<div className="contentAppear" key={0}>
+			<p className="paragraph paragraph--b">
+				Would you like to customise your punctuation marks?
+			</p>
+			<div className="buttonRow">
+				<button
+					className="button button__secondary button--large"
+					onClick={(e) => {
+						e.preventDefault();
+						setStep(5);
+					}}
+				>
+					Skip
+				</button>
+				<button
+					className="button button__primary button--large"
+					onClick={(e) => {
+						e.preventDefault();
+						setIsCustomising(true);
+					}}
+				>
+					Yes! <Icon withMargin="right">arrow_forward</Icon>
+				</button>
+			</div>
 		</div>
 	);
 };
 
 type Stage = "generating" | "initial" | "saving" | "saved";
 
-export const Step3: FunctionComponent<Step> = ({ setStep }) => {
-	const [previewText, setPreviewText] = useState("");
+export const Step5: FunctionComponent<Step> = () => {
 	const [fontTtf, setFontTtf] = useState(new Uint8Array());
 
 	const [errors, setErrors] = useState([] as string[]);
@@ -169,13 +306,20 @@ export const Step3: FunctionComponent<Step> = ({ setStep }) => {
 	const token = useAuthStore((store) => store.token);
 	const http = useHttpClient();
 	const font = useFontStore((store) => store.font);
+	const [previewText, setPreviewText] = useState(Object.keys(font).join(""));
 
 	useEffect(() => {
+		
+		let isSubscribed = true
 		convertToTTF(font).then((res) => {
-			document.fonts.add(new FontFace("Handwriting", res.buffer));
-			setFontTtf(res.buffer);
-			setStage("initial");
+			if (isSubscribed) {
+				document.fonts.add(new FontFace("Handwriting", res.buffer));
+				setFontTtf(res.buffer);
+				setStage("initial");
+			}
 		});
+
+		return () => {isSubscribed = false}
 	}, []);
 
 	const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
@@ -267,17 +411,31 @@ export const Step3: FunctionComponent<Step> = ({ setStep }) => {
 };
 
 export const Create = () => {
-	const [step, setStep] = useState(0);
+	const step = useFontCreationProgressStore((store) => store.step);
+	const setStep = useFontCreationProgressStore((store) => store.setStep);
 
 	return (
 		<div className="createPage">
 			<h2 className="pageTitle contentAppear">Create your own font.</h2>
+			{step > 0 && (
+				<button
+					className="linkButton contentAppear"
+					onClick={(e) => {
+						e.preventDefault();
+						setStep(step - 1);
+					}}
+				>
+					<Icon withMargin="left">arrow_back</Icon>Back
+				</button>
+			)}
 			{
 				[
 					<Step0 setStep={setStep} key={0} />,
 					<Step1 setStep={setStep} key={1} />,
 					<Step2 setStep={setStep} key={2} />,
 					<Step3 setStep={setStep} key={3} />,
+					<Step4 setStep={setStep} key={4} />,
+					<Step5 setStep={setStep} key={5} />,
 				][step]
 			}
 		</div>
