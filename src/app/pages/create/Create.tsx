@@ -358,7 +358,7 @@ export const Step5: FunctionComponent<Step> = () => {
 			<div>
 				{stage === "generating" && (
 					<p className="paragraph">
-						<LoadingSpinner /> Generating your font
+						<LoadingSpinner /> Generating your font (this can take up to a minute or so)
 					</p>
 				)}
 				{stage !== "generating" && (
