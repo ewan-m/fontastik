@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html  --out-dir docs --public-url ./fontastik",
+    "build": "parcel build src/index.html  --out-dir docs --public-url ./",
     "format": "prettier \"src/**\" --write"
   },
   "dependencies": {

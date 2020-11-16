@@ -1,7 +1,7 @@
 import { createBrowserHistory } from "history";
 import * as React from "react";
 import { render } from "react-dom";
-import { Route, Router, Switch, Redirect } from "react-router-dom";
+import { Route, Router, Switch, Redirect, HashRouter } from "react-router-dom";
 import { SiteContainer } from "./app/global/SiteContainer";
 import { Account } from "./app/pages/account/Account";
 import { LogIn } from "./app/pages/account/LogIn";
@@ -11,10 +11,8 @@ import { Create } from "./app/pages/create/Create";
 import { Home } from "./app/pages/home/Home";
 import "./index.scss";
 
-const history = createBrowserHistory();
-
 const App = () => (
-	<Router history={history}>
+	<HashRouter basename="/">
 		<SiteContainer>
 			<Switch>
 				<Redirect path="/" exact to="home" />
@@ -27,7 +25,7 @@ const App = () => (
 				<Route path="/account/sign-up" exact component={SignUp} />
 			</Switch>
 		</SiteContainer>
-	</Router>
+	</HashRouter>
 );
 
 render(<App />, document.getElementById("root"));
