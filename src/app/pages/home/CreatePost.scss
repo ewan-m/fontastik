@@ -17,6 +17,7 @@
 	transition: 0.3s all ease-in-out;
 	transform: translateY($size6);
 	animation: createPostButtonAppear 0.2s linear forwards;
+	z-index: 3;
 
 	&:hover {
 		transform: scale(1.1);
