@@ -419,7 +419,7 @@ export const Create = () => {
 
 	return (
 		<div className="createPage">
-			<h2 className="pageTitle contentAppear">Create your own font.</h2>
+			<h2 className="pageTitle contentAppear">Create your font.</h2>
 			{step > 0 && (
 				<button
 					className="linkButton contentAppear"
