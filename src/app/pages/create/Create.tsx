@@ -404,6 +404,17 @@ export const Step5: FunctionComponent<Step> = () => {
 										</Link>
 									</>
 								)}
+								<div className="downloadButtonContainer">
+									<a
+										className="button button__secondary button--large"
+										href={window.URL.createObjectURL(
+											new Blob([fontTtf], { type: "font/ttf" })
+										)}
+										download="MyFont.ttf"
+									>
+										Download font <Icon withMargin="right">cloud_download</Icon>
+									</a>
+								</div>
 							</>
 						)}
 					</>
