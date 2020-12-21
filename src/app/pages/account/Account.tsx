@@ -239,14 +239,11 @@ export const Account = () => {
 			<div>
 				{requestStatus === "fetched" && (
 					<>
-						{[...new Set(posts.map((post) => post.user_id))].map((userId) => (
-							<link
-								key={userId}
-								rel="stylesheet"
-								type="text/css"
-								href={`${environment.githubDataUrl}/UserFont-${userId}.css`}
-							/>
-						))}
+						<link
+							rel="stylesheet"
+							type="text/css"
+							href={`${environment.githubDataUrl}/UserFont-${decodedToken.id}.css`}
+						/>
 						{posts.map((post, index) => (
 							<div
 								className="animateIn"
