@@ -167,7 +167,7 @@ export const Account = () => {
 		setRequestStatus("fetching");
 		(async () => {
 			const response = await http.request({
-				uri: "posts-for-user",
+				uri: `user/${decodedToken.id}/posts`,
 				method: "GET",
 				withAuth: true,
 			});

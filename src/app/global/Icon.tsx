@@ -14,9 +14,9 @@ export const Icon: FunctionComponent<IconProps> = ({
 }) => (
 	<span
 		{...props}
-		className={`material-icons ${
-			withMargin ? ` material-icons--${withMargin} ` : ""
-		}${className}`}
+		className={`material-icons${
+			withMargin ? ` material-icons--${withMargin}` : ""
+		}${className ? ` ${className}` : ""}`}
 	>
 		{children}
 	</span>
