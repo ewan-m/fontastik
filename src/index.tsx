@@ -1,7 +1,6 @@
-import { createBrowserHistory } from "history";
 import * as React from "react";
 import { render } from "react-dom";
-import { Route, Router, Switch, Redirect, HashRouter } from "react-router-dom";
+import { Route, Switch, Redirect, HashRouter } from "react-router-dom";
 import { SiteContainer } from "./app/global/SiteContainer";
 import { Account } from "./app/pages/account/Account";
 import { LogIn } from "./app/pages/account/LogIn";
