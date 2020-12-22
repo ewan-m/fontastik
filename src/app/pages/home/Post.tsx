@@ -6,7 +6,6 @@ import { LikeButton } from "./LikeButton";
 import { PostData } from "./post-data.interface";
 import { formatDistance } from "date-fns";
 import { calculateDistance } from "./calculate-distance";
-import { NavLink } from "react-router-dom";
 
 interface PostComponent extends PostData {
 	currentLocation: { x: number; y: number };
@@ -28,15 +27,7 @@ export const Post: FunctionComponent<PostComponent> = ({
 	return (
 		<article className="post">
 			<div className="post__body">
-				{showName && (
-					<NavLink
-						className="post__author"
-						style={{ fontFamily: "UserFont-" + user_id }}
-						to={`/home/user/${user_id}?name=${name}`}
-					>
-						{name}
-					</NavLink>
-				)}
+				{showName && <address className="post__author">{name} </address>}
 				<p className="post__content" style={{ fontFamily: "UserFont-" + user_id }}>
 					{content}
 				</p>
