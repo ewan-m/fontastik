@@ -8,6 +8,7 @@ import { MagicLink } from "./app/pages/account/MagicLink";
 import { SignUp } from "./app/pages/account/SignUp";
 import { Create } from "./app/pages/create/Create";
 import { Home } from "./app/pages/home/Home";
+import { User } from "./app/pages/home/User";
 import "./index.scss";
 
 const App = () => (
@@ -17,6 +18,7 @@ const App = () => (
 				<Redirect path="/" exact to="home" />
 				<Redirect path="/home" exact to="home/popular" />
 				<Route path="/home/:category" exact component={Home} />
+				<Route path="/home/user/:userId" exact component={User} />
 				<Route path="/create" exact component={Create} />
 				<Route path="/account" exact component={Account} />
 				<Route path="/account/log-in" exact component={LogIn} />
