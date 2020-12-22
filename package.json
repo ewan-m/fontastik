@@ -18,6 +18,7 @@
     "makerjs": "^0.17.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-intersection-observer": "^8.28.6",
     "react-router-dom": "^5.2.0",
     "svg2ttf": "^5.0.0",
     "zustand": "^3.2.0"

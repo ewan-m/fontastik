@@ -10,6 +10,7 @@ import { PostData } from "./post-data.interface";
 import { environment } from "../../environment";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { usePostLikesStore } from "../../store/global-store";
+import { useInView } from "react-intersection-observer";
 
 type RequestStatus = "fetching" | "fetched" | "error";
 
@@ -25,6 +26,10 @@ export const Home = () => {
 		data: defaultLocation,
 		state: "unset",
 	});
+
+	const [fetchedOffsets, setFetchedOffsets] = useState([0]);
+	const [offset, setOffset] = useState(0);
+
 	const http = useHttpClient();
 
 	useEffect(() => {
@@ -64,12 +69,43 @@ export const Home = () => {
 			if (response.ok) {
 				const result = await response.json();
 				setPosts(result);
+				setOffset(0);
+				setFetchedOffsets([0]);
 				setRequestStatus("fetched");
 			} else {
 				setRequestStatus("error");
 			}
 		})();
 	}, [category, location.state]);
+
+	useEffect(() => {
+		if (offset !== 0) {
+			(async () => {
+				const response = await http.request({
+					method: "GET",
+					uri: `posts?type=${category}${
+						location.data.x !== 0 && location.data.y !== 0
+							? `&x=${location.data.x.toFixed(2)}&y=${location.data.y.toFixed(2)}`
+							: ""
+					}&offset=${offset}`,
+					withAuth: false,
+				});
+				if (response.ok) {
+					const result = await response.json();
+					setPosts([...posts, ...result]);
+					setFetchedOffsets([...fetchedOffsets, offset]);
+				}
+			})();
+		}
+	}, [offset]);
+
+	const [ref, isEndOfPageOnScreen] = useInView();
+
+	useEffect(() => {
+		if (isEndOfPageOnScreen && fetchedOffsets.includes(offset)) {
+			setOffset(offset + 20);
+		}
+	}, [isEndOfPageOnScreen]);
 
 	const syncLikesWithApi = usePostLikesStore((store) => store.syncWithApi);
 
@@ -132,6 +168,7 @@ export const Home = () => {
 							<Post currentLocation={location.data} {...post} />
 						</div>
 					))}
+					<div ref={ref}></div>
 				</>
 			)}
 			{requestStatus === "fetching" && <LoadingSpinner />}

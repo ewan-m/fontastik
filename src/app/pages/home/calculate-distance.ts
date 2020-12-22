@@ -12,7 +12,7 @@ export function calculateDistance(
 	const R = 6371; // km
 	const φ1 = (location1.x * Math.PI) / 180; // φ, λ in radians
 	const φ2 = (location2.x * Math.PI) / 180;
-	const Δφ = ((location2.x - location2.x) * Math.PI) / 180;
+	const Δφ = ((location2.x - location1.x) * Math.PI) / 180;
 	const Δλ = ((location2.y - location1.y) * Math.PI) / 180;
 
 	const a =
