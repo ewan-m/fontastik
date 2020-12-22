@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-	FunctionComponent,
-	useEffect,
-	useState,
-	MouseEvent,
-	CSSProperties,
-} from "react";
+import { FunctionComponent, useEffect, useState, MouseEvent } from "react";
 import { useHistory } from "react-router-dom";
 import { Icon } from "../../global/Icon";
 import "./Account.scss";
@@ -15,9 +9,7 @@ import { Errors } from "../../global/Errors";
 import { useAuthStore } from "../../store/global-store";
 import { decode } from "jsonwebtoken";
 import { TokenPayload } from "../../global/token-payload.type";
-import { environment } from "../../environment";
-import { Post } from "../home/Post";
-import { PostData } from "../home/post-data.interface";
+import { AccountPosts } from "./AccountPosts";
 
 enum FormState {
 	initial = "initial",
@@ -144,8 +136,6 @@ const MiniForm: FunctionComponent<{
 	}
 };
 
-type RequestStatus = "fetching" | "fetched" | "error";
-
 export const Account = () => {
 	const history = useHistory();
 	const token = useAuthStore((state) => state.token);
@@ -156,30 +146,7 @@ export const Account = () => {
 	}, []);
 
 	const decodedToken = decode(token) as TokenPayload;
-
-	const [requestStatus, setRequestStatus] = useState(
-		"fetching" as RequestStatus
-	);
-	const [posts, setPosts] = useState([] as PostData[]);
 	const http = useHttpClient();
-
-	useEffect(() => {
-		setRequestStatus("fetching");
-		(async () => {
-			const response = await http.request({
-				uri: `user/${decodedToken.id}/posts`,
-				method: "GET",
-				withAuth: true,
-			});
-			if (response.ok) {
-				const result = await response.json();
-				setPosts(result);
-				setRequestStatus("fetched");
-			} else {
-				setRequestStatus("error");
-			}
-		})();
-	}, []);
 
 	const logoutAction = useAuthStore((store) => store.logout);
 
@@ -235,31 +202,7 @@ export const Account = () => {
 					<Icon withMargin="left">delete</Icon> Delete your account
 				</button>
 			</div>
-			<h2 className="pageTitle contentAppear">Your posts.</h2>
-			<div>
-				{requestStatus === "fetched" && (
-					<>
-						<link
-							rel="stylesheet"
-							type="text/css"
-							href={`${environment.githubDataUrl}/UserFont-${decodedToken.id}.css`}
-						/>
-						{posts.map((post, index) => (
-							<div
-								className="animateIn"
-								key={post.post_id}
-								style={{ "--animation-order": index } as CSSProperties}
-							>
-								<Post showName={false} currentLocation={{ x: 0, y: 0 }} {...post} />
-							</div>
-						))}
-					</>
-				)}
-				{requestStatus === "fetching" && <LoadingSpinner />}
-				{requestStatus === "error" && (
-					<p className="paragraph">Something went wrong fetching posts.</p>
-				)}
-			</div>
+			<AccountPosts userId={decodedToken.id.toString()} title="Your posts." />
 		</div>
 	);
 };
