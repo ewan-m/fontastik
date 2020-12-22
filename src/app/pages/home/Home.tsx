@@ -163,7 +163,7 @@ export const Home = () => {
 						<div
 							className="animateIn"
 							key={post.post_id}
-							style={{ "--animation-order": index } as CSSProperties}
+							style={{ "--animation-order": index - offset } as CSSProperties}
 						>
 							<Post currentLocation={location.data} {...post} />
 						</div>
