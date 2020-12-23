@@ -202,7 +202,7 @@ export const Account = () => {
 					<Icon withMargin="left">delete</Icon> Delete your account
 				</button>
 			</div>
-			<AccountPosts userId={decodedToken.id.toString()} title="Your posts." />
+			<AccountPosts userId={decodedToken?.id.toString()} title="Your posts." />
 		</div>
 	);
 };
