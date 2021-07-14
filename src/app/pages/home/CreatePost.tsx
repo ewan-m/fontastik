@@ -121,12 +121,6 @@ export const CreatePost = () => {
 
 	return (
 		<>
-			<link
-				rel="stylesheet"
-				type="text/css"
-				href={`${environment.githubDataUrl}/UserFont-${userId}.css`}
-			/>
-
 			{!active && (
 				<button className="createPostButton" onClick={onCreateClick}>
 					<Icon>send</Icon>
@@ -134,6 +128,11 @@ export const CreatePost = () => {
 			)}
 			{active && (
 				<div className="createPostScreen" ref={createFrame}>
+					<link
+						rel="stylesheet"
+						type="text/css"
+						href={`${environment.githubDataUrl}/UserFont-${userId}.css`}
+					/>
 					<div className="createPostScreen__header">
 						<h2 className="createPostScreen__header__title">Share with fontastik.</h2>
 						<button
