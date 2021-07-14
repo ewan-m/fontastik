@@ -156,7 +156,10 @@ const Step2: FunctionComponent<Step> = ({ setStep }) => {
 				setSelectedLetter={setSelectedLetter}
 				characters={alphaCharacters}
 			/>
-			{Object.keys(font).join("").includes(alphaCharacters.join("")) && (
+			{Object.keys(font)
+				.sort()
+				.join("")
+				.includes(alphaCharacters.sort().join("")) && (
 				<p className="contentAppear paragraph">
 					Looking good, my friend.{" "}
 					<button
