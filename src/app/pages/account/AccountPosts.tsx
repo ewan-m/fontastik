@@ -11,7 +11,8 @@ type RequestStatus = "fetching" | "fetched" | "error";
 export const AccountPosts: FunctionComponent<{
 	userId: string;
 	title: string;
-}> = ({ userId, title }) => {
+	matchTitleToPost?: boolean;
+}> = ({ userId, title, matchTitleToPost = false }) => {
 	const [requestStatus, setRequestStatus] = useState(
 		"fetching" as RequestStatus
 	);
@@ -38,7 +39,9 @@ export const AccountPosts: FunctionComponent<{
 
 	return (
 		<>
-			<h2 className="pageTitle contentAppear">{title}</h2>
+			<h2 className="pageTitle contentAppear">
+				{matchTitleToPost ? posts?.[0]?.name ?? title : title}
+			</h2>
 			<div>
 				{requestStatus === "fetched" && (
 					<>

@@ -20,7 +20,7 @@ export const User = () => {
 			>
 				<Icon withMargin="left">arrow_back</Icon>Back
 			</button>
-			<AccountPosts title={title + "."} userId={userId} />
+			<AccountPosts matchTitleToPost title={title + "."} userId={userId} />
 		</div>
 	);
 };
