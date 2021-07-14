@@ -55,6 +55,7 @@ export const Home = () => {
 	}, [category]);
 
 	useEffect(() => {
+		let isSubscribed = true;
 		setRequestStatus("fetching");
 		(async () => {
 			const response = await http.request({
@@ -66,16 +67,21 @@ export const Home = () => {
 				}`,
 				withAuth: false,
 			});
-			if (response.ok) {
-				const result = await response.json();
-				setPosts(result);
-				setOffset(0);
-				setFetchedOffsets([0]);
-				setRequestStatus("fetched");
-			} else {
-				setRequestStatus("error");
+			if (isSubscribed) {
+				if (response.ok) {
+					const result = await response.json();
+					setPosts(result);
+					setOffset(0);
+					setFetchedOffsets([0]);
+					setRequestStatus("fetched");
+				} else {
+					setRequestStatus("error");
+				}
 			}
 		})();
+		return () => {
+			isSubscribed = false;
+		};
 	}, [category, location.state]);
 
 	useEffect(() => {
