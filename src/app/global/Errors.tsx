@@ -14,7 +14,7 @@ export const Errors: FunctionComponent<{ errors: string[] }> = ({ errors }) => {
 	return Array.isArray(errors) && errors.length > 0 ? (
 		<>
 			{errors.map((error) => (
-				<p key={error} className="paragraph paragraph--error">
+				<p key={error} className="paragraph paragraph--error contentAppear">
 					<Icon withMargin="left">error</Icon>
 					{formatError(error)}
 				</p>
