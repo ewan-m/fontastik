@@ -13,6 +13,18 @@ body {
 	font-weight: 400;
 	font-size: $size1;
 	margin: 0;
+
+	&::-webkit-scrollbar {
+		width: 11px;
+	}
+	&::-webkit-scrollbar-track {
+		background-color: $lightGrey;
+		border-radius: $size1;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: $secondaryTransparent;
+		border-radius: $size1;
+	}
 }
 
 .no-focus-outline {
