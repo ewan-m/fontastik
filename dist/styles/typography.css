@@ -1,0 +1,58 @@
+@font-face {
+  src: url(/dist/assets/fonts/GreycliffCF-Light.woff2);
+  font-family: "GreycliffCF";
+  font-weight: 200;
+}
+@font-face {
+  src: url(/dist/assets/fonts/GreycliffCF-Regular.woff2);
+  font-family: "GreycliffCF";
+  font-weight: 400;
+}
+@font-face {
+  src: url(/dist/assets/fonts/GreycliffCF-Medium.woff2);
+  font-family: "GreycliffCF";
+  font-weight: 500;
+}
+@font-face {
+  src: url(/dist/assets/fonts/GreycliffCF-DemiBold.woff2);
+  font-family: "GreycliffCF";
+  font-weight: 600;
+}
+@font-face {
+  src: url(/dist/assets/fonts/GreycliffCF-Bold.woff2);
+  font-family: "GreycliffCF";
+  font-weight: 700;
+}
+@font-face {
+  src: url(/dist/assets/fonts/GreycliffCF-ExtraBold.woff2);
+  font-family: "GreycliffCF";
+  font-weight: 800;
+}
+@font-face {
+  src: url(/dist/assets/fonts/GreycliffCF-Heavy.woff2);
+  font-family: "GreycliffCF";
+  font-weight: 900;
+}
+.paragraph {
+  max-width: 550px;
+  color: #222;
+  font-size: 0.949rem;
+  margin: 0;
+}
+.paragraph--informational {
+  font-size: 0.75rem;
+}
+.paragraph--b {
+  padding-bottom: 0.75rem;
+}
+.paragraph--error {
+  font-size: 0.949rem;
+  color: #d10707;
+  padding: 0.75rem 0 1.201rem;
+  display: flex;
+  align-items: center;
+}
+.paragraph--hero {
+  font-size: 3.082rem;
+  font-weight: 300;
+}
