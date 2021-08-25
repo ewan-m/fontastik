@@ -54,7 +54,7 @@ export const SiteContainer: FunctionComponent = ({ children }) => {
 					<NavLink to="/home" className="link">
 						<img
 							className="siteHeader__logo"
-							src="/fontastik.png"
+							src={`${import.meta.hot ? "" : "fontastik"}/fontastik.png`}
 							alt="fontastik logo"
 						/>
 					</NavLink>
