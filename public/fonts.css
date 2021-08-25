@@ -1,0 +1,42 @@
+@font-face {
+	src: url(./fonts/GreycliffCF-Light.woff2);
+	font-family: "GreycliffCF";
+	font-weight: 200;
+    font-display: fallback;
+}
+@font-face {
+	src: url(./fonts/GreycliffCF-Regular.woff2);
+	font-family: "GreycliffCF";
+	font-weight: 400;
+    font-display: fallback;
+}
+@font-face {
+	src: url(./fonts/GreycliffCF-Medium.woff2);
+	font-family: "GreycliffCF";
+	font-weight: 500;
+    font-display: fallback;
+}
+@font-face {
+	src: url(./fonts/GreycliffCF-DemiBold.woff2);
+	font-family: "GreycliffCF";
+	font-weight: 600;
+    font-display: fallback;
+}
+@font-face {
+	src: url(./fonts/GreycliffCF-Bold.woff2);
+	font-family: "GreycliffCF";
+	font-weight: 700;
+    font-display: fallback;
+}
+@font-face {
+	src: url(./fonts/GreycliffCF-ExtraBold.woff2);
+	font-family: "GreycliffCF";
+	font-weight: 800;
+    font-display: fallback;
+}
+@font-face {
+	src: url(./fonts/GreycliffCF-Heavy.woff2);
+	font-family: "GreycliffCF";
+	font-weight: 900;
+    font-display: fallback;
+}

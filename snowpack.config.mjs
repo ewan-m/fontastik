@@ -7,21 +7,28 @@ export default {
 	optimize: {
 		bundle: true,
 		minify: true,
-		target: 'es2020',
+		target: "es2020",
 		treeshake: true,
 	},
 	plugins: [
 		"@snowpack/plugin-react-refresh",
 		"@snowpack/plugin-dotenv",
-		"@snowpack/plugin-sass",
-		"@snowpack/plugin-typescript"
+		[
+			"@snowpack/plugin-sass",
+			{
+				compilerOptions: {
+					style: "compressed",
+				},
+			},
+		],
+		"@snowpack/plugin-typescript",
 	],
 	polyfillNode: true,
 	devOptions: {
-		port: 1234
+		port: 1234,
 	},
 	buildOptions: {
 		out: "docs",
-		baseUrl: "/fontastik"
-	}
+		baseUrl: "/fontastik",
+	},
 };
