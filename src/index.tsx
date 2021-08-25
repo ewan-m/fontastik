@@ -33,3 +33,7 @@ const App = () => (
 );
 
 render(<App />, document.getElementById("root"));
+
+if (import.meta.hot) {
+	import.meta.hot.accept();
+}
