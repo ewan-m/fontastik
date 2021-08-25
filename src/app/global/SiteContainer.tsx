@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { NavLink } from "react-router-dom";
 import { useMediaQuery } from "../hooks/use-media-query";
 import { Icon } from "./Icon";
@@ -53,7 +53,7 @@ export const SiteContainer: FunctionComponent = ({ children }) => {
 			<header className="siteHeader">
 				<div className="siteHeader__inner">
 					<NavLink to="/home" className="link">
-						<img className="siteHeader__logo" src={Logo} />
+						<img className="siteHeader__logo" src={Logo} alt="fontastik logo" />
 					</NavLink>
 					{!isMobile && <NavigationItems type="header" />}
 				</div>

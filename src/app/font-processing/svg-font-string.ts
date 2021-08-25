@@ -1,5 +1,5 @@
-import svg2ttf from "svg2ttf";
-import { Font } from "./font.interface";
+import type svg2ttf from "svg2ttf";
+import type { Font } from "./font.type";
 
 export function convertToTTF(font: Font): Promise<svg2ttf.MicroBuffer> {
 	return new Promise((resolve, reject) => {

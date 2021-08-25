@@ -15,7 +15,7 @@ import {
 	useAuthStore,
 	useFontCreationProgressStore,
 } from "../../store/global-store";
-import { Font } from "../../font-processing/font.interface";
+import type { Font } from "../../font-processing/font.type";
 
 interface Step {
 	setStep: (stepNumber: number) => void;

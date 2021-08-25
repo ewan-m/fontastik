@@ -7,8 +7,8 @@ import { useHttpClient } from "../../hooks/use-http-client";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { Errors } from "../../global/Errors";
 import { useAuthStore } from "../../store/global-store";
-import { decode } from "jsonwebtoken";
-import { TokenPayload } from "../../global/token-payload.type";
+import decode from "jwt-decode";
+import type { TokenPayload } from "../../global/token-payload.type";
 import { AccountPosts } from "./AccountPosts";
 
 enum FormState {
@@ -145,12 +145,12 @@ export const Account = () => {
 		}
 	}, []);
 
-	const decodedToken = decode(token) as TokenPayload;
+	const decodedToken = token ? (decode(token) as TokenPayload) : undefined;
 	const http = useHttpClient();
 
 	const logoutAction = useAuthStore((store) => store.logout);
 
-	return (
+	return decodedToken ? (
 		<div className="accountPage">
 			<h2 className="pageTitle contentAppear">Your info.</h2>
 			<div className="accountFields contentAppear">
@@ -204,5 +204,7 @@ export const Account = () => {
 			</div>
 			<AccountPosts userId={decodedToken?.id.toString()} title="Your posts." />
 		</div>
+	) : (
+		<></>
 	);
 };

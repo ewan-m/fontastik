@@ -1,4 +1,5 @@
 import * as React from "react";
+import { StrictMode } from "react";
 import { render } from "react-dom";
 import { Route, Switch, Redirect, HashRouter } from "react-router-dom";
 import { SiteContainer } from "./app/global/SiteContainer";
@@ -12,21 +13,23 @@ import { User } from "./app/pages/home/User";
 import "./index.scss";
 
 const App = () => (
-	<HashRouter basename="/">
-		<SiteContainer>
-			<Switch>
-				<Redirect path="/" exact to="home" />
-				<Redirect path="/home" exact to="home/popular" />
-				<Route path="/home/:category" exact component={Home} />
-				<Route path="/home/user/:userId" exact component={User} />
-				<Route path="/create" exact component={Create} />
-				<Route path="/account" exact component={Account} />
-				<Route path="/account/log-in" exact component={LogIn} />
-				<Route path="/account/magic-link" exact component={MagicLink} />
-				<Route path="/account/sign-up" exact component={SignUp} />
-			</Switch>
-		</SiteContainer>
-	</HashRouter>
+	<StrictMode>
+		<HashRouter basename="/">
+			<SiteContainer>
+				<Switch>
+					<Redirect path="/" exact to="home" />
+					<Redirect path="/home" exact to="home/popular" />
+					<Route path="/home/:category" exact component={Home} />
+					<Route path="/home/user/:userId" exact component={User} />
+					<Route path="/create" exact component={Create} />
+					<Route path="/account" exact component={Account} />
+					<Route path="/account/log-in" exact component={LogIn} />
+					<Route path="/account/magic-link" exact component={MagicLink} />
+					<Route path="/account/sign-up" exact component={SignUp} />
+				</Switch>
+			</SiteContainer>
+		</HashRouter>
+	</StrictMode>
 );
 
 render(<App />, document.getElementById("root"));

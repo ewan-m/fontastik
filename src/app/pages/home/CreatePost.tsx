@@ -6,9 +6,9 @@ import { useHistory } from "react-router-dom";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { useAuthStore } from "../../store/global-store";
 import { useHttpClient } from "../../hooks/use-http-client";
-import { decode } from "jsonwebtoken";
+import decode from "jwt-decode";
 import { environment } from "../../environment";
-import { TokenPayload } from "../../global/token-payload.type";
+import type { TokenPayload } from "../../global/token-payload.type";
 
 const defaultLocation = { x: 0, y: 0 };
 
@@ -26,7 +26,7 @@ export const CreatePost = () => {
 	const createFrame = useRef<HTMLDivElement>(null);
 	const inputElement = useRef<HTMLTextAreaElement>(null);
 	const token = useAuthStore((store) => store.token);
-	const userId = (decode(token) as TokenPayload)?.["id"];
+	const userId = token ? (decode(token) as TokenPayload)?.["id"] : undefined;
 	const http = useHttpClient();
 
 	useEffect(() => {

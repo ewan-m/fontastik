@@ -4,7 +4,7 @@ import { environment } from "../../environment";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { useHttpClient } from "../../hooks/use-http-client";
 import { Post } from "../home/Post";
-import { PostData } from "../home/post-data.interface";
+import type { PostData } from "../home/post-data.type";
 
 type RequestStatus = "fetching" | "fetched" | "error";
 

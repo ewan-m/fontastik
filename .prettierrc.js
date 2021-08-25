@@ -11,12 +11,4 @@ module.exports = {
 	jsxBracketSameLine: false,
 	endOfLine: "lf",
 	arrowParens: "always",
-	overrides: [
-		{
-			files: "*.ts",
-			options: {
-				parser: "typescript",
-			},
-		},
-	],
 };

@@ -1,4 +1,4 @@
-import { GetState, SetState, StateCreator, StoreApi } from "zustand";
+import type { GetState, SetState, StateCreator, StoreApi } from "zustand";
 
 interface AbstractStorage {
 	setItem: (key: string, value: string) => void;

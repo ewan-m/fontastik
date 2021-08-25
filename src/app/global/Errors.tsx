@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { Icon } from "./Icon";
 
 export const Errors: FunctionComponent<{ errors: string[] }> = ({ errors }) => {

@@ -6,7 +6,7 @@ import { useParams, NavLink } from "react-router-dom";
 import { CreatePost } from "./CreatePost";
 import { useState, useEffect, CSSProperties } from "react";
 import { useHttpClient } from "../../hooks/use-http-client";
-import { PostData } from "./post-data.interface";
+import type { PostData } from "./post-data.type";
 import { environment } from "../../environment";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 import { usePostLikesStore } from "../../store/global-store";

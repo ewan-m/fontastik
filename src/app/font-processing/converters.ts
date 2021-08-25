@@ -1,4 +1,4 @@
-import { Point } from "./point.interface";
+import type { Point } from "./point.type";
 
 export function convertPathToPoints(svgPath: string): Point[] {
 	return svgPath

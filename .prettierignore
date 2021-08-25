@@ -1,14 +1,1 @@
-.cache/
-node_modules/
-dist/
-coverage/
-src/**/*.html
-src/**/*.snap
-src/**/*.jpg
-src/**/*.jpeg
-src/**/*.gif
-src/**/*.png
-src/**/*.ico
-src/**/*.svg
 src/assets/
-package-lock.json

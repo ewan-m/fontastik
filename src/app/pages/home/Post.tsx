@@ -1,9 +1,9 @@
 import * as React from "react";
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import "./Post.scss";
 import { Icon } from "../../global/Icon";
 import { LikeButton } from "./LikeButton";
-import { PostData } from "./post-data.interface";
+import type { PostData } from "./post-data.type";
 import { formatDistance } from "date-fns";
 import { calculateDistance } from "./calculate-distance";
 import { NavLink } from "react-router-dom";

@@ -1,4 +1,4 @@
-import { Point } from "./point.interface";
+import type { Point } from "./point.type";
 
 const LETTER_PADDING = 20;
 

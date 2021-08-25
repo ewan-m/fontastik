@@ -1,4 +1,4 @@
-import { Point } from "./point.interface";
+import type { Point } from "./point.type";
 
 export function simplify(points: Point[], tolerance: number) {
 	if (points.length <= 2) return points;

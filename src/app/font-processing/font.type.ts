@@ -1,3 +1,3 @@
-export interface Font {
+export type Font = {
 	[fontLetter: string]: string;
-}
+};

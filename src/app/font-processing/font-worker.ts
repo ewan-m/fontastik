@@ -1,4 +1,4 @@
-import { Font } from "./font.interface";
+import type { Font } from "./font.type";
 import svg2ttf from "svg2ttf";
 import { convertPathToPoints, convertPointsToPath } from "./converters";
 import { normalize } from "./normalizer";
@@ -59,8 +59,8 @@ function convertToTTF(font: Font): svg2ttf.MicroBuffer {
 	);
 }
 
-self.onmessage = (ev: { data: Font }) => {
+(self as unknown as Worker).onmessage = (ev: { data: Font }) => {
 	const ttf = convertToTTF(ev.data);
 
-	self.postMessage(ttf);
+	(self as unknown as Worker).postMessage(ttf);
 };

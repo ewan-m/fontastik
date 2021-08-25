@@ -1,4 +1,4 @@
-export interface PostData {
+export type PostData = {
 	content: string;
 	created: string;
 	location: { x: number; y: number };
@@ -6,4 +6,4 @@ export interface PostData {
 	post_likes: string;
 	post_id: number;
 	user_id: number;
-}
+};
