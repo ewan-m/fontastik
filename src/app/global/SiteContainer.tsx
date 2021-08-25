@@ -3,7 +3,7 @@ import type { FunctionComponent } from "react";
 import { NavLink } from "react-router-dom";
 import { useMediaQuery } from "../hooks/use-media-query";
 import { Icon } from "./Icon";
-import Logo from "/fontastik.png";
+import Logo from "../../../public/fontastik.png";
 import "./SiteContainer.scss";
 
 function NavigationItems({ type }: { type: "footer" | "header" }) {
