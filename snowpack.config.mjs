@@ -21,6 +21,6 @@ export default {
 		port: 1234
 	},
 	buildOptions: {
-		out: "dist",
+		out: "docs",
 	}
 };
