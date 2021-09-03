@@ -5,7 +5,11 @@ export function convertToTTF(font: Font): Promise<svg2ttf.MicroBuffer> {
 	return new Promise((resolve, reject) => {
 		try {
 			const worker = new Worker(
-				new URL("./app/font-processing/font-worker.js", import.meta.url)
+				new URL("./app/font-processing/font-worker.js", import.meta.url),
+				{
+					name: "font-worker",
+					type: "module",
+				}
 			);
 			worker.postMessage(font);
 			worker.onmessage = (e: { data: svg2ttf.MicroBuffer }) => {
