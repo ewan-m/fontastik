@@ -4,7 +4,7 @@ import type { Font } from "./font.type";
 export function convertToTTF(font: Font): Promise<svg2ttf.MicroBuffer> {
 	return new Promise((resolve, reject) => {
 		try {
-			const worker = new Worker("./font-worker.ts");
+			const worker = new Worker(new URL("./font-worker.js", import.meta.url));
 			worker.postMessage(font);
 			worker.onmessage = (e: { data: svg2ttf.MicroBuffer }) => {
 				resolve(e.data);
