@@ -2,8 +2,8 @@
 
 .createPostButton {
 	position: fixed;
-	right: $size3;
-	bottom: 4.5rem;
+	right: $size0;
+	bottom: 5.5rem;
 	background: $vibrantGradientAlt;
 	color: $white;
 	font-size: $size3;
@@ -97,7 +97,7 @@
 
 @keyframes createPostButtonAppear {
 	0% {
-		transform: translateY($size6);
+		transform: translateY(5.5rem);
 	}
 	100% {
 		transform: translateY(0);

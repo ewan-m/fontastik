@@ -17,7 +17,7 @@ function NavigationItems({ type }: { type: "footer" | "header" }) {
 						to="/home"
 					>
 						<Icon>home</Icon>
-						&nbsp;Home
+						Home
 					</NavLink>
 				</li>
 				<li className={`${type}Nav__item`}>
@@ -27,7 +27,7 @@ function NavigationItems({ type }: { type: "footer" | "header" }) {
 						to="/create"
 					>
 						<Icon>create</Icon>
-						&nbsp;Create
+						Create
 					</NavLink>
 				</li>
 				<li className={`${type}Nav__item`}>
@@ -37,7 +37,7 @@ function NavigationItems({ type }: { type: "footer" | "header" }) {
 						to="/account"
 					>
 						<Icon>account_circle</Icon>
-						&nbsp;Account
+						Account
 					</NavLink>
 				</li>
 			</ul>

@@ -68,6 +68,11 @@
 			transition-timing-function: ease-in-out;
 			transition-duration: 0.2s;
 			border-radius: $size6;
+
+			.material-icons {
+				margin-right: $size-3;
+			}
+
 			&:hover {
 				background: $lightGrey;
 				color: $darkestGrey;
@@ -97,6 +102,12 @@
 	width: 100%;
 	bottom: 0;
 	text-align: center;
+	z-index: 4;
+	border-radius: $size3 $size3 0 0;
+	border-top: $lightGrey;
+	overflow: hidden;
+	box-shadow: 0px -1px 10px 1px rgba(0, 0, 0, 0.3),
+		0px -2px 15px 1px rgba(0, 0, 0, 0.1);
 }
 
 .footerNav {
@@ -105,8 +116,6 @@
 	display: flex;
 	justify-content: space-between;
 	list-style: none;
-	box-shadow: 0px -1px 10px 1px rgba(0, 0, 0, 0.3),
-		0px -2px 15px 1px rgba(0, 0, 0, 0.1);
 
 	&__item {
 		width: 100%;
@@ -120,21 +129,49 @@
 
 		&__a {
 			display: flex;
+			flex-direction: column;
 			justify-content: center;
+			font-size: $size0;
 			align-items: center;
 			text-align: center;
-			padding: $size0;
+			padding: $size-1 $size0;
 			background: $white;
-			color: $darkestGrey;
+			color: $darkGrey;
+			font-weight: 500;
 			text-decoration: none;
 			box-shadow: none;
 			transition: 0.2s background, box-shadow ease-in-out;
 
+			.material-icons {
+				color: $darkestGrey;
+				font-size: $size3;
+				padding: $size-2;
+				margin-bottom: 1px;
+				border-radius: $size6;
+			}
+
 			&--active {
-				background: $vibrantGradient;
-				color: $lightGrey;
-				box-shadow: inset 1px 1px 5px $darkGreyTransparent;
+				color: $primary;
+				.material-icons {
+					animation: splash 0.3s normal forwards ease-in-out;
+					background: $vibrantGradient;
+					color: $white;
+				}
 			}
 		}
+	}
+}
+
+@keyframes splash {
+	from {
+		opacity: 0.7;
+		transform: scale(0.9, 0.9);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.1, 1.1);
+	}
+	to {
+		transform: scale(1, 1);
 	}
 }

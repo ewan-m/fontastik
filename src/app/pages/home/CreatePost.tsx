@@ -9,6 +9,7 @@ import { useHttpClient } from "../../hooks/use-http-client";
 import decode from "jwt-decode";
 import { environment } from "../../environment";
 import type { TokenPayload } from "../../global/token-payload.type";
+import { useMediaQuery } from "../../hooks/use-media-query";
 
 const defaultLocation = { x: 0, y: 0 };
 
@@ -28,6 +29,7 @@ export const CreatePost = () => {
 	const token = useAuthStore((store) => store.token);
 	const userId = token ? (decode(token) as TokenPayload)?.["id"] : undefined;
 	const http = useHttpClient();
+	const isMobile = useMediaQuery("(max-width: 450px)");
 
 	useEffect(() => {
 		if (active) {
@@ -123,6 +125,7 @@ export const CreatePost = () => {
 		<>
 			{!active && (
 				<button className="createPostButton" onClick={onCreateClick}>
+					{!isMobile && <>Create Post&nbsp;</>}
 					<Icon>send</Icon>
 				</button>
 			)}
