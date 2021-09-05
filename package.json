@@ -2,16 +2,18 @@
 	"name": "fontastik",
 	"version": "1.0.0",
 	"description": "A social media platform in your own handwriting",
-	"main": "src/index.tsx",
-	"browserslist": "> 0.25%, not dead",
+	"browserslist": "> 0.5%, not dead",
 	"homepage": "/fontastik",
 	"author": "Ewan Morrison",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ewan-m/fontastik.git"
+	},
 	"license": "MIT",
 	"scripts": {
-		"start": "snowpack dev",
-		"build": "snowpack build",
-		"format": "prettier \"src/**\" \"types/**\" --write",
-		"snowpack": "snowpack"
+		"start": "parcel serve public/index.html",
+		"build": "parcel build public/index.html --dist-dir docs",
+		"format": "prettier \"src/**\" \"types/**\" --write"
 	},
 	"dependencies": {
 		"date-fns": "^2.23.0",
@@ -19,23 +21,23 @@
 		"makerjs": "^0.17.1",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
-		"react-intersection-observer": "^8.32.0",
-		"react-router-dom": "^5.2.0",
+		"react-intersection-observer": "^8.32.1",
+		"react-router-dom": "^5.3.0",
 		"svg2ttf": "^6.0.3",
-		"zustand": "^3.5.9"
+		"zustand": "^3.5.10"
 	},
 	"devDependencies": {
-		"@snowpack/plugin-dotenv": "^2.2.0",
-		"@snowpack/plugin-react-refresh": "^2.5.0",
-		"@snowpack/plugin-typescript": "^1.2.1",
-		"@snowpack/plugin-sass": "^1.4.0",
+		"@parcel/transformer-image": "2.0.0-rc.0",
+		"@parcel/transformer-sass": "2.0.0-rc.0",
+		"@parcel/transformer-webmanifest": "2.0.0-rc.0",
+		"@parcel/packager-raw-url": "2.0.0-rc.0",
 		"@types/css-font-loading-module": "^0.0.6",
+		"@types/parcel-env": "^0.0.1",
 		"@types/react-dom": "^17.0.9",
 		"@types/react-router-dom": "^5.1.8",
-		"@types/snowpack-env": "^2.3.4",
 		"@types/svg2ttf": "^5.0.1",
+		"parcel": "2.0.0-rc.0",
 		"prettier": "^2.3.2",
-		"snowpack": "^3.8.7",
-		"typescript": "^4.3.5"
+		"typescript": "^4.4.2"
 	}
 }

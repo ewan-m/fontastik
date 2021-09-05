@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useMediaQuery } from "../hooks/use-media-query";
 import { Icon } from "./Icon";
 import "./SiteContainer.scss";
+import Logo from "url:../../assets/fontastik.png";
 
 function NavigationItems({ type }: { type: "footer" | "header" }) {
 	return (
@@ -52,11 +53,7 @@ export const SiteContainer: FunctionComponent = ({ children }) => {
 			<header className="siteHeader">
 				<div className="siteHeader__inner">
 					<NavLink to="/home" className="link">
-						<img
-							className="siteHeader__logo"
-							src="fontastik.png"
-							alt="fontastik logo"
-						/>
+						<img className="siteHeader__logo" src={Logo} alt="fontastik logo" />
 					</NavLink>
 					{!isMobile && <NavigationItems type="header" />}
 				</div>
