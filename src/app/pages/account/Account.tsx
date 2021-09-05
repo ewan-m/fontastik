@@ -11,12 +11,7 @@ import decode from "jwt-decode";
 import type { TokenPayload } from "../../global/token-payload.type";
 import { AccountPosts } from "./AccountPosts";
 
-enum FormState {
-	initial = "initial",
-	editing = "editing",
-	sending = "sending",
-	completed = "completed",
-}
+type FormState = "initial" | "editing" | "sending" | "completed";
 
 const MiniForm: FunctionComponent<{
 	label: string;
@@ -25,7 +20,7 @@ const MiniForm: FunctionComponent<{
 	bodyTag: string;
 	inputType?: string;
 }> = ({ label, initialValue, endpoint, bodyTag, inputType = "text" }) => {
-	const [formState, setFormState] = useState(FormState.initial);
+	const [formState, setFormState] = useState<FormState>("initial");
 	const [value, setValue] = useState("");
 	const [errors, setErrors] = useState([]);
 	const http = useHttpClient();
@@ -41,7 +36,7 @@ const MiniForm: FunctionComponent<{
 	const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		setErrors([]);
-		setFormState(FormState.sending);
+		setFormState("sending");
 
 		const result = await http.request({
 			method: "POST",
@@ -51,33 +46,33 @@ const MiniForm: FunctionComponent<{
 		});
 		console.log(result);
 		if (result.ok) {
-			setFormState(FormState.completed);
+			setFormState("completed");
 			const response = await result.json();
 			if (response?.token) {
 				loginAction(response.token);
 			}
 		} else {
-			setFormState(FormState.editing);
+			setFormState("editing");
 			const message = (await result.json())?.message;
 			setErrors(message ?? "Something went wrong changing that for you.");
 		}
 	};
 
 	switch (formState) {
-		case FormState.initial:
+		case "initial":
 			return (
 				<button
 					className="linkButton"
 					onClick={() => {
-						setFormState(FormState.editing);
+						setFormState("editing");
 					}}
 				>
 					{initialValue}
 					<Icon withMargin="right">edit</Icon>
 				</button>
 			);
-		case FormState.sending:
-		case FormState.editing:
+		case "sending":
+		case "editing":
 			return (
 				<form className="form profileInfo__editForm">
 					<label className="form__label">
@@ -94,7 +89,7 @@ const MiniForm: FunctionComponent<{
 					<div className="buttonRow">
 						<button
 							onClick={onSubmit}
-							disabled={formState === FormState.sending}
+							disabled={formState === "sending"}
 							className="button button__primary"
 							type="submit"
 						>
@@ -103,7 +98,7 @@ const MiniForm: FunctionComponent<{
 						<button
 							onClick={(e) => {
 								e.preventDefault();
-								setFormState(FormState.initial);
+								setFormState("initial");
 							}}
 							className="button secondary"
 						>
@@ -111,10 +106,10 @@ const MiniForm: FunctionComponent<{
 						</button>
 					</div>
 					<Errors errors={errors} />
-					{formState === FormState.sending && <LoadingSpinner />}
+					{formState === "sending" && <LoadingSpinner />}
 				</form>
 			);
-		case FormState.completed:
+		case "completed":
 			return (
 				<div className="profileInfo__editForm">
 					<p className="paragraph paragraph--b">
@@ -123,7 +118,7 @@ const MiniForm: FunctionComponent<{
 					<button
 						onClick={(e) => {
 							e.preventDefault();
-							setFormState(FormState.initial);
+							setFormState("initial");
 						}}
 						className="button button__primary"
 					>

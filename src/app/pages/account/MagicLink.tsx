@@ -7,21 +7,17 @@ import "./auth.scss";
 import { useHttpClient } from "../../hooks/use-http-client";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
 
-enum Situation {
-	initial,
-	sending,
-	success,
-}
+type Situation = "initial" | "sending" | "success";
 
 export const MagicLink = () => {
 	const [email, setEmail] = useState("");
 	const [errors, setErrors] = useState([] as string[]);
-	const [situation, setSituation] = useState(Situation.initial);
+	const [situation, setSituation] = useState<Situation>("initial");
 	const http = useHttpClient();
 
 	const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		setSituation(Situation.sending);
+		setSituation("sending");
 		setErrors([]);
 
 		const response = await http.request({
@@ -34,19 +30,19 @@ export const MagicLink = () => {
 		const result = await response.json();
 
 		if (response.ok) {
-			setSituation(Situation.success);
+			setSituation("success");
 		} else {
 			setErrors(
 				result.message ?? ["Something went wrong sending you a magic link."]
 			);
-			setSituation(Situation.initial);
+			setSituation("initial");
 		}
 	};
 
 	return (
 		<div className="authPage contentAppear">
 			<h2 className="pageTitle">Forgotten your password?</h2>
-			{(situation === Situation.initial || situation === Situation.sending) && (
+			{(situation === "initial" || situation === "sending") && (
 				<>
 					<p className="paragraph paragraph--b">
 						Don't worry about it! Just enter the email you used to register and we'll
@@ -68,16 +64,16 @@ export const MagicLink = () => {
 							className="button button__primary button--large button--wide"
 							onClick={onSubmit}
 							type="submit"
-							disabled={situation === Situation.sending}
+							disabled={situation === "sending"}
 						>
 							Send a magic link<Icon withMargin="right">arrow_forward</Icon>
 						</button>
-						{situation === Situation.sending && <LoadingSpinner />}
+						{situation === "sending" && <LoadingSpinner />}
 						<Errors errors={errors} />
 					</form>
 				</>
 			)}
-			{situation === Situation.success && (
+			{situation === "success" && (
 				<p className="paragraph paragraph--b">
 					If you have an account registered with us by that email you should find a
 					magic sign in link in your inbox.
