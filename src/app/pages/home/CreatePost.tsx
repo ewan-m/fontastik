@@ -145,6 +145,7 @@ export const CreatePost = () => {
 					<div className="createPostScreen__inputContainer">
 						<textarea
 							placeholder="What's the scoop?!"
+							aria-label="create-post-input"
 							ref={inputElement}
 							value={inputText}
 							onChange={(e) => {

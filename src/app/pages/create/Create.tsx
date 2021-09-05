@@ -369,6 +369,7 @@ export const Step5: FunctionComponent<Step> = () => {
 					<>
 						<textarea
 							className="fontPreview"
+							aria-label="preview-your-font"
 							autoFocus={true}
 							value={previewText}
 							onChange={(event) => {

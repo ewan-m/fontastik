@@ -9,7 +9,7 @@ import { useHttpClient } from "../../hooks/use-http-client";
 import type { PostData } from "./post-data.type";
 import { environment } from "../../environment";
 import { LoadingSpinner } from "../../global/LoadingSpinner";
-import { usePostLikesStore } from "../../store/global-store";
+import { useAuthStore, usePostLikesStore } from "../../store/global-store";
 import { useInView } from "react-intersection-observer";
 
 type RequestStatus = "fetching" | "fetched" | "error";
@@ -115,18 +115,22 @@ export const Home = () => {
 
 	const syncLikesWithApi = usePostLikesStore((store) => store.syncWithApi);
 
+	const isUserLoggedIn = useAuthStore((store) => !!store.token);
+
 	useEffect(() => {
-		(async () => {
-			const request = await http.request({
-				method: "GET",
-				uri: "post-likes",
-				withAuth: true,
-			});
-			if (request.ok) {
-				const response = (await request.json()) as { post_id: number }[];
-				syncLikesWithApi(response.map((item) => item.post_id));
-			}
-		})();
+		if (isUserLoggedIn) {
+			(async () => {
+				const request = await http.request({
+					method: "GET",
+					uri: "post-likes",
+					withAuth: true,
+				});
+				if (request.ok) {
+					const response = (await request.json()) as { post_id: number }[];
+					syncLikesWithApi(response.map((item) => item.post_id));
+				}
+			})();
+		}
 	}, []);
 
 	return (
