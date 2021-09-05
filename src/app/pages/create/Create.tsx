@@ -1,6 +1,7 @@
 import * as React from "react";
 import { FunctionComponent, useEffect, useState, MouseEvent } from "react";
 import { Icon } from "../../global/Icon";
+import { ProgressBar } from "../../global/ProgressBar";
 import "../Page.scss";
 import { alphaCharacters, numbers, specialCharacters } from "./characters";
 import "./Create.scss";
@@ -14,6 +15,7 @@ import {
 	useFontStore,
 	useAuthStore,
 	useFontCreationProgressStore,
+	useGenerationProgressStore,
 } from "../../store/global-store";
 import type { Font } from "../../font-processing/font.type";
 
@@ -356,14 +358,22 @@ export const Step5: FunctionComponent<Step> = () => {
 		}
 	};
 
+	const { character, total, completed } = useGenerationProgressStore(
+		(store) => store
+	);
+
 	return (
 		<div className="contentAppear">
 			<div>
 				{stage === "generating" && (
-					<p className="paragraph">
-						<LoadingSpinner /> Generating your font (this can take up to a minute or
-						so)
-					</p>
+					<>
+						<p className="paragraph paragraph--b">Generating your font!</p>
+						<ProgressBar
+							currentStep={completed}
+							totalSteps={total}
+							stepName={character}
+						/>
+					</>
 				)}
 				{stage !== "generating" && (
 					<>

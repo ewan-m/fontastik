@@ -1,0 +1,56 @@
+@import "../../styles/variables.scss";
+
+.progressBar {
+	background: $lightGrey;
+	border-radius: $size6;
+	width: 100%;
+	border: 1px solid $grey;
+
+	&__completed {
+		transition: width ease-in-out;
+		animation: ghostPulse 1.25s ease-in-out infinite;
+		border-radius: $size6;
+		background: $vibrantGradient;
+		display: flex;
+		min-width: $size5;
+		justify-content: flex-end;
+
+		&__p {
+			color: $darkestGrey;
+			background: $lightGrey;
+			width: $size5;
+			height: $size5;
+			text-align: center;
+			font-size: $size4;
+			border-radius: $size6;
+			border: 2px solid $white;
+			margin: 0;
+			box-shadow: $shadow5px;
+			animation: bouncy 0.5s infinite ease-in-out;
+		}
+	}
+}
+
+@keyframes bouncy {
+	0% {
+		transform: scale(1, 1);
+	}
+	50% {
+		transform: scale(1.1, 1.1);
+	}
+	100% {
+		transform: scale(1, 1);
+	}
+}
+
+@keyframes ghostPulse {
+	0% {
+		opacity: 0.95;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0.95;
+	}
+}

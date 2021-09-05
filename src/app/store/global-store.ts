@@ -66,6 +66,27 @@ export const useFontCreationProgressStore = create(
 	)
 );
 
+export type GenerationProgress = {
+	character: string;
+	completed: number;
+	total: number;
+};
+
+export const useGenerationProgressStore = create(
+	combine(
+		{
+			character: "",
+			completed: 0,
+			total: 999,
+		},
+		(set) => ({
+			updateProgress: (character: string, completed: number, total: number) => {
+				set(() => ({ character, completed, total }));
+			},
+		})
+	)
+);
+
 export const usePostLikesStore = create(
 	persist(
 		combine(

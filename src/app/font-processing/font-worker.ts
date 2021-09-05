@@ -37,16 +37,28 @@ const enrichWithDefaultCharacters = (font: Font): Font => ({
 	...(fontHas(font, numbers) ? {} : defaultNumbers),
 });
 
-function convertToTTF(font: Font): svg2ttf.MicroBuffer {
+function convertToTTF(
+	font: Font,
+	postMessage: (msg: any) => void
+): svg2ttf.MicroBuffer {
 	const fullFont = enrichWithDefaultCharacters(font);
 
 	return svg2ttf(
 		getSvgFontString(
 			Object.entries(fullFont)
-				.map(([key, value]) => {
+				.map(([key, value], index, self) => {
 					const [shiftedPath, horizontalAdvance] = normalize(
 						simplify(convertPathToPoints(value.trim()), 1)
 					);
+
+					postMessage({
+						contents: {
+							character: key,
+							completed: index,
+							total: self.length,
+						},
+						type: "progress",
+					});
 
 					return getSvgGlyph(
 						key,
@@ -60,7 +72,10 @@ function convertToTTF(font: Font): svg2ttf.MicroBuffer {
 }
 
 (self as unknown as Worker).onmessage = (ev: { data: Font }) => {
-	const ttf = convertToTTF(ev.data);
+	const ttf = convertToTTF(ev.data, (self as unknown as Worker).postMessage);
 
-	(self as unknown as Worker).postMessage(ttf);
+	(self as unknown as Worker).postMessage({
+		contents: ttf,
+		type: "result",
+	});
 };
