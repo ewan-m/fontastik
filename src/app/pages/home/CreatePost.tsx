@@ -48,16 +48,14 @@ export const CreatePost = () => {
 				}
 				history.push("/create");
 			})();
-		}
-	}, [active]);
-
-	useEffect(() => {
-		if (active) {
 			document.body.classList.add("no-scrolling");
 			inputElement?.current?.focus();
 		} else {
 			document.body.classList.remove("no-scrolling");
 		}
+		return () => {
+			document.body.classList.remove("no-scrolling");
+		};
 	}, [active]);
 
 	const onCreateClick = () => {
