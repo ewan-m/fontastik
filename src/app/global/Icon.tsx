@@ -1,17 +1,10 @@
 import * as React from "react";
-import type { FunctionComponent } from "react";
+import type { FunctionComponent, HTMLAttributes } from "react";
 import "./Icon.scss";
 
-interface IconProps extends React.HTMLAttributes<HTMLSpanElement> {
-	withMargin?: "left" | "right";
-}
-
-export const Icon: FunctionComponent<IconProps> = ({
-	children,
-	withMargin,
-	className,
-	...props
-}) => (
+export const Icon: FunctionComponent<
+	{ withMargin?: "left" | "right" } & HTMLAttributes<HTMLSpanElement>
+> = ({ children, withMargin, className, ...props }) => (
 	<span
 		{...props}
 		className={`material-icons${

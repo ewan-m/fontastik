@@ -14,11 +14,9 @@ import { useInterval } from "../../../hooks/use-interval";
 
 const size = 250;
 
-interface LetterDrawProps {
-	letter: string;
-}
-
-export const LetterDraw: FunctionComponent<LetterDrawProps> = ({ letter }) => {
+export const LetterDraw: FunctionComponent<{ letter: string }> = ({
+	letter,
+}) => {
 	const svgElement = createRef<SVGSVGElement>();
 
 	const [path, setPath] = useState("");

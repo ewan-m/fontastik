@@ -17,9 +17,9 @@ import {
 } from "../../store/global-store";
 import type { Font } from "../../font-processing/font.type";
 
-interface Step {
+type Step = {
 	setStep: (stepNumber: number) => void;
-}
+};
 
 const Step0: FunctionComponent<Step> = ({ setStep }) => {
 	const font = useFontStore((store) => store.font);

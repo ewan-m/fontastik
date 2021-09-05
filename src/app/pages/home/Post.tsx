@@ -8,10 +8,10 @@ import { formatDistance } from "date-fns";
 import { calculateDistance } from "./calculate-distance";
 import { NavLink } from "react-router-dom";
 
-interface PostComponent extends PostData {
+type PostComponent = {
 	currentLocation: { x: number; y: number };
 	showName?: boolean;
-}
+} & PostData;
 
 export const Post: FunctionComponent<PostComponent> = ({
 	name,

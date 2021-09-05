@@ -1,9 +1,9 @@
 import type { GetState, SetState, StateCreator, StoreApi } from "zustand";
 
-interface AbstractStorage {
+type AbstractStorage = {
 	setItem: (key: string, value: string) => void;
 	getItem: (key: string) => string | null;
-}
+};
 
 export const persist =
 	<T extends Record<string | number | symbol, unknown>>(

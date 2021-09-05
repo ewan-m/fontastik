@@ -2,13 +2,13 @@ import { useHistory } from "react-router-dom";
 import { environment } from "../environment";
 import { useAuthStore } from "../store/global-store";
 
-interface Request {
+type Request = {
 	method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 	uri: string;
 	headers?: any;
 	body?: any;
 	withAuth: boolean;
-}
+};
 
 export const useHttpClient = () => {
 	const history = useHistory();
