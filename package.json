@@ -12,7 +12,7 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "parcel serve public/index.html",
-		"build": "parcel build public/index.html --dist-dir docs",
+		"build": "parcel build public/index.html --dist-dir docs --public-url ./fontastik/",
 		"format": "prettier \"src/**\" \"types/**\" --write"
 	},
 	"dependencies": {
