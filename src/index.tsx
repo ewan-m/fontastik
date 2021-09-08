@@ -37,6 +37,6 @@ const App = () => (
 
 render(<App />, document.getElementById("root"));
 
-if ((import.meta as any).hot) {
-	(import.meta as any).hot.accept();
+if (module.hot) {
+	module.hot.accept();
 }
