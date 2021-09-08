@@ -1,14 +1,15 @@
 import * as React from "react";
 import { FunctionComponent, useEffect, useState, MouseEvent } from "react";
-import { useHistory } from "react-router-dom";
-import { Icon } from "../../global/Icon";
+import { useHistory } from "react-router";
+import { Icon } from "fontastik/global/Icon";
 import "./Account.scss";
-import { useHttpClient } from "../../hooks/use-http-client";
-import { LoadingSpinner } from "../../global/LoadingSpinner";
-import { Errors } from "../../global/Errors";
-import { useAuthStore } from "../../store/global-store";
+import { useHttpClient } from "fontastik/hooks/use-http-client";
+import { useRedirectToLogin } from "fontastik/hooks/use-redirect-to-login";
+import { LoadingSpinner } from "fontastik/global/LoadingSpinner";
+import { Errors } from "fontastik/global/Errors";
+import { useAuthStore } from "fontastik/store/global-store";
 import decode from "jwt-decode";
-import type { TokenPayload } from "../../global/token-payload.type";
+import type { TokenPayload } from "fontastik/global/token-payload.type";
 import { AccountPosts } from "./AccountPosts";
 
 type FormState = "initial" | "editing" | "sending" | "completed";
@@ -132,13 +133,10 @@ const MiniForm: FunctionComponent<{
 };
 
 export const Account = () => {
-	const history = useHistory();
+	useRedirectToLogin();
+
 	const token = useAuthStore((state) => state.token);
-	useEffect(() => {
-		if (!token) {
-			history.push("account/log-in");
-		}
-	}, []);
+	const history = useHistory();
 
 	const decodedToken = token ? (decode(token) as TokenPayload) : undefined;
 	const http = useHttpClient();
