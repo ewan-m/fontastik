@@ -18,6 +18,7 @@ import {
 	useGenerationProgressStore,
 } from "../../store/global-store";
 import type { Font } from "../../font-processing/font.type";
+import { useFooterHiding } from "../../hooks/use-footer-hiding";
 
 type Step = {
 	setStep: (stepNumber: number) => void;
@@ -362,6 +363,9 @@ export const Step5: FunctionComponent<Step> = () => {
 		(store) => store
 	);
 
+	const [isInputFocused, setIsInputFocused] = useState(false);
+	useFooterHiding(isInputFocused);
+
 	return (
 		<div className="contentAppear">
 			<div>
@@ -378,6 +382,12 @@ export const Step5: FunctionComponent<Step> = () => {
 				{stage !== "generating" && (
 					<>
 						<textarea
+							onFocus={() => {
+								setIsInputFocused(true);
+							}}
+							onBlur={() => {
+								setIsInputFocused(false);
+							}}
 							className="fontPreview"
 							aria-label="preview-your-font"
 							autoFocus={true}
