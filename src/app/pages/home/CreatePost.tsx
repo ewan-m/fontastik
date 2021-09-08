@@ -9,7 +9,8 @@ import { useHttpClient } from "../../hooks/use-http-client";
 import decode from "jwt-decode";
 import { environment } from "../../environment";
 import type { TokenPayload } from "../../global/token-payload.type";
-import { useMediaQuery } from "../../hooks/use-media-query";
+import { useIsMobile } from "../../hooks/use-is-mobile";
+import { useFooterHiding } from "../../hooks/use-footer-hiding";
 
 const defaultLocation = { x: 0, y: 0 };
 
@@ -29,7 +30,9 @@ export const CreatePost = () => {
 	const token = useAuthStore((store) => store.token);
 	const userId = token ? (decode(token) as TokenPayload)?.["id"] : undefined;
 	const http = useHttpClient();
-	const isMobile = useMediaQuery("(max-width: 450px)");
+	const isMobile = useIsMobile();
+
+	useFooterHiding(active);
 
 	useEffect(() => {
 		if (active) {

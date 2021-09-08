@@ -87,6 +87,22 @@ export const useGenerationProgressStore = create(
 	)
 );
 
+export const useFooterVisibilityStore = create(
+	combine(
+		{
+			isFooterHidden: false,
+		},
+		(set) => ({
+			hide: () => {
+				set(() => ({ isFooterHidden: true }));
+			},
+			show: () => {
+				set(() => ({ isFooterHidden: false }));
+			},
+		})
+	)
+);
+
 export const usePostLikesStore = create(
 	persist(
 		combine(

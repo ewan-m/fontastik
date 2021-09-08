@@ -1,52 +1,42 @@
 import * as React from "react";
 import type { FunctionComponent } from "react";
 import { NavLink } from "react-router-dom";
-import { useMediaQuery } from "../hooks/use-media-query";
+import { useIsMobile } from "../hooks/use-is-mobile";
 import { Icon } from "./Icon";
 import "./SiteContainer.scss";
 import Logo from "url:../../assets/fontastik.png";
+import { toSentenceCase } from "./toSentenceCase";
+import { useFooterVisibilityStore } from "../store/global-store";
 
-function NavigationItems({ type }: { type: "footer" | "header" }) {
-	return (
-		<nav>
-			<ul className={`${type}Nav`}>
-				<li className={`${type}Nav__item`}>
+const navItems = [
+	{ route: "home" },
+	{ route: "create" },
+	{ icon: "mail", route: "messages" },
+	{ icon: "account_circle", route: "account" },
+];
+
+const NavigationItems = ({ type }: { type: "footer" | "header" }) => (
+	<nav>
+		<ul className={`${type}Nav`}>
+			{navItems.map(({ icon, route }) => (
+				<li key={route} className={`${type}Nav__item`}>
 					<NavLink
 						activeClassName={`${type}Nav__item__a--active`}
 						className={`${type}Nav__item__a`}
-						to="/home"
+						to={`/${route}`}
 					>
-						<Icon>home</Icon>
-						Home
+						<Icon>{icon ?? route}</Icon>
+						{toSentenceCase(route)}
 					</NavLink>
 				</li>
-				<li className={`${type}Nav__item`}>
-					<NavLink
-						activeClassName={`${type}Nav__item__a--active`}
-						className={`${type}Nav__item__a`}
-						to="/create"
-					>
-						<Icon>create</Icon>
-						Create
-					</NavLink>
-				</li>
-				<li className={`${type}Nav__item`}>
-					<NavLink
-						activeClassName={`${type}Nav__item__a--active`}
-						className={`${type}Nav__item__a`}
-						to="/account"
-					>
-						<Icon>account_circle</Icon>
-						Account
-					</NavLink>
-				</li>
-			</ul>
-		</nav>
-	);
-}
+			))}
+		</ul>
+	</nav>
+);
 
 export const SiteContainer: FunctionComponent = ({ children }) => {
-	const isMobile = useMediaQuery("(max-width: 450px)");
+	const isMobile = useIsMobile();
+	const { isFooterHidden } = useFooterVisibilityStore();
 
 	return (
 		<>
@@ -64,7 +54,7 @@ export const SiteContainer: FunctionComponent = ({ children }) => {
 				{children}
 				<div className="pointlessBollocksToMakeStuffLineup"></div>
 			</main>
-			{isMobile && (
+			{isMobile && !isFooterHidden && (
 				<footer className="siteFooter">
 					<NavigationItems type="footer" />
 				</footer>
