@@ -1,16 +1,16 @@
 import * as React from "react";
 import { useState, MouseEvent, useRef, useEffect } from "react";
 import "./CreatePost.scss";
-import { Icon } from "../../global/Icon";
+import { Icon } from "fontastik/global/Icon";
 import { useHistory } from "react-router-dom";
-import { LoadingSpinner } from "../../global/LoadingSpinner";
-import { useAuthStore } from "../../store/global-store";
-import { useHttpClient } from "../../hooks/use-http-client";
+import { LoadingSpinner } from "fontastik/global/LoadingSpinner";
+import { useAuthStore } from "fontastik/store/global-store";
+import { useHttpClient } from "fontastik/hooks/use-http-client";
 import decode from "jwt-decode";
-import { environment } from "../../environment";
-import type { TokenPayload } from "../../global/token-payload.type";
-import { useIsMobile } from "../../hooks/use-is-mobile";
-import { useFooterHiding } from "../../hooks/use-footer-hiding";
+import { environment } from "fontastik/environment";
+import type { TokenPayload } from "fontastik/global/token-payload.type";
+import { useIsMobile } from "fontastik/hooks/use-is-mobile";
+import { useFooterHiding } from "fontastik/hooks/use-footer-hiding";
 
 const defaultLocation = { x: 0, y: 0 };
 

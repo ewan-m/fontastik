@@ -1,8 +1,8 @@
 import * as React from "react";
 import { CSSProperties, FunctionComponent, useEffect, useState } from "react";
-import { environment } from "../../environment";
-import { LoadingSpinner } from "../../global/LoadingSpinner";
-import { useHttpClient } from "../../hooks/use-http-client";
+import { environment } from "fontastik/environment";
+import { LoadingSpinner } from "fontastik/global/LoadingSpinner";
+import { useHttpClient } from "fontastik/hooks/use-http-client";
 import { Post } from "../home/Post";
 import type { PostData } from "../home/post-data.type";
 

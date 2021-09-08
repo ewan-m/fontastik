@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useState, MouseEvent, useEffect } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
-import { Errors } from "../../global/Errors";
-import { Icon } from "../../global/Icon";
+import { Errors } from "fontastik/global/Errors";
+import { Icon } from "fontastik/global/Icon";
 import "./auth.scss";
-import { useHttpClient } from "../../hooks/use-http-client";
-import { useAuthStore } from "../../store/global-store";
+import { useHttpClient } from "fontastik/hooks/use-http-client";
+import { useAuthStore } from "fontastik/store/global-store";
 
 export const LogIn = () => {
 	const [email, setEmail] = useState("");

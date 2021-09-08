@@ -8,9 +8,12 @@ import {
 	useEffect,
 } from "react";
 import "./LetterDraw.scss";
-import { Icon } from "../../../global/Icon";
-import { usePreferencesStore, useFontStore } from "../../../store/global-store";
-import { useInterval } from "../../../hooks/use-interval";
+import { Icon } from "fontastik/global/Icon";
+import {
+	usePreferencesStore,
+	useFontStore,
+} from "fontastik/store/global-store";
+import { useInterval } from "fontastik/hooks/use-interval";
 
 const size = 250;
 

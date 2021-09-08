@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./LoadingSpinner.scss";
-import { useRandomId } from "../hooks/use-random-id";
+import { useRandomId } from "fontastik/hooks/use-random-id";
 
 export const LoadingSpinner = () => {
 	const random = useRandomId("loadingSpinner");

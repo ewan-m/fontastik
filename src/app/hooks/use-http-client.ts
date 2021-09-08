@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
-import { environment } from "../environment";
-import { useAuthStore } from "../store/global-store";
+import { environment } from "fontastik/environment";
+import { useAuthStore } from "fontastik/store/global-store";
 
 type Request = {
 	method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";

@@ -1,15 +1,15 @@
 import * as React from "react";
 import "./Home.scss";
-import { Icon } from "../../global/Icon";
+import { Icon } from "fontastik/global/Icon";
 import { Post } from "./Post";
 import { useParams, NavLink } from "react-router-dom";
 import { CreatePost } from "./CreatePost";
 import { useState, useEffect, CSSProperties } from "react";
-import { useHttpClient } from "../../hooks/use-http-client";
+import { useHttpClient } from "fontastik/hooks/use-http-client";
 import type { PostData } from "./post-data.type";
-import { environment } from "../../environment";
-import { LoadingSpinner } from "../../global/LoadingSpinner";
-import { useAuthStore, usePostLikesStore } from "../../store/global-store";
+import { environment } from "fontastik/environment";
+import { LoadingSpinner } from "fontastik/global/LoadingSpinner";
+import { useAuthStore, usePostLikesStore } from "fontastik/store/global-store";
 import { useInView } from "react-intersection-observer";
 
 type RequestStatus = "fetching" | "fetched" | "error";

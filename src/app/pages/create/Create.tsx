@@ -1,24 +1,24 @@
 import * as React from "react";
 import { FunctionComponent, useEffect, useState, MouseEvent } from "react";
-import { Icon } from "../../global/Icon";
-import { ProgressBar } from "../../global/ProgressBar";
+import { Icon } from "fontastik/global/Icon";
+import { ProgressBar } from "fontastik/global/ProgressBar";
 import "../Page.scss";
 import { alphaCharacters, numbers, specialCharacters } from "./characters";
 import "./Create.scss";
 import { LetterDraw } from "./subcomponents/LetterDraw";
-import { convertToTTF } from "../../font-processing/svg-font-string";
-import { LoadingSpinner } from "../../global/LoadingSpinner";
-import { useHttpClient } from "../../hooks/use-http-client";
-import { Errors } from "../../global/Errors";
+import { convertToTTF } from "fontastik/font-processing/svg-font-string";
+import { LoadingSpinner } from "fontastik/global/LoadingSpinner";
+import { useHttpClient } from "fontastik/hooks/use-http-client";
+import { Errors } from "fontastik/global/Errors";
 import { Link } from "react-router-dom";
 import {
 	useFontStore,
 	useAuthStore,
 	useFontCreationProgressStore,
 	useGenerationProgressStore,
-} from "../../store/global-store";
-import type { Font } from "../../font-processing/font.type";
-import { useFooterHiding } from "../../hooks/use-footer-hiding";
+} from "fontastik/store/global-store";
+import type { Font } from "fontastik/font-processing/font.type";
+import { useFooterHiding } from "fontastik/hooks/use-footer-hiding";
 
 type Step = {
 	setStep: (stepNumber: number) => void;

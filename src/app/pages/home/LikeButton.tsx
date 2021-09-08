@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, FunctionComponent } from "react";
-import { useHttpClient } from "../../hooks/use-http-client";
-import { usePostLikesStore } from "../../store/global-store";
+import { useHttpClient } from "fontastik/hooks/use-http-client";
+import { usePostLikesStore } from "fontastik/store/global-store";
 import "./LikeButton.scss";
 
 export const LikeButton: FunctionComponent<{

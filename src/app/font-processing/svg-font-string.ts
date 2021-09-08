@@ -2,7 +2,7 @@ import type svg2ttf from "svg2ttf";
 import {
 	GenerationProgress,
 	useGenerationProgressStore,
-} from "../store/global-store";
+} from "fontastik/store/global-store";
 import type { Font } from "./font.type";
 
 let inProgressProcessing: Promise<svg2ttf.MicroBuffer> | null = null;

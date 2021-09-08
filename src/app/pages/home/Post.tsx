@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { FunctionComponent } from "react";
 import "./Post.scss";
-import { Icon } from "../../global/Icon";
+import { Icon } from "fontastik/global/Icon";
 import { LikeButton } from "./LikeButton";
 import type { PostData } from "./post-data.type";
 import { formatDistance } from "date-fns";

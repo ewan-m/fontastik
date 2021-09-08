@@ -1,12 +1,12 @@
 import * as React from "react";
 import type { FunctionComponent } from "react";
 import { NavLink } from "react-router-dom";
-import { useIsMobile } from "../hooks/use-is-mobile";
+import { useIsMobile } from "fontastik/hooks/use-is-mobile";
 import { Icon } from "./Icon";
 import "./SiteContainer.scss";
 import Logo from "url:../../assets/fontastik.png";
 import { toSentenceCase } from "./toSentenceCase";
-import { useFooterVisibilityStore } from "../store/global-store";
+import { useFooterVisibilityStore } from "fontastik/store/global-store";
 
 const navItems = [
 	{ route: "home" },

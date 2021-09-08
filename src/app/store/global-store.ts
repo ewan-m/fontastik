@@ -1,7 +1,7 @@
 import create from "zustand";
 import { combine } from "zustand/middleware";
 import { persist } from "./store-persistence-middleware";
-import type { Font } from "../font-processing/font.type";
+import type { Font } from "fontastik/font-processing/font.type";
 
 export const usePreferencesStore = create(
 	persist(

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useState, MouseEvent } from "react";
 import { Link } from "react-router-dom";
-import { Errors } from "../../global/Errors";
-import { Icon } from "../../global/Icon";
+import { Errors } from "fontastik/global/Errors";
+import { Icon } from "fontastik/global/Icon";
 import "./auth.scss";
-import { useHttpClient } from "../../hooks/use-http-client";
-import { LoadingSpinner } from "../../global/LoadingSpinner";
+import { useHttpClient } from "fontastik/hooks/use-http-client";
+import { LoadingSpinner } from "fontastik/global/LoadingSpinner";
 
 type Situation = "initial" | "sending" | "success";
 

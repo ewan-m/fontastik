@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { Icon } from "../../global/Icon";
+import { Icon } from "fontastik/global/Icon";
 import { AccountPosts } from "../account/AccountPosts";
 import "./User.scss";
 

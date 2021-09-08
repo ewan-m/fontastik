@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useFooterVisibilityStore } from "../store/global-store";
+import { useFooterVisibilityStore } from "fontastik/store/global-store";
 
 export const useFooterHiding = (enabled?: boolean) => {
 	const { show, hide } = useFooterVisibilityStore();
