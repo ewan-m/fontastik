@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { FunctionComponent } from "react";
 import { Icon } from "./Icon";
-import { toSentenceCase } from "./toSentenceCase";
+import { toSentenceCase } from "./to-sentence-case";
 
 export const Errors: FunctionComponent<{ errors: string[] | string }> = ({
 	errors,

@@ -5,7 +5,7 @@ import { useIsMobile } from "fontastik/hooks/use-is-mobile";
 import { Icon } from "./Icon";
 import "./SiteContainer.scss";
 import Logo from "url:../../assets/fontastik.png";
-import { toSentenceCase } from "./toSentenceCase";
+import { toSentenceCase } from "./to-sentence-case";
 import { useFooterVisibilityStore } from "fontastik/store/global-store";
 
 const navItems = [
