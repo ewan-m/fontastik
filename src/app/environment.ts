@@ -1,6 +1,6 @@
 export const environment = {
 	apiUrl: "https://fontastik-api.herokuapp.com/",
-	githubDataUrl: "https://cdn.jsdelivr.net/gh/ewan-m/fontastik-data/",
+	githubDataUrl: "https://cdn.jsdelivr.net/gh/ewan-m/fontastik-data",
 };
 
 const testEnvironment = {
