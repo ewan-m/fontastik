@@ -11,7 +11,7 @@
 	},
 	"license": "MIT",
 	"scripts": {
-		"start": "parcel serve public/index.html",
+		"start": "parcel serve public/index.html --no-cache",
 		"build": "parcel build public/index.html --dist-dir docs --public-url ./",
 		"format": "prettier \"src/**\" \"types/**\" --write"
 	},
@@ -42,5 +42,5 @@
 	},
 	"alias": {
 		"fontastik": "./src/app"
-	  }
+	}
 }
