@@ -62,7 +62,7 @@ function clipperOffset(
 export function convertPathToOutline(svgPath: string): string {
 	const makerObject = model.simplify(
 		importer.fromSVGPathData(svgPath, {
-			bezierAccuracy: 1,
+			bezierAccuracy: 10,
 		})
 	);
 
