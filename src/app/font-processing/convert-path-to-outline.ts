@@ -13,10 +13,10 @@ const EndTypes = {
 
 function clipperOffset(
 	modelToOutline: maker.IModel,
-	offset: number,
-	tolerance: number = 0.1
+	offset: number
 ): maker.IModel {
-	const scale = 1000;
+	const tolerance = 0.01;
+	const scale = 10000;
 	const chains = maker.model.findChains(modelToOutline) as maker.IChain[];
 	const models = chains.reduce((memo, chain, i) => {
 		const divisions = Math.floor(chain.pathLength / tolerance);
@@ -26,7 +26,7 @@ function clipperOffset(
 			keyPoints.push(keyPoints[0]);
 		}
 		let paths = [
-			keyPoints.map((point: any) => ({
+			keyPoints.map((point) => ({
 				X: Math.round(point[0] * scale),
 				Y: Math.round(point[1] * scale),
 			})),
@@ -37,7 +37,7 @@ function clipperOffset(
 		co.AddPaths(
 			paths,
 			ClipperLib.JoinType.jtRound,
-			chain.endless ? EndTypes.etClosedLine : EndTypes.etOpenButt
+			chain.endless ? EndTypes.etClosedPolygon : EndTypes.etOpenRound
 		);
 		co.MiterLimit = 2;
 		co.ArcTolerance = 0.25;
