@@ -16,6 +16,7 @@
 		"format": "prettier \"src/**\" \"types/**\" --write"
 	},
 	"dependencies": {
+		"clipper-lib": "^6.4.2",
 		"date-fns": "^2.23.0",
 		"jwt-decode": "^3.1.2",
 		"makerjs": "^0.17.1",
