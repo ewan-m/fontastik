@@ -1,0 +1,80 @@
+@import "../../../../styles/variables.scss";
+
+.conversation {
+	&__inputContainer {
+		position: fixed;
+		width: 100%;
+		bottom: 0;
+		font-size: $size2;
+
+		&__bg {
+			background: $whiteTransparent;
+			padding: $size0;
+		}
+
+		&__form {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			position: relative;
+
+			.form__input {
+				margin: 0;
+				width: 100%;
+				resize: none;
+				border-radius: $size6;
+				padding-right: $size6;
+			}
+
+			.button {
+				height: 100%;
+				position: absolute;
+				right: 0;
+			}
+		}
+	}
+
+	&__messagesContainer {
+		display: flex;
+		flex-direction: column;
+		padding-bottom: $size6;
+	}
+
+	&__message {
+		margin: 0;
+		font-size: $size2;
+		max-width: calc(100% - 4 * #{$size0});
+		padding: $size-1;
+		margin-bottom: $size0;
+		border-radius: $size-1;
+
+		&--standalone {
+			border-radius: $size2;
+		}
+		&--first {
+			border-top-left-radius: $size2;
+			margin-bottom: 4px;
+		}
+		&--middle {
+			margin-bottom: 4px;
+		}
+		&--last {
+			border-bottom-left-radius: $size2;
+		}
+
+		&--sent {
+			font-weight: 600;
+			align-self: flex-end;
+			background: $lightGrey;
+			color: $darkestGrey;
+		}
+
+		&--received {
+			font-weight: 500;
+			align-self: flex-start;
+			background: $vibrantGradientAlt;
+			color: $white;
+		}
+	}
+}

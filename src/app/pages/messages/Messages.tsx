@@ -8,13 +8,13 @@ import "./Messages.scss";
 
 export const Messages = () => {
 	const isMobile = useIsMobile();
-	useRedirectToLogin();
+	// useRedirectToLogin();
 	const { conversationId } = useParams<{ conversationId?: string }>();
 
 	return (
-		<div className="messagesPage">
+		<div className="panelsContainer">
 			{!(isMobile && conversationId) && <Conversations />}
-			{!(isMobile && !conversationId) && <Conversation />}
+			{/* {!(isMobile && !conversationId) && <Conversation />} */}
 		</div>
 	);
 };

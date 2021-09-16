@@ -19,7 +19,7 @@ export const useHttpClient = () => {
 		const url = environment.apiUrl + uri;
 		headers = {
 			...headers,
-			"mode": "cors",
+			mode: "cors",
 			"Content-Type": "application/json",
 			...(withAuth ? { Authorization: `Bearer ${token}` } : {}),
 		};
